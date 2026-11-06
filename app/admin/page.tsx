@@ -11,6 +11,7 @@ export default function AdminPage() {
   const [form, setForm] = useState<Exercise>(blank);
   const [editing, setEditing] = useState(false);
   const [message, setMessage] = useState("");
+  const [activeSection, setActiveSection] = useState("工作台");
   useEffect(() => { setItems(getExercises()); }, []);
   function persist(next: Exercise[]) { setItems(next); saveExercises(next); }
   function edit(item: Exercise) { setForm({...item, tags:[...item.tags]}); setEditing(true); window.scrollTo({top:0,behavior:"smooth"}); }
@@ -23,10 +24,10 @@ export default function AdminPage() {
     persist(next); setForm(blank); setEditing(false); setMessage("练习已保存到当前浏览器。");
   }
   function remove(id:string) { if(confirm("确定删除这条练习吗？")) persist(items.filter(x=>x.id!==id)); }
-  return <main className="admin-shell"><aside className="admin-sidebar"><Link href="/home" className="brand">CODE ARCHIVE</Link><div className="admin-label">CONTENT MANAGER</div>{["工作台","练习管理","代码管理","图片管理","文件管理","分类管理","标签管理","页面内容","网站设置","操作日志"].map((x,i)=><div key={x} className={i===0?"side-item selected":"side-item"}>{["⌂","▤","‹›","▧","▱","▦","#","▤","⚙","≡"][i]}　{x}</div>)}<Link href="/home" className="side-logout">返回作品集</Link></aside>
-    <section className="admin-content"><div className="admin-top"><div><div className="eyebrow">ADMIN / DASHBOARD</div><h1>工作台</h1><p>管理你的 Python 编程练习与学习成果。</p></div><Link href="/home" className="text-link">查看网站 ↗</Link></div>
+  return <main className="admin-shell"><aside className="admin-sidebar"><Link href="/home" className="brand">CODE ARCHIVE</Link><div className="admin-label">CONTENT MANAGER</div>{["工作台","练习管理","代码管理","图片管理","文件管理","分类管理","标签管理","页面内容","网站设置","操作日志"].map((x,i)=><button type="button" key={x} onClick={()=>setActiveSection(x)} className={activeSection===x?"side-item selected":"side-item"} aria-current={activeSection===x?"page":undefined}>{["⌂","▤","‹›","▧","▱","▦","#","▤","⚙","≡"][i]}　{x}</button>)}<Link href="/home" className="side-logout">返回作品集</Link></aside>
+    <section className="admin-content"><div className="admin-top"><div><div className="eyebrow">ADMIN / DASHBOARD</div><h1>{activeSection}</h1><p>{activeSection==="工作台"?"管理你的 Python 编程练习与学习成果。":activeSection==="练习管理"?"创建、编辑和发布 Python 课堂练习。":`当前选择：${activeSection}。查看该模块的可用内容与开发状态。`}</p></div><Link href="/home" className="text-link">查看网站 ↗</Link></div>
       <div className="stats-grid"><div><span>练习总数</span><strong>{items.length}</strong></div><div><span>已发布</span><strong>{items.filter(x=>x.published).length}</strong></div><div><span>草稿</span><strong>{items.filter(x=>!x.published).length}</strong></div><div><span>可在线运行</span><strong>{items.filter(x=>x.allowRun).length}</strong></div></div>
-      <div className="admin-panel"><div className="panel-heading"><div><h2>{editing?"编辑练习":"练习管理"}</h2><p>创建、编辑、测试并发布 Python 课堂练习。</p></div><button className="button button-primary" onClick={create}>＋ 新建练习</button></div>
+      {(activeSection==="工作台" || activeSection==="练习管理") ? <div className="admin-panel"><div className="panel-heading"><div><h2>{editing?"编辑练习":"练习管理"}</h2><p>创建、编辑、测试并发布 Python 课堂练习。</p></div><button className="button button-primary" onClick={create}>＋ 新建练习</button></div>
         {editing && <form className="exercise-form" onSubmit={submit}>
           <div className="form-grid"><label>练习标题<input required value={form.title} onChange={e=>setForm({...form,title:e.target.value})}/></label><label>练习分类<select value={form.category} onChange={e=>setForm({...form,category:e.target.value})}>{["基础语法","输入与输出","条件判断","循环结构","函数与模块","列表与字典","算法与逻辑","综合课堂作业"].map(x=><option key={x}>{x}</option>)}</select></label></div>
           <label>练习简介<input value={form.summary} onChange={e=>setForm({...form,summary:e.target.value})}/></label>
@@ -41,8 +42,13 @@ export default function AdminPage() {
         </form>}
         {message&&<p className="success-message">{message}</p>}
         <div className="admin-list">{items.map(x=><div className="admin-row" key={x.id}><div><strong>{x.title}</strong><small>{x.category} · {x.date} · {x.published?"已发布":"草稿"}</small></div><div className="row-actions"><button onClick={()=>edit(x)}>编辑</button><button onClick={()=>remove(x.id)}>删除</button></div></div>)}</div>
-      </div>
-      <p className="admin-warning">账号访问由 Supabase Auth 保护。练习内容目前仍保存在当前浏览器；跨设备同步需下一阶段接入云端数据库。</p>
+      </div> : <div className="admin-panel">
+        <div className="panel-heading"><div><h2>{activeSection}</h2><p>模块入口已接通。以下为当前项目中可读取的数据与功能状态。</p></div></div>
+        {activeSection==="分类管理" ? <div className="admin-list">{Array.from(new Set(items.map(x=>x.category))).map(category=><div className="admin-row" key={category}><div><strong>{category}</strong><small>{items.filter(x=>x.category===category).length} 条练习</small></div></div>)}</div>
+        : activeSection==="标签管理" ? <div className="admin-list">{Array.from(new Set(items.flatMap(x=>x.tags))).map(tag=><div className="admin-row" key={tag}><div><strong>#{tag}</strong><small>{items.filter(x=>x.tags.includes(tag)).length} 条练习使用</small></div></div>)}</div>
+        : <div className="admin-empty"><strong>{activeSection}模块尚未接入</strong><p>这个菜单现在可以正常切换，但当前代码中还没有对应的独立管理功能。为避免误操作或造成数据丢失，这里暂不提供虚假的编辑按钮。</p><p>目前已可用：工作台统计、练习的新建/编辑/删除、分类和标签数据查看。</p></div>}
+      </div>}
+      <p className="admin-warning">账号访问由 Supabase Auth 保护。练习内容目前仍保存在当前浏览器；跨设备同步需下一阶段接入云端数据库。</p>账号访问由 Supabase Auth 保护。练习内容目前仍保存在当前浏览器；跨设备同步需下一阶段接入云端数据库。</p>
     </section>
   </main>;
 }
