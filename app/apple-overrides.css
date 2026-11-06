@@ -1786,3 +1786,14 @@ body { color: #1d1d1f; background: #fff; }
   color: transparent;
   filter: drop-shadow(0 3px 8px rgba(91, 111, 225, .12));
 }
+
+
+/* Prevent the gradient Py mark from clipping its final letter */
+.home-featured .exercise-card .python-mark {
+  display: inline-block;
+  letter-spacing: -2px;
+  line-height: 1.2;
+  padding-right: 5px;
+  overflow: visible;
+  white-space: nowrap;
+}
