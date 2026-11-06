@@ -1775,3 +1775,14 @@ body { color: #1d1d1f; background: #fff; }
     0 0 28px color-mix(in srgb, var(--topic-accent) 11%, transparent),
     inset 0 0 0 1px color-mix(in srgb, var(--topic-accent) 8%, transparent);
 }
+
+
+/* Match the featured exercise Python mark to the login gradient */
+.home-featured .exercise-card .python-mark {
+  background: linear-gradient(100deg, #347fe9 5%, #7968e9 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 3px 8px rgba(91, 111, 225, .12));
+}
