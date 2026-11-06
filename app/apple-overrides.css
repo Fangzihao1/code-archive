@@ -1378,7 +1378,7 @@ body { color: #1d1d1f; background: #fff; }
 /* Nudge the home hero copy toward the visual center of the left column */
 @media (min-width: 901px) {
   .home-hero-copy {
-    margin-left: clamp(18px, 3vw, 42px);
+    margin-left: clamp(8px, 1.8vw, 24px);
     transform: translateY(34px);
   }
 }
