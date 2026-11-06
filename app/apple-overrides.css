@@ -107,3 +107,48 @@ body { color: #1d1d1f; background: #fff; }
   .category-section h2 { font-size: 30px; }
   .horizontal-rail-item { flex-basis: 84vw; }
 }
+
+
+/* Interactive featured exercise rail */
+.horizontal-rail-track {
+  padding: 16px 8px 30px;
+}
+.horizontal-rail-item {
+  position: relative;
+  z-index: 0;
+}
+.horizontal-rail-item:hover,
+.horizontal-rail-item:focus-within {
+  z-index: 2;
+}
+.horizontal-rail-item .exercise-card {
+  display: block;
+  height: 100%;
+  cursor: pointer;
+  transform: translateY(0) scale(1);
+  transform-origin: center center;
+  transition:
+    transform .28s cubic-bezier(.2,.75,.25,1),
+    box-shadow .28s ease,
+    border-color .28s ease;
+  will-change: transform;
+}
+.horizontal-rail-item:hover .exercise-card,
+.horizontal-rail-item:focus-within .exercise-card {
+  transform: translateY(-5px) scale(1.045);
+  border-color: #b8d5f5;
+  box-shadow: 0 22px 48px #1d1d1f18;
+}
+.horizontal-rail-item .exercise-card:focus-visible {
+  outline: 3px solid #0071e3;
+  outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .horizontal-rail-item .exercise-card {
+    transition: none;
+  }
+  .horizontal-rail-item:hover .exercise-card,
+  .horizontal-rail-item:focus-within .exercise-card {
+    transform: none;
+  }
+}
