@@ -5,6 +5,7 @@ import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 import ExerciseCard from "@/components/ExerciseCard";
 import { getExercises } from "@/lib/storage";
+import { getPublishedExercises } from "@/lib/exercises-cloud";
 import type { Exercise } from "@/lib/types";
 
 const categories = ["全部练习","基础语法","输入与输出","条件判断","循环结构","函数与模块","列表与字典","算法与逻辑","综合课堂作业"];
@@ -16,7 +17,7 @@ export default function ExercisesPage() {
   const [category, setCategory] = useState("全部练习");
   const [sort, setSort] = useState("new");
   useEffect(() => {
-    setItems(getExercises().filter(x => x.published));
+    getPublishedExercises().then(setItems).catch(() => setItems(getExercises().filter(x => x.published)));
     const params = new URLSearchParams(window.location.search);
     const c = params.get("category");
     if (c) setCategory(c);
