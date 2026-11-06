@@ -1375,12 +1375,29 @@ body { color: #1d1d1f; background: #fff; }
 }
 
 
-/* Nudge the home hero copy toward the visual center of the left column */
+/* Fine-tune home hero copy position and soften its supporting actions */
 @media (min-width: 901px) {
   .home-hero-copy {
-    margin-left: clamp(8px, 1.8vw, 24px);
+    margin-left: clamp(-28px, -2vw, -10px);
     transform: translateY(34px);
   }
+}
+.home-hero-copy > p {
+  color: #96969d;
+}
+.home-hero-actions .button-primary {
+  background: #34363a;
+  color: #fff;
+}
+.home-hero-actions .button-primary:hover {
+  background: #4a4c50;
+}
+.home-hero-actions .home-secondary-link {
+  color: #777980;
+  transition: color .2s ease;
+}
+.home-hero-actions .home-secondary-link:hover {
+  color: #34363a;
 }
 @media (max-width: 900px) {
   .home-hero-copy {
