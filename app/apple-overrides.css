@@ -1298,3 +1298,33 @@ body { color: #1d1d1f; background: #fff; }
   .hero-atmosphere::after, .hero-orbit-two, .hero-spark { animation: none; }
   .hero-atmosphere::before, .hero-orbit-one { transition: none; }
 }
+
+
+/* Full-bleed interactive cover background */
+.home-hero {
+  width: 100vw;
+  max-width: none;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  min-height: calc(100svh - 76px);
+  padding: 96px max(24px, calc((100vw - 1160px) / 2)) 88px;
+  border-radius: 0;
+}
+.hero-atmosphere {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+@media (max-width: 900px) {
+  .home-hero {
+    min-height: auto;
+    padding: 75px 24px 95px;
+  }
+}
+@media (max-width: 600px) {
+  .home-hero {
+    width: 100vw;
+    padding: 65px 18px 90px;
+  }
+}
