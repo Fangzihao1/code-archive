@@ -43,25 +43,6 @@ export default function HomePage() {
             ? <HorizontalExerciseRail items={items.slice(0, 8)} />
             : <div className="home-empty"><strong>练习档案正在整理中</strong><span>发布练习后，它们会出现在这里。</span><Link href="/exercises">浏览练习库 ↗</Link></div>}
         </section>
-
-        <section className="section category-section">
-          <div className="content-wrap">
-            <div className="eyebrow">EXPLORE BY TOPIC / 02</div>
-            <h2>从一个知识点开始。</h2>
-            <p className="muted">按照课堂知识结构整理，让每一次练习都更容易找到。</p>
-            <div className="topic-grid">{["基础语法", "输入与输出", "条件判断", "循环结构", "函数与模块", "列表与字典", "算法与逻辑", "综合课堂作业"].map((item, index) => (
-              <Link href={`/exercises?category=${encodeURIComponent(item)}`} key={item}>
-                <span>0{index + 1}</span><strong>{item}</strong><b>↗</b>
-              </Link>
-            ))}</div>
-          </div>
-        </section>
-
-        <section className="section content-wrap about-strip">
-          <div><div className="eyebrow">ABOUT THIS ARCHIVE / 03</div><h2>每一段代码，<br />都是成长的记录。</h2></div>
-          <p>这是一个持续更新的个人 Python 学习档案，记录课堂练习、代码思路和实际运行结果。</p>
-          <Link className="button button-light" href="/about">关于这个档案 ↗</Link>
-        </section>
       </main>
       <Footer />
     </>
