@@ -152,3 +152,38 @@ body { color: #1d1d1f; background: #fff; }
     transform: none;
   }
 }
+
+/* Admin sidebar navigation buttons */
+.admin-sidebar button.side-item {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  transition: background .18s ease, color .18s ease;
+}
+.admin-sidebar button.side-item:hover {
+  background: #f4f6f8;
+  color: #1c5fae;
+}
+.admin-sidebar button.side-item.selected {
+  background: #eff3f8;
+  color: #1c5fae;
+  font-weight: 600;
+}
+.admin-empty {
+  margin-top: 22px;
+  padding: 26px;
+  border: 1px dashed #dfe3e8;
+  border-radius: 12px;
+  background: #fafbfc;
+  color: #454b54;
+}
+.admin-empty strong { font-size: 14px; }
+.admin-empty p {
+  max-width: 720px;
+  color: #7d848e;
+  font-size: 12px;
+  line-height: 1.9;
+}
