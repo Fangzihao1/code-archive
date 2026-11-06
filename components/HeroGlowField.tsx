@@ -30,11 +30,11 @@ export default function HeroGlowField() {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const glows: Glow[] = [
-      { x: .23, y: .24, vx: .00009, vy: .00006, radius: 285, hue: 210, phase: .3, strength: .78 },
-      { x: .69, y: .25, vx: -.000075, vy: .00008, radius: 245, hue: 278, phase: 1.7, strength: .72 },
-      { x: .82, y: .68, vx: -.000085, vy: -.00006, radius: 310, hue: 174, phase: 2.8, strength: .68 },
-      { x: .43, y: .76, vx: .00007, vy: -.00008, radius: 225, hue: 330, phase: 4.2, strength: .64 },
-      { x: .56, y: .48, vx: -.00006, vy: .00007, radius: 205, hue: 42, phase: 5.1, strength: .58 },
+      { x: .23, y: .24, vx: .00009, vy: .00006, radius: 560, hue: 210, phase: .3, strength: .78 },
+      { x: .69, y: .25, vx: -.000075, vy: .00008, radius: 500, hue: 278, phase: 1.7, strength: .72 },
+      { x: .82, y: .68, vx: -.000085, vy: -.00006, radius: 620, hue: 174, phase: 2.8, strength: .68 },
+      { x: .43, y: .76, vx: .00007, vy: -.00008, radius: 470, hue: 330, phase: 4.2, strength: .64 },
+      { x: .56, y: .48, vx: -.00006, vy: .00007, radius: 440, hue: 42, phase: 5.1, strength: .58 },
     ];
 
     const resize = () => {
@@ -119,12 +119,12 @@ export default function HeroGlowField() {
       glows.forEach((glow, index) => {
         const colliding = activeCollisions.has(index);
         const pulse = reduceMotion ? 1 : 1 + Math.sin(time * .00055 + glow.phase) * .055;
-        paintGlow(glow.x * width, glow.y * height, glow.radius * pulse * (colliding ? 1.1 : 1), glow.hue, glow.strength * (colliding ? .32 : .25));
+        paintGlow(glow.x * width, glow.y * height, glow.radius * pulse * (colliding ? 1.1 : 1), glow.hue, glow.strength * (colliding ? .46 : .36));
       });
 
       if (pointerInside) {
-        paintGlow(mainX, mainY, 290, 211, .24);
-        paintGlow(mainX, mainY, 145, 205, .18);
+        paintGlow(mainX, mainY, 560, 211, .34);
+        paintGlow(mainX, mainY, 285, 205, .25);
         context.beginPath();
         context.arc(mainX, mainY, 17, 0, Math.PI * 2);
         context.strokeStyle = "rgba(74, 139, 232, .22)";
