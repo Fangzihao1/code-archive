@@ -12,18 +12,22 @@ import type { Exercise } from "@/lib/types";
 export default function ExerciseDetailPage() {
   const params = useParams<{slug:string}>();
   const [item, setItem] = useState<Exercise | null>(null);
+  const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
   const [activeStep, setActiveStep] = useState("brief");
   useEffect(() => {
     let active = true;
+    setLoading(true);
     getPublishedExercises()
       .then((rows) => { if (active) setItem(rows.find((x) => x.slug === params.slug) || null); })
-      .catch(() => { if (active) setItem(getExercises().find((x) => x.slug === params.slug && x.published) || null); });
+      .catch(() => { if (active) setItem(getExercises().find((x) => x.slug === params.slug && x.published) || null); })
+      .finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
   }, [params.slug]);
   async function copy() { if (!item) return; try { await navigator.clipboard?.writeText(item.code); setCopied(true); setTimeout(()=>setCopied(false),1600); } catch { setCopied(false); } }
   function jumpTo(id: string) { setActiveStep(id); document.getElementById(`detail-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" }); }
-  if (!item) return <><SiteHeader/><main className="content-wrap page-main"><div className="empty-state"><h2>正在加载练习…</h2><Link href="/exercises">返回练习列表</Link></div></main></>;
+  if (loading) return <><SiteHeader/><main className="content-wrap page-main"><div className="empty-state"><h2>正在加载练习…</h2></div></main></>;
+  if (!item) return <><SiteHeader/><main className="content-wrap page-main"><div className="empty-state"><h2>暂未找到这条练习</h2><p>它可能已被取消发布或删除。</p><Link href="/exercises">返回练习列表</Link></div></main></>;
   return <><SiteHeader/><main className="content-wrap detail-main">
     <div className="breadcrumb"><Link href="/home">首页</Link> / <Link href="/exercises">课堂练习</Link> / {item.title}</div>
     <div className="detail-title"><div className="eyebrow">{item.category} · PYTHON EXERCISE</div><h1>{item.title}</h1><p>{item.summary}</p><div className="detail-meta"><span>Python</span><span>{item.date}</span>{item.tags.map(t=><span key={t}>#{t}</span>)}</div><button className="button button-light" onClick={copy}>{copied ? "已复制 ✓" : "复制源代码 ↗"}</button></div>
