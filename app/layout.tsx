@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./apple-overrides.css";
 
 export const metadata: Metadata = {
   title: "CODE ARCHIVE — Python 编程学习档案",

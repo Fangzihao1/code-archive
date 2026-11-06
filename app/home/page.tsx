@@ -1,28 +1,69 @@
 "use client";
+
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
-import ExerciseCard from "@/components/ExerciseCard";
+import HorizontalExerciseRail from "@/components/HorizontalExerciseRail";
 import { getExercises } from "@/lib/storage";
 import type { Exercise } from "@/lib/types";
 
 export default function HomePage() {
   const [items, setItems] = useState<Exercise[]>([]);
-  useEffect(() => { setItems(getExercises().filter(x => x.published)); }, []);
-  return <><SiteHeader/><main>
-    <section className="home-hero content-wrap">
-      <div className="eyebrow">A PERSONAL PYTHON ARCHIVE</div>
-      <h1>我的 Python<br/><span>编程学习档案。</span></h1>
-      <p>从课堂练习到实际应用，记录每一次代码实践。<br/>用代码整理思路，用运行验证想法。</p>
-      <Link className="button button-primary" href="/exercises">浏览全部练习 ↗</Link>
-      <div className="hero-code-card"><div className="fake-window"><i/><i/><i/><span>main.py</span></div><pre><b>01</b> <em>name</em> = <strong>input</strong>(<mark>"请输入姓名："</mark>){"\n"}<b>02</b> <strong>print</strong>(<mark>"Hello, "</mark> + name){"\n"}<b>03</b> <span className="code-muted"># keep learning, keep building.</span></pre></div>
-    </section>
-    <section className="section content-wrap">
-      <div className="section-heading"><div><div className="eyebrow">SELECTED WORK</div><h2>精选练习</h2><p>一些值得记录的 Python 编程学习成果。</p></div><Link href="/exercises" className="text-link">查看全部 ↗</Link></div>
-      <div className="card-grid">{items.slice(0, 3).map(x => <ExerciseCard key={x.id} item={x}/>)}</div>
-    </section>
-    <section className="section category-section"><div className="content-wrap"><div className="eyebrow">EXPLORE BY TOPIC</div><h2>探索我的 Python 练习</h2><p className="muted">按照课堂知识点整理，让每一次练习都更容易找到。</p><div className="topic-grid">{["基础语法","输入与输出","条件判断","循环结构","函数与模块","列表与字典","算法与逻辑","综合课堂作业"].map((x,i)=><Link href={`/exercises?category=${encodeURIComponent(x)}`} key={x}><span>0{i+1}</span><strong>{x}</strong><b>↗</b></Link>)}</div></div></section>
-    <section className="section content-wrap about-strip"><div><div className="eyebrow">ABOUT THIS ARCHIVE</div><h2>每一段代码，<br/>都是成长的记录。</h2></div><p>这是一个持续更新的个人 Python 学习档案，记录课堂练习、代码思路和实际运行结果。</p><Link className="button button-light" href="/about">了解更多 ↗</Link></section>
-  </main><Footer/></>;
+  useEffect(() => { setItems(getExercises().filter((item) => item.published)); }, []);
+
+  return (
+    <>
+      <SiteHeader />
+      <main>
+        <section className="home-hero content-wrap">
+          <div className="home-hero-copy">
+            <div className="eyebrow">A PERSONAL PYTHON ARCHIVE</div>
+            <h1>把代码，变成<br /><span>看得见的成长。</span></h1>
+            <p>从课堂练习到实际应用，整理每一次编程实践。<br />用代码梳理思路，用运行验证想法。</p>
+            <div className="home-hero-actions">
+              <Link className="button button-primary" href="/exercises">探索练习库 <span>↗</span></Link>
+              <Link className="home-secondary-link" href="/about">了解档案 <span>→</span></Link>
+            </div>
+          </div>
+          <div className="hero-code-card">
+            <div className="fake-window"><i /><i /><i /><span>main.py</span></div>
+            <pre><b>01</b> <em>name</em> = <strong>input</strong>(<mark>"请输入姓名："</mark>){"\n"}<b>02</b> <strong>print</strong>(<mark>"Hello, "</mark> + name){"\n"}<b>03</b> <span className="code-muted"># keep learning, keep building.</span></pre>
+            <div className="code-card-caption"><span>PYTHON / DAILY PRACTICE</span><span>01 — 03</span></div>
+          </div>
+          <div className="hero-bottom-note"><span>SCROLL TO EXPLORE</span><span>学习 · 实践 · 归档</span></div>
+        </section>
+
+        <section className="section content-wrap home-featured">
+          <div className="section-heading">
+            <div><div className="eyebrow">SELECTED WORK / 01</div><h2>精选练习</h2><p>横向浏览值得记录的 Python 学习成果。</p></div>
+            <Link href="/exercises" className="text-link">查看全部练习 ↗</Link>
+          </div>
+          {items.length > 0
+            ? <HorizontalExerciseRail items={items.slice(0, 8)} />
+            : <div className="home-empty"><strong>练习档案正在整理中</strong><span>发布练习后，它们会出现在这里。</span><Link href="/exercises">浏览练习库 ↗</Link></div>}
+        </section>
+
+        <section className="section category-section">
+          <div className="content-wrap">
+            <div className="eyebrow">EXPLORE BY TOPIC / 02</div>
+            <h2>从一个知识点开始。</h2>
+            <p className="muted">按照课堂知识结构整理，让每一次练习都更容易找到。</p>
+            <div className="topic-grid">{["基础语法", "输入与输出", "条件判断", "循环结构", "函数与模块", "列表与字典", "算法与逻辑", "综合课堂作业"].map((item, index) => (
+              <Link href={`/exercises?category=${encodeURIComponent(item)}`} key={item}>
+                <span>0{index + 1}</span><strong>{item}</strong><b>↗</b>
+              </Link>
+            ))}</div>
+          </div>
+        </section>
+
+        <section className="section content-wrap about-strip">
+          <div><div className="eyebrow">ABOUT THIS ARCHIVE / 03</div><h2>每一段代码，<br />都是成长的记录。</h2></div>
+          <p>这是一个持续更新的个人 Python 学习档案，记录课堂练习、代码思路和实际运行结果。</p>
+          <Link className="button button-light" href="/about">关于这个档案 ↗</Link>
+        </section>
+      </main>
+      <Footer />
+    </>
+  );
 }
