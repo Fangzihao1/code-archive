@@ -262,3 +262,93 @@ body { color: #1d1d1f; background: #fff; }
 @media (prefers-reduced-motion: reduce) {
   .lab-tabs button, .lab-run-button, .lab-input-row input { transition: none; }
 }
+
+
+/* Click-only Python hero demo */
+.lab-example-caption {
+  margin: 10px 0 8px;
+  color: #858a92;
+  font-size: 9px;
+  line-height: 1.5;
+}
+.lab-editor {
+  min-height: 112px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+}
+.lab-editor pre {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.lab-code-line {
+  display: block;
+  min-height: 19px;
+  white-space: pre;
+}
+.lab-editor.is-running .lab-code-line {
+  animation: lab-code-reveal .32s both;
+}
+.lab-editor.is-running .lab-code-line:nth-child(2) { animation-delay: .07s; }
+.lab-editor.is-running .lab-code-line:nth-child(3) { animation-delay: .14s; }
+.lab-editor.is-running .lab-code-line:nth-child(4) { animation-delay: .21s; }
+.lab-editor.is-running .lab-code-line:nth-child(5) { animation-delay: .28s; }
+@keyframes lab-code-reveal {
+  from { opacity: .35; transform: translateX(3px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.lab-output {
+  min-height: 83px;
+}
+.lab-output-result {
+  min-height: 38px;
+  max-height: 66px;
+  overflow: auto;
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: #a0a5ad;
+  font: 9px/1.7 "DM Mono", monospace;
+  transition: color .2s ease;
+}
+.lab-output-result.visible {
+  color: #303944;
+  animation: lab-output-in .28s ease both;
+}
+@keyframes lab-output-in {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.lab-actions {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 12px;
+}
+.lab-actions .lab-run-button {
+  min-height: 34px;
+  padding: 0 14px;
+  cursor: pointer;
+}
+.lab-next-button {
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid #e8e8ed;
+  border-radius: 8px;
+  background: #fff;
+  color: #62666e;
+  font-size: 10px;
+  cursor: pointer;
+  transition: border-color .18s, background .18s, color .18s;
+}
+.lab-next-button:hover {
+  border-color: #c9dcf4;
+  background: #f7faff;
+  color: #0068d8;
+}
+.lab-next-button span { margin-left: 4px; }
+.lab-disclaimer { margin-top: 9px; }
+@media (prefers-reduced-motion: reduce) {
+  .lab-editor.is-running .lab-code-line,
+  .lab-output-result.visible { animation: none; }
+}
