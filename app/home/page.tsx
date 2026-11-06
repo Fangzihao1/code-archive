@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 import HorizontalExerciseRail from "@/components/HorizontalExerciseRail";
+import HeroPythonLab from "@/components/HeroPythonLab";
 import { getExercises } from "@/lib/storage";
 import type { Exercise } from "@/lib/types";
 
@@ -26,11 +27,7 @@ export default function HomePage() {
               <Link className="home-secondary-link" href="/about">了解档案 <span>→</span></Link>
             </div>
           </div>
-          <div className="hero-code-card">
-            <div className="fake-window"><i /><i /><i /><span>main.py</span></div>
-            <pre><b>01</b> <em>name</em> = <strong>input</strong>(<mark>"请输入姓名："</mark>){"\n"}<b>02</b> <strong>print</strong>(<mark>"Hello, "</mark> + name){"\n"}<b>03</b> <span className="code-muted"># keep learning, keep building.</span></pre>
-            <div className="code-card-caption"><span>PYTHON / DAILY PRACTICE</span><span>01 — 03</span></div>
-          </div>
+          <HeroPythonLab />
           <div className="hero-bottom-note"><span>SCROLL TO EXPLORE</span><span>学习 · 实践 · 归档</span></div>
         </section>
 
