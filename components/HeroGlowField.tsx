@@ -30,11 +30,11 @@ export default function HeroGlowField() {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const glows: Glow[] = [
-      { x: .23, y: .24, vx: .00012, vy: .00008, radius: 145, hue: 211, phase: .3, strength: .7 },
-      { x: .69, y: .25, vx: -.0001, vy: .00011, radius: 118, hue: 224, phase: 1.7, strength: .62 },
-      { x: .82, y: .68, vx: -.00013, vy: -.00008, radius: 165, hue: 197, phase: 2.8, strength: .58 },
-      { x: .43, y: .76, vx: .0001, vy: -.00012, radius: 105, hue: 246, phase: 4.2, strength: .52 },
-      { x: .56, y: .48, vx: -.00008, vy: .0001, radius: 82, hue: 207, phase: 5.1, strength: .45 },
+      { x: .23, y: .24, vx: .00009, vy: .00006, radius: 285, hue: 210, phase: .3, strength: .78 },
+      { x: .69, y: .25, vx: -.000075, vy: .00008, radius: 245, hue: 278, phase: 1.7, strength: .72 },
+      { x: .82, y: .68, vx: -.000085, vy: -.00006, radius: 310, hue: 174, phase: 2.8, strength: .68 },
+      { x: .43, y: .76, vx: .00007, vy: -.00008, radius: 225, hue: 330, phase: 4.2, strength: .64 },
+      { x: .56, y: .48, vx: -.00006, vy: .00007, radius: 205, hue: 42, phase: 5.1, strength: .58 },
     ];
 
     const resize = () => {
@@ -105,10 +105,11 @@ export default function HeroGlowField() {
           if (pointerInside && distance < collisionRange) {
             activeCollisions.add(index);
             const force = (collisionRange - distance) / collisionRange;
-            glow.vx += (dx / distance) * force * .0008;
-            glow.vy += (dy / distance) * force * .0008;
-            glow.vx = Math.max(-.00065, Math.min(.00065, glow.vx));
-            glow.vy = Math.max(-.00065, Math.min(.00065, glow.vy));
+            // Gentle repulsion: nearby glows drift apart instead of shooting away.
+            glow.vx += (dx / distance) * force * .000035;
+            glow.vy += (dy / distance) * force * .000035;
+            glow.vx = Math.max(-.000025, Math.min(.000025, glow.vx));
+            glow.vy = Math.max(-.000025, Math.min(.000025, glow.vy));
           }
           glow.vx *= .9992;
           glow.vy *= .9992;
@@ -118,12 +119,12 @@ export default function HeroGlowField() {
       glows.forEach((glow, index) => {
         const colliding = activeCollisions.has(index);
         const pulse = reduceMotion ? 1 : 1 + Math.sin(time * .00055 + glow.phase) * .055;
-        paintGlow(glow.x * width, glow.y * height, glow.radius * pulse * (colliding ? 1.22 : 1), glow.hue, glow.strength * (colliding ? .24 : .16));
+        paintGlow(glow.x * width, glow.y * height, glow.radius * pulse * (colliding ? 1.1 : 1), glow.hue, glow.strength * (colliding ? .32 : .25));
       });
 
       if (pointerInside) {
-        paintGlow(mainX, mainY, 245, 211, .24);
-        paintGlow(mainX, mainY, 110, 205, .18);
+        paintGlow(mainX, mainY, 290, 211, .24);
+        paintGlow(mainX, mainY, 145, 205, .18);
         context.beginPath();
         context.arc(mainX, mainY, 17, 0, Math.PI * 2);
         context.strokeStyle = "rgba(74, 139, 232, .22)";
