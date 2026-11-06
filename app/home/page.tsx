@@ -30,7 +30,6 @@ export default function HomePage() {
             </div>
           </div>
           <HeroPythonLab />
-          <div className="hero-bottom-note"><span>学习 · 实践 · 归档</span></div>
         </section>
 
         <section className="section content-wrap home-featured">
