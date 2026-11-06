@@ -30,11 +30,11 @@ export default function HeroGlowField() {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const glows: Glow[] = [
-      { x: .23, y: .24, vx: .00009, vy: .00006, radius: 560, hue: 210, phase: .3, strength: .78 },
-      { x: .69, y: .25, vx: -.000075, vy: .00008, radius: 500, hue: 278, phase: 1.7, strength: .72 },
-      { x: .82, y: .68, vx: -.000085, vy: -.00006, radius: 620, hue: 174, phase: 2.8, strength: .68 },
-      { x: .43, y: .76, vx: .00007, vy: -.00008, radius: 470, hue: 330, phase: 4.2, strength: .64 },
-      { x: .56, y: .48, vx: -.00006, vy: .00007, radius: 440, hue: 42, phase: 5.1, strength: .58 },
+      { x: .23, y: .24, vx: .000075, vy: .000052, radius: 760, hue: 210, phase: .3, strength: .78 },
+      { x: .69, y: .25, vx: -.000062, vy: .000068, radius: 680, hue: 278, phase: 1.7, strength: .72 },
+      { x: .82, y: .68, vx: -.00007, vy: -.000052, radius: 820, hue: 174, phase: 2.8, strength: .68 },
+      { x: .43, y: .76, vx: .000058, vy: -.000068, radius: 650, hue: 330, phase: 4.2, strength: .64 },
+      { x: .56, y: .48, vx: -.000052, vy: .00006, radius: 620, hue: 42, phase: 5.1, strength: .58 },
     ];
 
     const resize = () => {
@@ -91,8 +91,8 @@ export default function HeroGlowField() {
       if (!reduceMotion) {
         glows.forEach((glow, index) => {
           glow.phase += delta * .00045;
-          glow.x += glow.vx * delta + Math.sin(glow.phase) * .00018 * delta;
-          glow.y += glow.vy * delta + Math.cos(glow.phase * .83) * .00015 * delta;
+          glow.x += glow.vx * delta + Math.sin(glow.phase) * .00032 * delta;
+          glow.y += glow.vy * delta + Math.cos(glow.phase * .83) * .00028 * delta;
           if (glow.x < .08 || glow.x > .92) glow.vx *= -1;
           if (glow.y < .12 || glow.y > .88) glow.vy *= -1;
 
@@ -108,8 +108,8 @@ export default function HeroGlowField() {
             // Gentle repulsion: nearby glows drift apart instead of shooting away.
             glow.vx += (dx / distance) * force * .000035;
             glow.vy += (dy / distance) * force * .000035;
-            glow.vx = Math.max(-.000025, Math.min(.000025, glow.vx));
-            glow.vy = Math.max(-.000025, Math.min(.000025, glow.vy));
+            glow.vx = Math.max(-.00008, Math.min(.00008, glow.vx));
+            glow.vy = Math.max(-.00008, Math.min(.00008, glow.vy));
           }
           glow.vx *= .9992;
           glow.vy *= .9992;
