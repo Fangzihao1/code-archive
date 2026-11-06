@@ -6,6 +6,7 @@ import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 import HorizontalExerciseRail from "@/components/HorizontalExerciseRail";
 import HeroPythonLab from "@/components/HeroPythonLab";
+import HeroGlowField from "@/components/HeroGlowField";
 import InteractiveTopicGrid from "@/components/InteractiveTopicGrid";
 import { getExercises } from "@/lib/storage";
 import type { Exercise } from "@/lib/types";
@@ -18,8 +19,8 @@ export default function HomePage() {
     <>
       <SiteHeader />
       <main>
-        <section className="home-hero content-wrap" onPointerMove={(event) => { if (event.pointerType !== "mouse") return; const rect = event.currentTarget.getBoundingClientRect(); event.currentTarget.style.setProperty("--pointer-x", `${((event.clientX - rect.left) / rect.width) * 100}%`); event.currentTarget.style.setProperty("--pointer-y", `${((event.clientY - rect.top) / rect.height) * 100}%`); }} onPointerLeave={(event) => { event.currentTarget.style.setProperty("--pointer-x", "50%"); event.currentTarget.style.setProperty("--pointer-y", "50%"); }}>
-          <div className="hero-atmosphere" aria-hidden="true"><span className="hero-orbit hero-orbit-one" /><span className="hero-orbit hero-orbit-two" /><span className="hero-spark hero-spark-one" /><span className="hero-spark hero-spark-two" /><span className="hero-spark hero-spark-three" /></div>
+        <section className="home-hero content-wrap">
+          <HeroGlowField />
           <div className="home-hero-copy">
             <div className="eyebrow">A PERSONAL PYTHON ARCHIVE</div>
             <h1>把代码，变成<br /><span>看得见的成长。</span></h1>
