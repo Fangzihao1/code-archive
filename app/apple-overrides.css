@@ -1585,3 +1585,12 @@ body { color: #1d1d1f; background: #fff; }
     border-radius: 15px;
   }
 }
+
+/* Keep the knowledge-point section on the page's plain background */
+.category-section {
+  background: transparent !important;
+}
+.category-section::before,
+.category-section::after {
+  display: none !important;
+}
