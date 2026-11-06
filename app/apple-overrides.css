@@ -1373,3 +1373,18 @@ body { color: #1d1d1f; background: #fff; }
   .hero-python-lab .lab-editor pre { font-size: 11px; }
   .hero-python-lab .lab-output-result { font-size: 10px; }
 }
+
+
+/* Nudge the home hero copy toward the visual center of the left column */
+@media (min-width: 901px) {
+  .home-hero-copy {
+    margin-left: clamp(18px, 3vw, 42px);
+    transform: translateY(34px);
+  }
+}
+@media (max-width: 900px) {
+  .home-hero-copy {
+    margin-left: 0;
+    transform: none;
+  }
+}
