@@ -22,7 +22,7 @@ export default function HomePage() {
         <section className="home-hero content-wrap">
           <HeroGlowField />
           <div className="home-hero-copy">
-            <div className="eyebrow">个人 PYTHON 学习档案</div>
+            <div className="eyebrow">A PERSONAL PYTHON ARCHIVE</div>
             <h1>把代码，变成<br /><span>看得见的成长。</span></h1>
             <p>从课堂练习到实际应用，整理每一次编程实践。<br />用代码梳理思路，用运行验证想法。</p>
             <div className="home-hero-actions">
@@ -31,7 +31,7 @@ export default function HomePage() {
             </div>
           </div>
           <HeroPythonLab />
-          <div className="hero-bottom-note"><span>向下探索</span><span>学习 · 实践 · 归档</span></div>
+          <div className="hero-bottom-note"><span>SCROLL TO EXPLORE</span><span>学习 · 实践 · 归档</span></div>
         </section>
 
         <section className="section content-wrap home-featured">
