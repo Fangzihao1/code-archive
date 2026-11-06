@@ -14,7 +14,8 @@ export async function POST(request: NextRequest) {
   const supabase = createServerClient(url, anonKey, {
     cookies: {
       getAll: () => request.cookies.getAll(),
-      setAll: (cookies) => cookies.forEach(({ name, value, options }) => response.cookies.set(name, value, options)),
+      setAll: (cookiesToSet: { name: string; value: string; options?: any }[]) =>
+        cookiesToSet.forEach(({ name, value, options }) => response.cookies.set(name, value, options)),
     },
   });
   const { error } = await supabase.auth.signInWithPassword({ email, password });
