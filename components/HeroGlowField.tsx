@@ -67,9 +67,9 @@ export default function HeroGlowField() {
 
     const paintGlow = (x: number, y: number, radius: number, hue: number, alpha: number) => {
       const gradient = context.createRadialGradient(x, y, 0, x, y, radius);
-      gradient.addColorStop(0, `hsla(${hue}, 94%, 70%, ${alpha})`);
-      gradient.addColorStop(.28, `hsla(${hue}, 92%, 73%, ${alpha * .48})`);
-      gradient.addColorStop(1, `hsla(${hue}, 90%, 75%, 0)`);
+      gradient.addColorStop(0, `hsla(${hue}, 68%, 76%, ${alpha})`);
+      gradient.addColorStop(.28, `hsla(${hue}, 64%, 79%, ${alpha * .48})`);
+      gradient.addColorStop(1, `hsla(${hue}, 62%, 82%, 0)`);
       context.fillStyle = gradient;
       context.beginPath();
       context.arc(x, y, radius, 0, Math.PI * 2);
@@ -119,12 +119,12 @@ export default function HeroGlowField() {
       glows.forEach((glow, index) => {
         const colliding = activeCollisions.has(index);
         const pulse = reduceMotion ? 1 : 1 + Math.sin(time * .00055 + glow.phase) * .055;
-        paintGlow(glow.x * width, glow.y * height, glow.radius * pulse * (colliding ? 1.1 : 1), glow.hue, glow.strength * (colliding ? .46 : .36));
+        paintGlow(glow.x * width, glow.y * height, glow.radius * pulse * (colliding ? 1.1 : 1), glow.hue, glow.strength * (colliding ? .25 : .19));
       });
 
       if (pointerInside) {
-        paintGlow(mainX, mainY, 560, 211, .34);
-        paintGlow(mainX, mainY, 285, 205, .25);
+        paintGlow(mainX, mainY, 560, 211, .20);
+        paintGlow(mainX, mainY, 285, 205, .13);
         context.beginPath();
         context.arc(mainX, mainY, 17, 0, Math.PI * 2);
         context.strokeStyle = "rgba(74, 139, 232, .22)";
