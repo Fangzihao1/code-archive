@@ -1328,3 +1328,25 @@ body { color: #1d1d1f; background: #fff; }
     padding: 65px 18px 90px;
   }
 }
+
+
+/* Multi-glow field: autonomous drift, cursor attraction and soft collision response */
+.home-hero { background: linear-gradient(135deg, #fff 0%, #f8fbff 52%, #fff 100%); }
+.hero-glow-field {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.hero-python-lab {
+  right: clamp(72px, calc((100vw - 1160px) / 2 + 64px), 180px);
+}
+@media (max-width: 900px) {
+  .hero-python-lab { right: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-glow-field { opacity: .75; }
+}
