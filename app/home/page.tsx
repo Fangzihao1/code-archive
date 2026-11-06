@@ -8,6 +8,7 @@ import HorizontalExerciseRail from "@/components/HorizontalExerciseRail";
 import HeroPythonLab from "@/components/HeroPythonLab";
 import HeroGlowField from "@/components/HeroGlowField";
 import InteractiveTopicGrid from "@/components/InteractiveTopicGrid";
+import HomeSectionWheelSnap from "@/components/HomeSectionWheelSnap";
 import { getExercises } from "@/lib/storage";
 import type { Exercise } from "@/lib/types";
 
@@ -18,6 +19,7 @@ export default function HomePage() {
   return (
     <>
       <SiteHeader />
+      <HomeSectionWheelSnap />
       <main>
         <section className="home-hero content-wrap">
           <HeroGlowField />
