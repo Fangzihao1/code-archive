@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
   if (!url || !key) {
-    if (path === "/login" || path.startsWith("/auth")) return response;
+    if (path === "/login" || path.startsWith("/auth") || path === "/api/demo-login") return response;
     const target = request.nextUrl.clone();
     target.pathname = "/login";
     target.searchParams.set("setup", "1");
