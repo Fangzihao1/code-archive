@@ -10,11 +10,17 @@ import HeroGlowField from "@/components/HeroGlowField";
 import InteractiveTopicGrid from "@/components/InteractiveTopicGrid";
 import HomeSectionWheelSnap from "@/components/HomeSectionWheelSnap";
 import { getExercises } from "@/lib/storage";
+import { getPublishedExercises } from "@/lib/exercises-cloud";
 import type { Exercise } from "@/lib/types";
 
 export default function HomePage() {
   const [items, setItems] = useState<Exercise[]>([]);
-  useEffect(() => { setItems(getExercises().filter((item) => item.published)); }, []);
+  useEffect(() => {
+    let active = true;
+    getPublishedExercises().then((rows) => { if (active) setItems(rows); })
+      .catch(() => { if (active) setItems(getExercises().filter((item) => item.published)); });
+    return () => { active = false; };
+  }, []);
 
   return (
     <>
