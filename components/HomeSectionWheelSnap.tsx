@@ -12,10 +12,7 @@ export default function HomeSectionWheelSnap() {
 
     if (sections.length < 2) return;
 
-    let accumulated = 0;
-    let lastDirection = 0;
     let locked = false;
-    let resetTimer = 0;
     let unlockTimer = 0;
 
     const goTo = (target: HTMLElement) => {
@@ -26,31 +23,12 @@ export default function HomeSectionWheelSnap() {
       window.clearTimeout(unlockTimer);
       unlockTimer = window.setTimeout(() => {
         locked = false;
-      }, 900);
-      accumulated = 0;
-      lastDirection = 0;
+      }, 1000);
     };
 
     const onWheel = (event: WheelEvent) => {
-      if (
-        Math.abs(event.deltaY) < Math.abs(event.deltaX) ||
-        event.deltaY === 0 ||
-        locked
-      ) return;
-
-      const direction = Math.sign(event.deltaY);
-      if (direction !== lastDirection) accumulated = 0;
-      lastDirection = direction;
-      accumulated += event.deltaY;
-
-      window.clearTimeout(resetTimer);
-      resetTimer = window.setTimeout(() => {
-        accumulated = 0;
-        lastDirection = 0;
-      }, 140);
-
-      // A light wheel movement is enough to turn one section.
-      if (Math.abs(accumulated) < 6) return;
+      // Respond to the very first non-zero vertical wheel event.
+      if (event.deltaY === 0 || Math.abs(event.deltaY) < Math.abs(event.deltaX) || locked) return;
 
       const anchor = window.innerHeight * 0.42;
       let currentIndex = sections.findIndex((section) => {
@@ -68,7 +46,7 @@ export default function HomeSectionWheelSnap() {
         }, 0);
       }
 
-      const nextIndex = currentIndex + (direction > 0 ? 1 : -1);
+      const nextIndex = currentIndex + (event.deltaY > 0 ? 1 : -1);
       if (nextIndex < 0 || nextIndex >= sections.length) return;
 
       event.preventDefault();
@@ -78,7 +56,6 @@ export default function HomeSectionWheelSnap() {
     window.addEventListener("wheel", onWheel, { passive: false });
     return () => {
       window.removeEventListener("wheel", onWheel);
-      window.clearTimeout(resetTimer);
       window.clearTimeout(unlockTimer);
     };
   }, []);
