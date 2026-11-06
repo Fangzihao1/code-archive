@@ -4,9 +4,13 @@ import { useEffect } from "react";
 
 export default function HomeSectionWheelSnap() {
   useEffect(() => {
-    const hero = document.querySelector<HTMLElement>(".home-hero");
-    const featured = document.querySelector<HTMLElement>(".home-featured");
-    if (!hero || !featured) return;
+    const sections = [
+      document.querySelector<HTMLElement>(".home-hero"),
+      document.querySelector<HTMLElement>(".home-featured"),
+      document.querySelector<HTMLElement>(".category-section"),
+    ].filter((section): section is HTMLElement => Boolean(section));
+
+    if (sections.length < 2) return;
 
     let accumulated = 0;
     let lastDirection = 0;
@@ -22,12 +26,17 @@ export default function HomeSectionWheelSnap() {
       window.clearTimeout(unlockTimer);
       unlockTimer = window.setTimeout(() => {
         locked = false;
-      }, 950);
+      }, 900);
       accumulated = 0;
+      lastDirection = 0;
     };
 
     const onWheel = (event: WheelEvent) => {
-      if (Math.abs(event.deltaY) < Math.abs(event.deltaX) || event.deltaY === 0 || locked) return;
+      if (
+        Math.abs(event.deltaY) < Math.abs(event.deltaX) ||
+        event.deltaY === 0 ||
+        locked
+      ) return;
 
       const direction = Math.sign(event.deltaY);
       if (direction !== lastDirection) accumulated = 0;
@@ -38,23 +47,32 @@ export default function HomeSectionWheelSnap() {
       resetTimer = window.setTimeout(() => {
         accumulated = 0;
         lastDirection = 0;
-      }, 180);
+      }, 140);
 
-      if (Math.abs(accumulated) < 32) return;
+      // A light wheel movement is enough to turn one section.
+      if (Math.abs(accumulated) < 6) return;
 
-      const heroRect = hero.getBoundingClientRect();
-      const featuredRect = featured.getBoundingClientRect();
-      const viewport = window.innerHeight;
-      const heroIsCurrent = heroRect.top < viewport * 0.35 && heroRect.bottom > viewport * 0.35;
-      const featuredIsCurrent = featuredRect.top < viewport * 0.55 && featuredRect.bottom > viewport * 0.35;
+      const anchor = window.innerHeight * 0.42;
+      let currentIndex = sections.findIndex((section) => {
+        const rect = section.getBoundingClientRect();
+        return rect.top <= anchor && rect.bottom > anchor;
+      });
 
-      if (direction > 0 && heroIsCurrent) {
-        event.preventDefault();
-        goTo(featured);
-      } else if (direction < 0 && featuredIsCurrent) {
-        event.preventDefault();
-        goTo(hero);
+      if (currentIndex === -1) {
+        currentIndex = sections.reduce((closest, section, index) => {
+          const distance = Math.abs(section.getBoundingClientRect().top - 76);
+          const closestDistance = Math.abs(
+            sections[closest].getBoundingClientRect().top - 76
+          );
+          return distance < closestDistance ? index : closest;
+        }, 0);
       }
+
+      const nextIndex = currentIndex + (direction > 0 ? 1 : -1);
+      if (nextIndex < 0 || nextIndex >= sections.length) return;
+
+      event.preventDefault();
+      goTo(sections[nextIndex]);
     };
 
     window.addEventListener("wheel", onWheel, { passive: false });
