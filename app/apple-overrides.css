@@ -403,3 +403,181 @@ body { color: #1d1d1f; background: #fff; }
     font-size: 8px;
   }
 }
+
+
+/* Brighter, more energetic login experience */
+.auth-screen {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 12% 28%, rgba(111, 168, 255, .17), transparent 34%),
+    radial-gradient(ellipse at 78% 78%, rgba(174, 143, 255, .13), transparent 32%),
+    linear-gradient(135deg, #fbfdff 0%, #f7f9ff 52%, #fff 100%);
+}
+.auth-screen::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 390px;
+  height: 390px;
+  left: -180px;
+  bottom: -180px;
+  border: 1px solid rgba(83, 139, 255, .14);
+  border-radius: 50%;
+  box-shadow: 0 0 0 34px rgba(83, 139, 255, .035), 0 0 0 70px rgba(83, 139, 255, .025);
+  pointer-events: none;
+}
+.auth-topbar {
+  border-bottom-color: rgba(218, 226, 241, .8);
+}
+.auth-brand {
+  font-weight: 750;
+  letter-spacing: -.45px;
+}
+.auth-brand::before {
+  content: "";
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin: 0 9px 1px 0;
+  border-radius: 3px;
+  background: linear-gradient(135deg, #3988ff, #8b67f6);
+  box-shadow: 0 2px 8px rgba(72, 119, 245, .28);
+}
+.auth-top-note {
+  color: #8b96aa;
+}
+.auth-intro {
+  position: relative;
+}
+.auth-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 13px;
+  border: 1px solid rgba(100, 151, 242, .18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .72);
+  color: #5876a8;
+  box-shadow: 0 5px 18px rgba(63, 111, 190, .06);
+}
+.auth-eyebrow i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b91ff, #8d69f7);
+  box-shadow: 0 0 0 4px rgba(73, 139, 255, .12);
+}
+.auth-intro h1 {
+  color: #18243a;
+  letter-spacing: -.082em;
+}
+.auth-intro h1 span {
+  color: #4e82e8;
+  background: linear-gradient(100deg, #347fe9 5%, #7968e9 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.auth-intro > p {
+  color: #66748a;
+}
+.auth-intro-meta {
+  gap: 10px;
+}
+.auth-intro-meta span {
+  padding: 9px 11px;
+  border: 1px solid rgba(220, 228, 242, .9);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .68);
+  color: #7b8ba5;
+  letter-spacing: .8px;
+}
+.auth-card {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(218, 226, 241, .95);
+  background: rgba(255, 255, 255, .88);
+  box-shadow: 0 24px 70px rgba(49, 83, 145, .10), 0 3px 12px rgba(49, 83, 145, .035);
+  backdrop-filter: blur(16px);
+}
+.auth-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #438df5, #7969ec 58%, #a48af5);
+}
+.auth-card-kicker {
+  color: #6685b6;
+}
+.auth-card h2 {
+  color: #1d2a40;
+}
+.auth-card-heading p {
+  color: #8793a6;
+}
+.auth-form label {
+  color: #45536a;
+  font-weight: 550;
+}
+.auth-form input {
+  background: #f6f8fc;
+  border-color: #edf1f8;
+}
+.auth-form input:focus {
+  border-color: #7ba9f4;
+  box-shadow: 0 0 0 4px rgba(68, 135, 241, .12);
+  background: #fff;
+}
+.auth-submit {
+  background: linear-gradient(100deg, #347fe9, #626ee8 58%, #7968e9);
+  box-shadow: 0 7px 17px rgba(76, 112, 226, .2);
+}
+.auth-submit:hover {
+  background: linear-gradient(100deg, #286fdb, #5662db 58%, #6d5cdb);
+  box-shadow: 0 10px 23px rgba(76, 112, 226, .27);
+}
+.auth-switch button,
+.auth-demo button {
+  color: #477fe0;
+}
+.auth-demo {
+  border-color: #e6ecf7;
+  background: linear-gradient(110deg, #f5f8ff, #faf8ff);
+}
+.auth-demo strong {
+  color: #33445f;
+}
+.auth-demo span {
+  color: #8492a8;
+}
+.auth-card-foot {
+  border-top-color: #edf1f7;
+  color: #9aa6b8;
+}
+@media (max-width: 850px) {
+  .auth-screen {
+    background:
+      radial-gradient(ellipse at 8% 8%, rgba(111, 168, 255, .15), transparent 35%),
+      linear-gradient(145deg, #fbfdff, #f7f9ff 58%, #fff);
+  }
+  .auth-intro-meta {
+    flex-wrap: wrap;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .auth-intro h1 {
+    animation: auth-title-in .65s cubic-bezier(.2,.75,.25,1) both;
+  }
+  .auth-card {
+    animation: auth-rise .55s .08s ease both;
+  }
+}
+@keyframes auth-title-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
