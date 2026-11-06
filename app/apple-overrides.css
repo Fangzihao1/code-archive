@@ -1350,3 +1350,26 @@ body { color: #1d1d1f; background: #fff; }
 @media (prefers-reduced-motion: reduce) {
   .hero-glow-field { opacity: .75; }
 }
+
+
+/* Improve readability of the home hero Python demo */
+.hero-python-lab .lab-file-name { font-size: 11px; }
+.hero-python-lab .lab-live { font-size: 9px; }
+.hero-python-lab .lab-kicker { font-size: 9px; }
+.hero-python-lab .lab-heading strong { font-size: 19px; }
+.hero-python-lab .lab-version { font-size: 9px; }
+.hero-python-lab .lab-tabs button { font-size: 12px; padding: 8px 10px; }
+.hero-python-lab .lab-example-caption { font-size: 11px; }
+.hero-python-lab .lab-line-numbers { font-size: 11px; }
+.hero-python-lab .lab-editor pre { font-size: 12px; line-height: 1.9; }
+.hero-python-lab .lab-code-line { min-height: 22px; }
+.hero-python-lab .lab-output-heading { font-size: 9px; }
+.hero-python-lab .lab-output-result { font-size: 11px; line-height: 1.75; }
+.hero-python-lab .lab-run-button,
+.hero-python-lab .lab-next-button { font-size: 12px; }
+.hero-python-lab .lab-disclaimer { font-size: 9px; }
+@media (max-width: 600px) {
+  .hero-python-lab .lab-tabs button { font-size: 11px; padding: 8px 7px; }
+  .hero-python-lab .lab-editor pre { font-size: 11px; }
+  .hero-python-lab .lab-output-result { font-size: 10px; }
+}
