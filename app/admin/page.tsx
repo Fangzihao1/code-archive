@@ -48,7 +48,7 @@ export default function AdminPage() {
         : activeSection==="标签管理" ? <div className="admin-list">{Array.from(new Set(items.flatMap(x=>x.tags))).map(tag=><div className="admin-row" key={tag}><div><strong>#{tag}</strong><small>{items.filter(x=>x.tags.includes(tag)).length} 条练习使用</small></div></div>)}</div>
         : <div className="admin-empty"><strong>{activeSection}模块尚未接入</strong><p>这个菜单现在可以正常切换，但当前代码中还没有对应的独立管理功能。为避免误操作或造成数据丢失，这里暂不提供虚假的编辑按钮。</p><p>目前已可用：工作台统计、练习的新建/编辑/删除、分类和标签数据查看。</p></div>}
       </div>}
-      <p className="admin-warning">账号访问由 Supabase Auth 保护。练习内容目前仍保存在当前浏览器；跨设备同步需下一阶段接入云端数据库。</p>账号访问由 Supabase Auth 保护。练习内容目前仍保存在当前浏览器；跨设备同步需下一阶段接入云端数据库。</p>
+      <p className="admin-warning">账号访问由 Supabase Auth 保护。练习内容目前仍保存在当前浏览器；跨设备同步需下一阶段接入云端数据库。</p>
     </section>
   </main>;
 }
