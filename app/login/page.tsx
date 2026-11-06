@@ -21,9 +21,23 @@ export default function LoginPage() {
     setMessage("");
     setDemoBusy(true);
     try {
-      const response = await fetch("/api/demo-login", { method: "POST" });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || "体验登录失败");
+      const response = await fetch("/api/demo-login", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+      });
+      const raw = await response.text();
+      let result: { error?: string; ok?: boolean } = {};
+      if (raw) {
+        try {
+          result = JSON.parse(raw);
+        } catch {
+          throw new Error(`体验登录接口返回了非 JSON 内容（HTTP ${response.status}）。请稍后重试，或检查 Vercel 部署日志。`);
+        }
+      } else {
+        throw new Error(`体验登录接口没有返回内容（HTTP ${response.status}）。请检查 Vercel 部署状态。`);
+      }
+      if (!response.ok) throw new Error(result.error || `体验登录失败（HTTP ${response.status}）`);
+      if (!result.ok) throw new Error("体验登录接口未确认登录成功，请稍后重试。");
       router.replace("/home");
       router.refresh();
     } catch (e) {
