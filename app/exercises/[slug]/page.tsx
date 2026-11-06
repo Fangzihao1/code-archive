@@ -6,6 +6,7 @@ import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 import PythonRunner from "@/components/PythonRunner";
 import { getExercises } from "@/lib/storage";
+import { getPublishedExercises } from "@/lib/exercises-cloud";
 import type { Exercise } from "@/lib/types";
 
 export default function ExerciseDetailPage() {
@@ -13,7 +14,13 @@ export default function ExerciseDetailPage() {
   const [item, setItem] = useState<Exercise | null>(null);
   const [copied, setCopied] = useState(false);
   const [activeStep, setActiveStep] = useState("brief");
-  useEffect(() => { setItem(getExercises().find(x=>x.slug===params.slug && x.published) || null); }, [params.slug]);
+  useEffect(() => {
+    let active = true;
+    getPublishedExercises()
+      .then((rows) => { if (active) setItem(rows.find((x) => x.slug === params.slug) || null); })
+      .catch(() => { if (active) setItem(getExercises().find((x) => x.slug === params.slug && x.published) || null); });
+    return () => { active = false; };
+  }, [params.slug]);
   async function copy() { if (!item) return; try { await navigator.clipboard?.writeText(item.code); setCopied(true); setTimeout(()=>setCopied(false),1600); } catch { setCopied(false); } }
   function jumpTo(id: string) { setActiveStep(id); document.getElementById(`detail-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" }); }
   if (!item) return <><SiteHeader/><main className="content-wrap page-main"><div className="empty-state"><h2>正在加载练习…</h2><Link href="/exercises">返回练习列表</Link></div></main></>;
