@@ -6,6 +6,7 @@ import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 import HorizontalExerciseRail from "@/components/HorizontalExerciseRail";
 import HeroPythonLab from "@/components/HeroPythonLab";
+import InteractiveTopicGrid from "@/components/InteractiveTopicGrid";
 import { getExercises } from "@/lib/storage";
 import type { Exercise } from "@/lib/types";
 
@@ -46,11 +47,7 @@ export default function HomePage() {
             <div className="eyebrow">EXPLORE BY TOPIC / 02</div>
             <h2>从一个知识点开始。</h2>
             <p className="muted">按照课堂知识结构整理，让每一次练习都更容易找到。</p>
-            <div className="topic-grid">{["基础语法", "输入与输出", "条件判断", "循环结构", "函数与模块", "列表与字典", "算法与逻辑", "综合课堂作业"].map((item, index) => (
-              <Link href={`/exercises?category=${encodeURIComponent(item)}`} key={item}>
-                <span>0{index + 1}</span><strong>{item}</strong><b>↗</b>
-              </Link>
-            ))}</div>
+            <InteractiveTopicGrid />
           </div>
         </section>
 
