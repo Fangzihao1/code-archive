@@ -78,7 +78,7 @@ export default function HorizontalExerciseRail({ items }: { items: Exercise[] })
           const gap = parseFloat(getComputedStyle(rail).columnGap || "22") || 22;
           const shift = first.offsetWidth + gap;
           rail.scrollLeft += 36 * elapsed / 1000;
-          if (rail.scrollLeft >= shift) {
+          if (rail.scrollLeft >= shift && pendingShift.current === 0) {
             pendingShift.current = shift;
             setOrderedItems(current => {
               if (current.length < 2) return current;
