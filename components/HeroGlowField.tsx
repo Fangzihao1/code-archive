@@ -30,11 +30,14 @@ export default function HeroGlowField() {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const glows: Glow[] = [
-      { x: .23, y: .24, vx: .000075, vy: .000052, radius: 760, hue: 210, phase: .3, strength: .78 },
-      { x: .69, y: .25, vx: -.000062, vy: .000068, radius: 680, hue: 278, phase: 1.7, strength: .72 },
-      { x: .82, y: .68, vx: -.00007, vy: -.000052, radius: 820, hue: 174, phase: 2.8, strength: .68 },
-      { x: .43, y: .76, vx: .000058, vy: -.000068, radius: 650, hue: 330, phase: 4.2, strength: .64 },
-      { x: .56, y: .48, vx: -.000052, vy: .00006, radius: 620, hue: 42, phase: 5.1, strength: .58 },
+      { x: .23, y: .24, vx: .00009, vy: .000062, radius: 760, hue: 210, phase: .3, strength: .78 },
+      { x: .69, y: .25, vx: -.000074, vy: .000082, radius: 680, hue: 278, phase: 1.7, strength: .72 },
+      { x: .82, y: .68, vx: -.000084, vy: -.000062, radius: 820, hue: 174, phase: 2.8, strength: .68 },
+      { x: .43, y: .76, vx: .00007, vy: -.000082, radius: 650, hue: 330, phase: 4.2, strength: .64 },
+      { x: .56, y: .48, vx: -.000062, vy: .000072, radius: 620, hue: 42, phase: 5.1, strength: .58 },
+      { x: .08, y: .62, vx: .000068, vy: -.000052, radius: 590, hue: 195, phase: 2.1, strength: .48 },
+      { x: .91, y: .36, vx: -.000064, vy: .000058, radius: 610, hue: 300, phase: 3.6, strength: .46 },
+      { x: .34, y: .91, vx: .000058, vy: -.000066, radius: 540, hue: 48, phase: 5.8, strength: .44 },
     ];
 
     const resize = () => {
@@ -91,8 +94,8 @@ export default function HeroGlowField() {
       if (!reduceMotion) {
         glows.forEach((glow, index) => {
           glow.phase += delta * .00045;
-          glow.x += glow.vx * delta + Math.sin(glow.phase) * .00032 * delta;
-          glow.y += glow.vy * delta + Math.cos(glow.phase * .83) * .00028 * delta;
+          glow.x += glow.vx * delta + Math.sin(glow.phase) * .00036 * delta;
+          glow.y += glow.vy * delta + Math.cos(glow.phase * .83) * .00032 * delta;
           if (glow.x < .08 || glow.x > .92) glow.vx *= -1;
           if (glow.y < .12 || glow.y > .88) glow.vy *= -1;
 
