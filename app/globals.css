@@ -82,3 +82,41 @@
 .horizontal-rail-item:hover{transform:translateY(-2px) scale(1.035)!important}
 
 .visual-lines span{display:block;white-space:pre;overflow:hidden;text-overflow:ellipsis;max-width:250px}
+
+
+/* Hero Python demo: three layered, draggable concept cards */
+.hero-python-deck{position:absolute;right:20px;top:140px;width:400px;height:440px;z-index:2;touch-action:pan-y;user-select:none}
+.python-deck-back{position:absolute;inset:0;border-radius:18px;background:#252b35;box-shadow:0 25px 65px #1c20271c;pointer-events:none}
+.python-deck-back-one{transform:translate(10px,10px) rotate(3deg);opacity:.58}
+.python-deck-back-two{transform:translate(19px,19px) rotate(6deg);opacity:.25}
+.hero-python-deck .deck-card{position:absolute;inset:0;width:100%;height:100%;top:0;right:auto;margin:0;transform-origin:center center;transition:transform .34s cubic-bezier(.2,.75,.25,1),box-shadow .25s;cursor:grab;display:flex;flex-direction:column}
+.hero-python-deck.is-dragging .deck-card{cursor:grabbing;transition:none}
+.hero-python-deck .lab-heading{padding:20px 22px 7px;display:flex;align-items:center;justify-content:space-between}
+.hero-python-deck .lab-heading strong{display:block;font-size:25px;letter-spacing:-.7px;margin-top:8px}
+.hero-python-deck .lab-kicker{font:9px "DM Mono",monospace;letter-spacing:1.5px;color:#8996a8}
+.hero-python-deck .lab-version{font:10px "DM Mono";color:#9ba7b8;border:1px solid #ffffff20;padding:6px 8px;border-radius:6px}
+.hero-python-deck .lab-example-caption{font-size:11px;color:#9da8b7;padding:0 22px 14px}
+.hero-python-deck .lab-editor{display:flex;gap:15px;margin:0 16px;padding:14px 13px;background:#141820;border:1px solid #ffffff0d;border-radius:10px;min-height:112px}
+.hero-python-deck .lab-line-numbers{display:flex;flex-direction:column;color:#647184;font:10px/1.9 "DM Mono";text-align:right}
+.hero-python-deck .lab-editor pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;color:#e3e9f2;font:10px/1.9 "DM Mono"}
+.hero-python-deck .lab-code-line{display:block}
+.hero-python-deck .lab-code-line:first-child{color:#a8cfff}
+.hero-python-deck .lab-output{margin:13px 16px 0;padding:11px 13px;background:#171c24;border:1px solid #ffffff0d;border-radius:9px;flex:1;min-height:72px}
+.hero-python-deck .lab-output-heading{display:flex;justify-content:space-between;color:#7e8b9d;font:8px "DM Mono";letter-spacing:1px}
+.hero-python-deck .lab-output-status{color:#8792a2}
+.hero-python-deck .lab-output-status.done{color:#8ed5ae}
+.hero-python-deck .lab-output-result{font:10px/1.8 "DM Mono";color:#c5d0df;white-space:pre-wrap;margin:9px 0 0;opacity:.65}
+.hero-python-deck .lab-output-result.visible{opacity:1;color:#a8ddb9}
+.hero-python-deck .lab-actions{display:flex;align-items:center;justify-content:space-between;padding:13px 17px 5px}
+.hero-python-deck .lab-run-button{border:0;border-radius:8px;background:#edf3fc;color:#18202b;padding:10px 13px;font-size:10px;font-weight:700}
+.hero-python-deck .lab-run-button span{font-size:9px;margin-right:5px}
+.hero-python-deck .lab-drag-hint{font-size:9px;color:#9aa6b6}
+.hero-python-deck .lab-drag-hint span{font-size:14px;margin-right:5px}
+.hero-python-deck .lab-deck-pagination{display:flex;align-items:center;gap:5px;padding:10px 19px 14px}
+.hero-python-deck .lab-deck-pagination i{width:5px;height:5px;border-radius:50%;background:#667181}
+.hero-python-deck .lab-deck-pagination i.active{width:17px;border-radius:5px;background:#a9c9f3}
+.hero-python-deck .lab-deck-pagination span{margin-left:auto;font:8px "DM Mono";color:#7e8b9d}
+.hero-python-deck .lab-live{font:8px "DM Mono";letter-spacing:1px;color:#9ab5d9}
+.hero-python-deck .lab-live i{display:inline-block;width:5px;height:5px;border-radius:50%;background:#8ed5ae;margin-right:5px;vertical-align:1px}
+@media(max-width:900px){.hero-python-deck{position:relative;right:auto;top:auto;margin:48px 0 22px;width:min(100%,440px);height:440px}}
+@media(max-width:650px){.hero-python-deck{width:calc(100% - 20px);height:430px;margin:48px auto 18px}.hero-python-deck .lab-heading strong{font-size:23px}}
