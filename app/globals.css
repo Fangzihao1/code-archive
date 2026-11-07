@@ -62,3 +62,8 @@
 .horizontal-rail.is-auto .rail-autoplay-status::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#78ad91;margin-right:6px;vertical-align:1px}
 .horizontal-rail.is-paused .rail-autoplay-status::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#8da4c5;margin-right:6px;vertical-align:1px}
 @media(prefers-reduced-motion:reduce){.horizontal-rail-item{transition:none}.horizontal-rail-track{scroll-behavior:auto}}
+
+/* Keep frame-by-frame autoplay immediate; manual arrow actions still request smooth scrolling. */
+.horizontal-rail-track{scroll-behavior:auto!important;scroll-snap-type:none!important}
+.horizontal-rail.is-auto .horizontal-rail-track{cursor:default}
+.horizontal-rail-item{will-change:transform}
