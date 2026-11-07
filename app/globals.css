@@ -309,3 +309,50 @@
  .hero-deck-stage{height:525px!important;min-height:525px!important}
  .hero-python-deck .deck-card{height:515px!important;min-height:515px!important}
 }
+
+
+/* Hero alignment and fully-contained output panel */
+@media(min-width:901px){
+  .home-hero-copy{padding-left:34px!important}
+}
+.hero-python-deck .deck-card{
+  height:560px!important;
+  min-height:560px!important;
+}
+.hero-deck-stage{
+  height:570px!important;
+  min-height:570px!important;
+}
+.hero-python-deck{
+  height:620px!important;
+}
+.hero-python-deck .lab-output{
+  box-sizing:border-box!important;
+  flex:0 0 auto!important;
+  min-width:0!important;
+  min-height:118px!important;
+  height:auto!important;
+  overflow:visible!important;
+}
+.hero-python-deck .lab-output-result{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  white-space:pre-wrap!important;
+  overflow-wrap:anywhere!important;
+  word-break:break-word!important;
+  box-sizing:border-box!important;
+}
+@media(max-width:900px){
+  .home-hero-copy{padding-left:0!important}
+  .hero-python-deck{height:620px!important}
+  .hero-deck-stage{height:570px!important;min-height:570px!important}
+  .hero-python-deck .deck-card{height:560px!important;min-height:560px!important}
+}
+@media(max-width:650px){
+  .hero-python-deck{height:590px!important}
+  .hero-deck-stage{height:540px!important;min-height:540px!important}
+  .hero-python-deck .deck-card{height:530px!important;min-height:530px!important}
+  .hero-python-deck .lab-output{min-height:112px!important;margin-top:12px!important}
+}
