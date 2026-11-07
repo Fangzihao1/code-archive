@@ -358,11 +358,12 @@
 }
 
 
-/* Hero copy: move the text block further inward and keep the tagline on one line. */
+/* Hero copy: align diagonally with the demo panel on desktop. */
 @media(min-width:901px){
   .home-hero-copy{
     position:relative!important;
-    left:88px!important;
+    left:120px!important;
+    top:-42px!important;
   }
 }
 .home-hero-copy h1 span{
