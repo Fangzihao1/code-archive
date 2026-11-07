@@ -433,3 +433,20 @@
 @media(max-width:900px){
   .home-hero{overflow:visible!important}
 }
+
+
+/* Fine-tune hero typography and horizontal balance to match the reference. */
+@media(min-width:901px){
+  .home-hero-copy{top:-58px!important}
+  .home-hero>.hero-python-deck{
+    position:relative!important;
+    left:22px!important;
+  }
+}
+.home-hero-copy h1 span{
+  font-size:inherit!important;
+  line-height:inherit!important;
+}
+@media(max-width:900px){
+  .home-hero-copy h1 span{font-size:inherit!important}
+}
