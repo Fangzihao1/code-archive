@@ -356,3 +356,24 @@
   .hero-python-deck .deck-card{height:530px!important;min-height:530px!important}
   .hero-python-deck .lab-output{min-height:112px!important;margin-top:12px!important}
 }
+
+
+/* Hero copy: move the text block further inward and keep the tagline on one line. */
+@media(min-width:901px){
+  .home-hero-copy{
+    position:relative!important;
+    left:88px!important;
+  }
+}
+.home-hero-copy h1 span{
+  display:inline-block!important;
+  white-space:nowrap!important;
+  font-size:clamp(48px,5.8vw,70px)!important;
+}
+@media(max-width:900px){
+  .home-hero-copy{left:0!important}
+  .home-hero-copy h1 span{font-size:clamp(42px,8vw,62px)!important}
+}
+@media(max-width:650px){
+  .home-hero-copy h1 span{font-size:clamp(38px,9.6vw,48px)!important}
+}
