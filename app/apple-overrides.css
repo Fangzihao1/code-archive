@@ -4651,3 +4651,75 @@ html{scroll-behavior:auto}
   border-color: rgba(32,38,44,.13) !important;
   box-shadow: 0 16px 38px rgba(25,30,36,.075) !important;
 }
+
+
+/* Apple-inspired exercise preview: pure, restrained, typography-led; no tinted gradients. */
+.page-main:has(.exercise-library-card) .exercise-library-visual {
+  color: #1d1d1f !important;
+  background: #f5f5f7 !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(0,0,0,.045) !important;
+  box-shadow: none !important;
+  padding: 20px 22px 16px !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-visual-top {
+  color: #86868b !important;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif !important;
+  font-size: 9px !important;
+  letter-spacing: .08em !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-visual-top i {
+  color: #c7c7cc !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-code {
+  gap: 17px !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-code > strong {
+  color: #1d1d1f !important;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif !important;
+  font-size: 46px !important;
+  font-weight: 650 !important;
+  letter-spacing: -0.075em !important;
+  text-shadow: none !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-code > div {
+  color: #424245 !important;
+  font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace !important;
+  font-size: 10px !important;
+  line-height: 1.65 !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-code span i {
+  color: #aeaeb2 !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-visual > small {
+  color: #86868b !important;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif !important;
+  font-size: 8px !important;
+  letter-spacing: .09em !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-card {
+  background: #fff !important;
+  border: 1px solid rgba(0,0,0,.07) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,.025) !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-card:hover {
+  border-color: rgba(0,0,0,.12) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.055) !important;
+  transform: translateY(-2px);
+}
+.page-main:has(.exercise-library-card) .exercise-library-content h3 {
+  color: #1d1d1f !important;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif !important;
+  letter-spacing: -.025em !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-content > p {
+  color: #6e6e73 !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-content .tag-row span {
+  color: #6e6e73 !important;
+  background: #f5f5f7 !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-bottom strong {
+  color: #1d1d1f !important;
+}
