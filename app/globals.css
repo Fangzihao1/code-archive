@@ -250,3 +250,62 @@
  .hero-python-deck{width:calc(100% - 18px)!important;height:475px!important}
  .hero-deck-stage{height:430px!important}
 }
+
+
+/* Hero follow-up: restore original left typography and give the full card a real safe area. */
+.home-hero{
+  grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)!important;
+  column-gap:38px!important;
+  min-height:750px!important;
+  padding:76px 0 92px!important;
+}
+.home-hero-copy{max-width:560px!important}
+.home-hero-copy h1{
+  font-size:clamp(48px,7vw,82px)!important;
+  line-height:1.16!important;
+  letter-spacing:-.07em!important;
+  margin:25px 0!important;
+}
+.home-hero-copy>p{
+  font-size:14px!important;
+  line-height:2!important;
+  color:#747982!important;
+  margin:0 0 28px!important;
+}
+.hero-python-deck{
+  width:min(100%,440px)!important;
+  height:600px!important;
+  margin:0 auto!important;
+  overflow:visible!important;
+}
+.hero-deck-stage{
+  height:550px!important;
+  min-height:550px!important;
+  overflow:visible!important;
+}
+.hero-python-deck .deck-card{
+  height:540px!important;
+  min-height:540px!important;
+  overflow:hidden!important;
+}
+.hero-python-deck .lab-output{flex:1 0 88px!important;min-height:88px!important}
+.hero-python-deck .lab-deck-pagination{flex:0 0 auto!important;padding-bottom:17px!important}
+.hero-deck-caption{padding-top:12px!important}
+@media(max-width:1000px){
+ .home-hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;column-gap:24px!important}
+ .hero-python-deck{width:min(100%,420px)!important;height:600px!important}
+}
+@media(max-width:900px){
+ .home-hero{display:flex!important;flex-direction:column;align-items:flex-start;gap:28px;min-height:0!important;padding:72px 0 80px!important}
+ .home-hero-copy{width:100%;max-width:620px!important}
+ .home-hero-copy h1{font-size:clamp(48px,7vw,82px)!important;line-height:1.16!important}
+ .hero-python-deck{width:min(100%,440px)!important;height:600px!important;margin:10px auto 0!important;align-self:center}
+ .hero-deck-stage{height:550px!important;min-height:550px!important}
+ .hero-python-deck .deck-card{height:540px!important;min-height:540px!important}
+}
+@media(max-width:650px){
+ .home-hero-copy h1{font-size:48px!important;line-height:1.16!important}
+ .hero-python-deck{width:calc(100% - 18px)!important;height:570px!important}
+ .hero-deck-stage{height:525px!important;min-height:525px!important}
+ .hero-python-deck .deck-card{height:515px!important;min-height:515px!important}
+}
