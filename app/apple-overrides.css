@@ -4223,3 +4223,48 @@ html{scroll-behavior:auto}
   .stats-grid > div,.admin-row,.admin-row .row-actions button { transition:none!important; }
   .stats-grid > div:hover,.admin-sidebar button.side-item:hover { transform:none; }
 }
+
+
+/* Full-bleed homepage footer: extend its divider and surface across the viewport. */
+.footer {
+  width:100%;
+  max-width:none!important;
+  box-sizing:border-box;
+  margin:0!important;
+  padding-left:max(30px,calc((100% - 1240px)/2))!important;
+  padding-right:max(30px,calc((100% - 1240px)/2))!important;
+  border-top:1px solid rgba(43,60,82,.075);
+  background:linear-gradient(180deg,rgba(250,252,254,.72),#f7f9fb);
+}
+@media(max-width:760px) {
+  .footer {
+    padding-left:20px!important;
+    padding-right:20px!important;
+  }
+}
+
+/* Replay the reveal transition each time a section enters the viewport. */
+.archive-reveal {
+  opacity:1;
+  transform:translate3d(0,0,0);
+  transition:opacity .72s cubic-bezier(.22,.7,.25,1),transform .72s cubic-bezier(.22,.7,.25,1);
+  will-change:opacity,transform;
+}
+.archive-reveal.archive-reveal-pending:not(.is-revealed) {
+  opacity:0;
+  transform:translate3d(0,22px,0);
+}
+.archive-reveal.archive-reveal-pending.is-revealed {
+  opacity:1;
+  transform:translate3d(0,0,0);
+}
+@media(prefers-reduced-motion:reduce) {
+  .archive-reveal,
+  .archive-reveal.archive-reveal-pending:not(.is-revealed),
+  .archive-reveal.archive-reveal-pending.is-revealed {
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+    will-change:auto;
+  }
+}
