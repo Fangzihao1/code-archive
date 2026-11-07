@@ -30,14 +30,14 @@ export default function HeroGlowField() {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const glows: Glow[] = [
-      { x: .23, y: .24, vx: .00009, vy: .000062, radius: 760, hue: 210, phase: .3, strength: .78 },
-      { x: .69, y: .25, vx: -.000074, vy: .000082, radius: 680, hue: 278, phase: 1.7, strength: .72 },
-      { x: .82, y: .68, vx: -.000084, vy: -.000062, radius: 820, hue: 174, phase: 2.8, strength: .68 },
-      { x: .43, y: .76, vx: .00007, vy: -.000082, radius: 650, hue: 330, phase: 4.2, strength: .64 },
-      { x: .56, y: .48, vx: -.000062, vy: .000072, radius: 620, hue: 42, phase: 5.1, strength: .58 },
-      { x: .08, y: .62, vx: .000068, vy: -.000052, radius: 590, hue: 195, phase: 2.1, strength: .48 },
-      { x: .91, y: .36, vx: -.000064, vy: .000058, radius: 610, hue: 300, phase: 3.6, strength: .46 },
-      { x: .34, y: .91, vx: .000058, vy: -.000066, radius: 540, hue: 48, phase: 5.8, strength: .44 },
+      { x: .23, y: .24, vx: .000105, vy: .000072, radius: 760, hue: 205, phase: .3, strength: .78 },
+      { x: .69, y: .25, vx: -.000088, vy: .000096, radius: 680, hue: 270, phase: 1.7, strength: .72 },
+      { x: .82, y: .68, vx: -.000098, vy: -.000074, radius: 820, hue: 158, phase: 2.8, strength: .68 },
+      { x: .43, y: .76, vx: .000084, vy: -.000096, radius: 650, hue: 338, phase: 4.2, strength: .64 },
+      { x: .56, y: .48, vx: -.000074, vy: .000086, radius: 620, hue: 38, phase: 5.1, strength: .58 },
+      { x: .08, y: .62, vx: .000082, vy: -.000064, radius: 590, hue: 188, phase: 2.1, strength: .48 },
+      { x: .91, y: .36, vx: -.000076, vy: .00007, radius: 610, hue: 12, phase: 3.6, strength: .46 },
+      { x: .34, y: .91, vx: .00007, vy: -.000078, radius: 540, hue: 292, phase: 5.8, strength: .44 },
     ];
 
     const resize = () => {
@@ -70,8 +70,8 @@ export default function HeroGlowField() {
 
     const paintGlow = (x: number, y: number, radius: number, hue: number, alpha: number) => {
       const gradient = context.createRadialGradient(x, y, 0, x, y, radius);
-      gradient.addColorStop(0, `hsla(${hue}, 68%, 76%, ${alpha})`);
-      gradient.addColorStop(.28, `hsla(${hue}, 64%, 79%, ${alpha * .48})`);
+      gradient.addColorStop(0, `hsla(${hue}, 76%, 76%, ${alpha})`);
+      gradient.addColorStop(.28, `hsla(${hue}, 72%, 79%, ${alpha * .5})`);
       gradient.addColorStop(1, `hsla(${hue}, 62%, 82%, 0)`);
       context.fillStyle = gradient;
       context.beginPath();
@@ -94,8 +94,8 @@ export default function HeroGlowField() {
       if (!reduceMotion) {
         glows.forEach((glow, index) => {
           glow.phase += delta * .00045;
-          glow.x += glow.vx * delta + Math.sin(glow.phase) * .00036 * delta;
-          glow.y += glow.vy * delta + Math.cos(glow.phase * .83) * .00032 * delta;
+          glow.x += glow.vx * delta + Math.sin(glow.phase) * .00041 * delta;
+          glow.y += glow.vy * delta + Math.cos(glow.phase * .83) * .00037 * delta;
           if (glow.x < .08 || glow.x > .92) glow.vx *= -1;
           if (glow.y < .12 || glow.y > .88) glow.vy *= -1;
 
@@ -111,8 +111,8 @@ export default function HeroGlowField() {
             // Gentle repulsion: nearby glows drift apart instead of shooting away.
             glow.vx += (dx / distance) * force * .000035;
             glow.vy += (dy / distance) * force * .000035;
-            glow.vx = Math.max(-.00008, Math.min(.00008, glow.vx));
-            glow.vy = Math.max(-.00008, Math.min(.00008, glow.vy));
+            glow.vx = Math.max(-.00010, Math.min(.00010, glow.vx));
+            glow.vy = Math.max(-.00010, Math.min(.00010, glow.vy));
           }
           glow.vx *= .9992;
           glow.vy *= .9992;
