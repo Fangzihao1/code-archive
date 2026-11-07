@@ -1907,3 +1907,9 @@ body { color: #1d1d1f; background: #fff; }
   .detail-main > *, .gallery-preview-backdrop, .loading-dot { animation:none!important; }
   .detail-page-link,.detail-related-grid a { transition:none!important; }
 }
+
+
+/* Gentle reveal as homepage sections enter the viewport */
+.archive-reveal { opacity:0; transform:translateY(18px); transition:opacity .72s cubic-bezier(.2,.7,.2,1),transform .72s cubic-bezier(.2,.7,.2,1); }
+.archive-reveal.is-revealed { opacity:1; transform:translateY(0); }
+@media(prefers-reduced-motion:reduce) { .archive-reveal,.archive-reveal.is-revealed { opacity:1; transform:none; transition:none; } }
