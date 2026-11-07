@@ -465,3 +465,9 @@
   .home-hero-copy h1{font-weight:800!important}
   .home-hero>.hero-python-deck{left:82px!important}
 }
+
+
+/* Reduce the headline weight slightly for a cleaner Apple-like feel. */
+@media(min-width:901px){
+  .home-hero-copy h1{font-weight:600!important}
+}
