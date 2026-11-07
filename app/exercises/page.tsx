@@ -10,7 +10,7 @@ import type { Exercise } from "@/lib/types";
 const categories = ["全部练习","基础语法","输入与输出","条件判断","循环结构","函数与模块","列表与字典","算法与逻辑","综合课堂作业"];
 
 function ExerciseLibraryCard({ item }: { item: Exercise }) {
-  const previewLines = (item.code || "").split(/\\r?\\n/).slice(0, 3);
+  const previewLines = (item.code || "").split(/\r?\n/).slice(0, 3);
   return <a href={`/exercises/${item.slug}`} className="exercise-library-card">
     <div className="exercise-library-visual">
       <div className="exercise-library-visual-top"><span>PYTHON</span><i>● ● ●</i></div>
