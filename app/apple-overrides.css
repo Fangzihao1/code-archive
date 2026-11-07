@@ -2317,3 +2317,173 @@ body { color: #1d1d1f; background: #fff; }
 @media (prefers-reduced-motion: reduce) {
   .section-heading .text-link { transition: none; }
 }
+
+
+/* Navigation and primary actions: quiet precision, clear interaction states. */
+.site-header {
+  height: 78px;
+  padding-left: max(24px, calc((100% - 1194px)/2));
+  padding-right: max(24px, calc((100% - 1194px)/2));
+  border-bottom: 1px solid rgba(36,49,68,.065);
+  background: rgba(255,255,255,.82);
+  box-shadow: 0 4px 24px rgba(27,39,56,.018);
+  backdrop-filter: saturate(165%) blur(22px);
+  -webkit-backdrop-filter: saturate(165%) blur(22px);
+}
+.site-header .brand {
+  color: #252d38;
+  font-size: 16px;
+  font-weight: 750;
+  letter-spacing: -.55px;
+  transition: opacity .2s ease;
+}
+.site-header .brand:hover { opacity: .72; }
+.site-header .brand span {
+  margin-left: 3px;
+  color: #a0a8b3;
+  font-size: 9px;
+  letter-spacing: 1.2px;
+}
+.site-header nav { align-items: center; gap: 29px; }
+.site-header nav a {
+  position: relative;
+  padding: 9px 0;
+  color: #737d8a;
+  font-size: 11px;
+  font-weight: 500;
+  transition: color .2s ease;
+}
+.site-header nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: #4e83c4;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform .24s cubic-bezier(.2,.7,.2,1);
+}
+.site-header nav a:hover,
+.site-header nav a.active { color: #315f98; }
+.site-header nav a:hover::after,
+.site-header nav a.active::after { transform: scaleX(1); }
+.header-actions { gap: 8px; }
+.header-actions .admin-link {
+  padding: 9px 13px;
+  border-color: rgba(53,76,106,.12);
+  background: rgba(255,255,255,.64);
+  color: #64758a;
+  font-size: 10px;
+  transition: border-color .2s ease, color .2s ease, background .2s ease;
+}
+.header-actions .admin-link:hover {
+  border-color: rgba(64,119,185,.32);
+  background: #f7faff;
+  color: #376da9;
+}
+.header-actions .logout-button {
+  padding: 9px 12px;
+  border-color: rgba(53,76,106,.1);
+  background: transparent;
+  color: #8a939f;
+  font-size: 10px;
+}
+.header-actions .logout-button:hover {
+  border-color: rgba(178,91,91,.22);
+  background: #fffafa;
+  color: #a35e5e;
+}
+
+/* A little depth on the main call to action, without turning it glossy. */
+.home-hero-actions .button-primary {
+  min-height: 46px;
+  padding: 0 21px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 999px;
+  background: linear-gradient(115deg, #286fc2 0%, #477fd0 100%);
+  box-shadow: 0 7px 18px rgba(48,112,190,.17), inset 0 1px 0 rgba(255,255,255,.18);
+  transition: transform .24s cubic-bezier(.2,.7,.2,1), box-shadow .24s ease, filter .24s ease;
+}
+.home-hero-actions .button-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 11px 24px rgba(48,112,190,.22), inset 0 1px 0 rgba(255,255,255,.2);
+  filter: saturate(1.06);
+}
+.home-hero-actions .button-primary span {
+  opacity: .8;
+  transition: transform .2s ease, opacity .2s ease;
+}
+.home-hero-actions .button-primary:hover span {
+  opacity: 1;
+  transform: translate(2px,-2px);
+}
+.home-hero-actions .home-secondary-link {
+  color: #73849a;
+  font-size: 12px;
+  transition: color .2s ease;
+}
+.home-hero-actions .home-secondary-link:hover { color: #376fae; }
+
+/* The code demo feels like a crafted product surface, not a generic panel. */
+.hero-python-deck .deck-card {
+  border-color: rgba(45,62,86,.09)!important;
+  box-shadow: 0 24px 68px rgba(32,48,70,.105), 0 2px 8px rgba(32,48,70,.035)!important;
+}
+.hero-python-deck .deck-card.is-active {
+  box-shadow: 0 30px 78px rgba(32,48,70,.13), 0 4px 14px rgba(32,48,70,.045)!important;
+}
+.hero-python-deck .lab-run-button {
+  box-shadow: 0 4px 12px rgba(48,112,190,.12);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.hero-python-deck .lab-run-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 7px 16px rgba(48,112,190,.18);
+}
+.hero-python-deck .lab-run-button:active { transform: translateY(0) scale(.98); }
+
+.site-header a:focus-visible,
+.site-header button:focus-visible,
+.home-hero-actions a:focus-visible,
+.hero-python-deck button:focus-visible {
+  outline: 2px solid rgba(66,128,198,.72);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+@media (max-width: 900px) {
+  .site-header { padding-left: 24px; padding-right: 24px; }
+}
+@media (max-width: 650px) {
+  .site-header {
+    min-height: 68px;
+    padding: 12px 18px 10px;
+    gap: 9px 12px;
+    background: rgba(255,255,255,.9);
+  }
+  .site-header .brand { font-size: 14px; }
+  .site-header nav {
+    gap: 22px;
+    padding: 9px 1px 3px;
+    scrollbar-width: none;
+  }
+  .site-header nav::-webkit-scrollbar { display: none; }
+  .site-header nav a { font-size: 11px; }
+  .header-actions { gap: 6px; }
+  .header-actions .admin-link { padding: 7px 9px; font-size: 9px; }
+  .header-actions .logout-button { padding: 7px 8px; font-size: 9px; }
+  .home-hero-actions .button-primary { min-height: 43px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header .brand,
+  .site-header nav a,
+  .site-header nav a::after,
+  .header-actions .admin-link,
+  .header-actions .logout-button,
+  .home-hero-actions .button-primary,
+  .home-hero-actions .button-primary span,
+  .home-hero-actions .home-secondary-link,
+  .hero-python-deck .lab-run-button { transition: none!important; }
+}
