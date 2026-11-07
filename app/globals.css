@@ -67,3 +67,9 @@
 .horizontal-rail-track{scroll-behavior:auto!important;scroll-snap-type:none!important}
 .horizontal-rail.is-auto .horizontal-rail-track{cursor:default}
 .horizontal-rail-item{will-change:transform}
+
+
+/* Give enlarged featured cards enough breathing room so hover never clips their top edge. */
+.horizontal-rail-track{padding:34px 10px 38px!important;overflow-y:hidden}
+.horizontal-rail-item{transform-origin:center center}
+.horizontal-rail-item:hover{transform:translateY(-5px) scale(1.045)}
