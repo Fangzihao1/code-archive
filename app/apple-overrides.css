@@ -5151,3 +5151,113 @@ html{scroll-behavior:auto}
     margin-bottom: 22px !important;
   }
 }
+
+
+/* Exercise cards — subtle, tactile interaction details */
+.page-main:has(.exercise-library-card) .exercise-library-card {
+  position: relative !important;
+  isolation: isolate;
+  transform: translate3d(0,0,0) !important;
+  transition:
+    transform .32s cubic-bezier(.2,.72,.25,1),
+    box-shadow .32s ease,
+    border-color .32s ease !important;
+  -webkit-tap-highlight-color: transparent;
+}
+.page-main:has(.exercise-library-card) .exercise-library-visual {
+  position: relative;
+  overflow: hidden;
+  transition: background .32s ease !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(112deg, transparent 20%, rgba(255,255,255,.62) 48%, transparent 72%);
+  transform: translateX(-55%);
+  transition: opacity .28s ease, transform .62s cubic-bezier(.2,.7,.25,1);
+}
+.page-main:has(.exercise-library-card) .exercise-library-code > strong {
+  transform: translateY(0);
+  transition: transform .32s cubic-bezier(.2,.72,.25,1), color .32s ease !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-code > div span {
+  transition: transform .28s ease, color .28s ease;
+}
+.page-main:has(.exercise-library-card) .exercise-library-content h3 {
+  transition: color .25s ease !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-content .tag-row span {
+  transition: background .22s ease, border-color .22s ease, color .22s ease;
+}
+.page-main:has(.exercise-library-card) .exercise-library-bottom strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.page-main:has(.exercise-library-card) .exercise-library-bottom strong span {
+  transition: transform .25s cubic-bezier(.2,.7,.25,1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .page-main:has(.exercise-library-card) .exercise-library-card:hover {
+    transform: translate3d(0,-5px,0) !important;
+    border-color: #d6e2ef !important;
+    box-shadow: 0 18px 38px rgba(38,59,83,.095), 0 3px 8px rgba(38,59,83,.035) !important;
+  }
+  .page-main:has(.exercise-library-card) .exercise-library-card:hover .exercise-library-visual::after {
+    opacity: 1;
+    transform: translateX(55%);
+  }
+  .page-main:has(.exercise-library-card) .exercise-library-card:hover .exercise-library-code > strong {
+    transform: translateY(-2px);
+    color: #3f6795 !important;
+  }
+  .page-main:has(.exercise-library-card) .exercise-library-card:hover .exercise-library-code > div span {
+    transform: translateX(3px);
+  }
+  .page-main:has(.exercise-library-card) .exercise-library-card:hover .exercise-library-code > div span:nth-child(2) {
+    transition-delay: .025s;
+  }
+  .page-main:has(.exercise-library-card) .exercise-library-card:hover .exercise-library-code > div span:nth-child(3) {
+    transition-delay: .05s;
+  }
+  .page-main:has(.exercise-library-card) .exercise-library-card:hover .exercise-library-content h3 {
+    color: #315f91 !important;
+  }
+  .page-main:has(.exercise-library-card) .exercise-library-card:hover .exercise-library-content .tag-row span {
+    border-color: #dce7f3 !important;
+    background: #f1f6fc !important;
+    color: #5e7592 !important;
+  }
+  .page-main:has(.exercise-library-card) .exercise-library-card:hover .exercise-library-bottom strong span {
+    transform: translate(3px,-2px);
+  }
+}
+.page-main:has(.exercise-library-card) .exercise-library-card:focus-visible {
+  outline: 3px solid rgba(0,113,227,.35);
+  outline-offset: 4px;
+}
+.page-main:has(.exercise-library-card) .exercise-library-card:active {
+  transform: translate3d(0,-1px,0) scale(.995) !important;
+  transition-duration: .1s !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-main:has(.exercise-library-card) .exercise-library-card,
+  .page-main:has(.exercise-library-card) .exercise-library-visual,
+  .page-main:has(.exercise-library-card) .exercise-library-visual::after,
+  .page-main:has(.exercise-library-card) .exercise-library-code > strong,
+  .page-main:has(.exercise-library-card) .exercise-library-code > div span,
+  .page-main:has(.exercise-library-card) .exercise-library-content h3,
+  .page-main:has(.exercise-library-card) .exercise-library-content .tag-row span,
+  .page-main:has(.exercise-library-card) .exercise-library-bottom strong span {
+    transition: none !important;
+  }
+  .page-main:has(.exercise-library-card) .exercise-library-card:hover {
+    transform: none !important;
+  }
+  .page-main:has(.exercise-library-card) .exercise-library-visual::after {
+    display: none;
+  }
+}
