@@ -96,8 +96,8 @@ export default function HeroPythonLab() {
       onPointerUp={onPointerEnd}
       onPointerCancel={onPointerEnd}
     >
-      <div className="python-deck-back python-deck-back-two" aria-hidden="true" />
-      <div className="python-deck-back python-deck-back-one" aria-hidden="true" />
+      <div className="python-deck-back python-deck-back-two" aria-hidden="true"><span>{examples[order[2]].label}</span><small>03 CONCEPT</small></div>
+      <div className="python-deck-back python-deck-back-one" aria-hidden="true"><span>{examples[order[1]].label}</span><small>0{order[1] + 1} CONCEPT</small></div>
       <article
         className={"hero-code-card hero-python-lab deck-card accent-" + activeExample.accent}
         style={{ transform: `translateX(${dragX}px) rotate(${dragX / 30}deg)` }}
