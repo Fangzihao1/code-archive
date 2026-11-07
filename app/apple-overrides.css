@@ -4543,3 +4543,31 @@ html{scroll-behavior:auto}
     grid-template-columns: minmax(0, 1fr) !important;
   }
 }
+
+
+/* Light Python preview for the exercise library only. */
+.page-main:has(.exercise-library-card) .exercise-library-visual {
+  color: #344256 !important;
+  background:
+    radial-gradient(ellipse at 16% 8%, rgba(164,194,231,.30), transparent 58%),
+    linear-gradient(145deg, #f4f7fb, #eaf0f7) !important;
+  border-bottom: 1px solid rgba(54,83,119,.07);
+}
+.page-main:has(.exercise-library-card) .exercise-library-visual-top {
+  color: #75849a !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-visual-top i {
+  color: #a2afbf !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-code > strong {
+  color: #648bbd !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-code > div {
+  color: #42536b !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-code span i {
+  color: #9aa8b9 !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-visual > small {
+  color: #8998aa !important;
+}
