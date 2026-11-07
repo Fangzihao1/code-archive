@@ -5323,3 +5323,58 @@ body:has(.page-main.page-simple-background) > * {
   width: 26px !important;
   transform: translateX(-50%) scaleX(1) !important;
 }
+
+
+/* Lighter, quieter canvas across the inner pages. */
+body:has(.page-main.page-simple-background) {
+  background:
+    radial-gradient(ellipse at 14% 18%, rgba(232,240,250,.22) 0%, transparent 43%),
+    radial-gradient(ellipse at 86% 82%, rgba(242,239,250,.16) 0%, transparent 46%),
+    linear-gradient(180deg, #fdfefe 0%, #fafbfd 54%, #fcfcfe 100%) !important;
+}
+
+/* Keep the sticky navigation crisp and fully opaque — no frosted glass. */
+.site-header {
+  background: #fff !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  box-shadow: 0 1px 0 rgba(32,48,68,.035);
+}
+
+/* Give the navigation underline a softer, more tactile animated response. */
+.site-header nav a {
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+.site-header nav a::after,
+.site-header nav a:after {
+  height: 2px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(90deg, #8bbcff 0%, #397fe0 48%, #8bbcff 100%) !important;
+  box-shadow: 0 1px 7px rgba(62,132,225,.22);
+  opacity: 0;
+  transform: translateX(-50%) translateY(3px) scaleX(.18) !important;
+  transition:
+    transform .46s cubic-bezier(.16,1,.3,1),
+    opacity .2s ease,
+    box-shadow .3s ease !important;
+}
+.site-header nav a:hover::after,
+.site-header nav a.active::after,
+.site-header nav a:hover:after,
+.site-header nav a.active:after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scaleX(1) !important;
+  box-shadow: 0 1px 10px rgba(62,132,225,.32);
+}
+.site-header nav a:active::after,
+.site-header nav a:active:after {
+  transform: translateX(-50%) translateY(0) scaleX(.82) !important;
+  transition-duration: .12s !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header nav a::after,
+  .site-header nav a:after {
+    transition: none !important;
+  }
+}
