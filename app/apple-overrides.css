@@ -4416,3 +4416,44 @@ html{scroll-behavior:auto}
   .exercise-library-card { transition: none; }
   .exercise-library-card:hover { transform: none; }
 }
+
+
+/* Fix exercise library card crowding: wide rows, still strictly page-scoped. */
+.page-main .card-grid {
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 18px !important;
+}
+.page-main .exercise-library-card {
+  grid-template-columns: minmax(250px, 32%) minmax(0, 1fr);
+  min-height: 224px;
+}
+.page-main .exercise-library-visual {
+  padding: 20px 24px 17px;
+}
+.page-main .exercise-library-code {
+  gap: 18px;
+}
+.page-main .exercise-library-code > div {
+  flex: 1;
+  max-width: 100%;
+}
+.page-main .exercise-library-code span {
+  max-width: 100%;
+}
+.page-main .exercise-library-content {
+  padding: 24px 30px 20px;
+}
+.page-main .exercise-library-content h3,
+.page-main .exercise-library-content > p {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+@media (max-width: 650px) {
+  .page-main .card-grid { gap: 13px !important; }
+  .page-main .exercise-library-card {
+    grid-template-columns: 116px minmax(0,1fr);
+    min-height: 190px;
+  }
+  .page-main .exercise-library-visual { padding: 13px 11px 12px; }
+  .page-main .exercise-library-content { padding: 15px 13px 13px; }
+}
