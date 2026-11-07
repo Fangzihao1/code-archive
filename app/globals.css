@@ -311,9 +311,9 @@
 }
 
 
-/* Hero alignment and fully-contained output panel */
+/* Hero copy follows the reference composition: align to the left content edge. */
 @media(min-width:901px){
-  .home-hero-copy{padding-left:34px!important}
+  .home-hero-copy{padding-left:0!important}
 }
 .hero-python-deck .deck-card{
   height:560px!important;
@@ -362,7 +362,7 @@
 @media(min-width:901px){
   .home-hero-copy{
     position:relative!important;
-    left:120px!important;
+    left:0!important;
     top:-42px!important;
   }
 }
@@ -419,4 +419,17 @@
     padding-left:18px!important;
     padding-right:18px!important;
   }
+}
+
+
+/* Reference layout: keep the hero content balanced inside a centered wide canvas. */
+.home-hero{
+  grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)!important;
+  column-gap:38px!important;
+  padding-left:max(24px,calc((100% - 1194px)/2))!important;
+  padding-right:max(24px,calc((100% - 1194px)/2))!important;
+  overflow:hidden!important;
+}
+@media(max-width:900px){
+  .home-hero{overflow:visible!important}
 }
