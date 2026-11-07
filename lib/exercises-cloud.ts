@@ -38,6 +38,14 @@ function fromRow(row: ExerciseRow): Exercise {
 export async function getPublishedExercises(): Promise<Exercise[]> {
   const supabase = createClient();
   const { data, error } = await supabase.from("exercises").select("*")
+    .eq("published", true).order("date", { ascending: false });
+  if (error) throw error;
+  return (data ?? []).map((row) => fromRow(row as ExerciseRow));
+}
+
+export async function getFeaturedExercises(): Promise<Exercise[]> {
+  const supabase = createClient();
+  const { data, error } = await supabase.from("exercises").select("*")
     .eq("published", true).eq("featured", true).order("date", { ascending: false });
   if (error) throw error;
   return (data ?? []).map((row) => fromRow(row as ExerciseRow));
