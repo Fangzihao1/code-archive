@@ -15,6 +15,36 @@ import type { Exercise } from "@/lib/types";
 
 export default function HomePage() {
   const [items, setItems] = useState<Exercise[]>([]);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    const sections = Array.from(document.querySelectorAll<HTMLElement>(".archive-reveal"));
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!("IntersectionObserver" in window) || reduceMotion) return;
+
+    sections.forEach((section) => section.classList.add("archive-reveal-pending"));
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-revealed");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+
+    sections.forEach((section) => observer.observe(section));
+    return () => {
+      observer.disconnect();
+      sections.forEach((section) => section.classList.remove("archive-reveal-pending"));
+    };
+  }, []);
+
+  useEffect(() => {
+    const update = () => setShowBackToTop(window.scrollY > 520);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
   useEffect(() => {
     let active = true;
     getFeaturedExercises().then((rows) => { if (active) setItems(rows); })
@@ -66,6 +96,17 @@ export default function HomePage() {
         </section>
       </main>
       <Footer />
+      <button
+        type="button"
+        className={`back-to-top ${showBackToTop ? "is-visible" : ""}`}
+        aria-label="回到页面顶部"
+        aria-hidden={!showBackToTop}
+        tabIndex={showBackToTop ? 0 : -1}
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      >
+        <span aria-hidden="true">↑</span>
+        <small>回到顶部</small>
+      </button>
     </>
   );
 }
