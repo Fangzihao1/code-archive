@@ -540,3 +540,16 @@
 @media(min-width:901px){
   .home-hero>.hero-python-deck{left:130px!important}
 }
+
+
+/* Smoother, more deliberate card transitions for the hero carousel. */
+.hero-python-deck .deck-card{
+  transition:
+    transform .72s cubic-bezier(.22,.72,.18,1),
+    opacity .62s ease,
+    box-shadow .48s ease,
+    filter .62s ease!important;
+}
+.hero-python-deck .deck-card.is-dragging{
+  transition:none!important;
+}
