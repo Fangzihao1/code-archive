@@ -5261,3 +5261,39 @@ html{scroll-behavior:auto}
     display: none;
   }
 }
+
+
+/* Shared ambient glow atmosphere for secondary pages — matching the home hero. */
+.page-main.page-ambient {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 10% 12%, rgba(112, 169, 239, .095), transparent 34%),
+    radial-gradient(ellipse at 88% 24%, rgba(169, 145, 238, .085), transparent 32%),
+    radial-gradient(ellipse at 56% 88%, rgba(126, 204, 196, .065), transparent 36%),
+    linear-gradient(135deg, #ffffff 0%, #f8fbff 48%, #fbfaff 100%);
+}
+.page-main.page-ambient > .hero-glow-field {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.page-main.page-ambient > :not(.hero-glow-field) {
+  position: relative;
+  z-index: 1;
+}
+.page-main.page-ambient .page-intro,
+.page-main.page-ambient.about-page > .eyebrow,
+.page-main.page-ambient.about-page > h1,
+.page-main.page-ambient.about-page > .about-lead,
+.page-main.page-ambient.about-page > .about-columns {
+  position: relative;
+  z-index: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-main.page-ambient > .hero-glow-field { opacity: .72; }
+}
