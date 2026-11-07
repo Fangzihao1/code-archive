@@ -85,7 +85,7 @@ export default function HeroPythonLab() {
           const isNext = offset === 1;
           const isLast = offset === 2;
           const style: React.CSSProperties = isActive
-            ? { transform: `translate3d(${dragX}px, 0, 0) rotate(${dragX / 34}deg)`, zIndex: 3, opacity: leaving ? 0 : 1 }
+            ? { transform: leaving ? "translate3d(-540px, 0, 0) rotate(-9deg)" : `translate3d(${dragX}px, 0, 0) rotate(${dragX / 34}deg)`, zIndex: 3, opacity: leaving ? 0 : 1 }
             : isNext
               ? { transform: "translate3d(27px, 12px, 0) scale(.955) rotate(2deg)", zIndex: 2, opacity: 1 }
               : { transform: "translate3d(48px, 23px, 0) scale(.91) rotate(4deg)", zIndex: 1, opacity: 1 };
