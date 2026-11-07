@@ -4419,13 +4419,13 @@ html{scroll-behavior:auto}
 
 
 /* Fix exercise library card crowding: wide rows, still strictly page-scoped. */
-.page-main .card-grid {
-  grid-template-columns: minmax(0, 1fr) !important;
+.page-main:has(.exercise-library-card) .card-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   gap: 18px !important;
 }
 .page-main .exercise-library-card {
-  grid-template-columns: minmax(250px, 32%) minmax(0, 1fr);
-  min-height: 224px;
+  grid-template-columns: minmax(105px, 38%) minmax(0, 1fr);
+  min-height: 210px;
 }
 .page-main .exercise-library-visual {
   padding: 20px 24px 17px;
@@ -4448,8 +4448,11 @@ html{scroll-behavior:auto}
   overflow-wrap: anywhere;
   word-break: break-word;
 }
-@media (max-width: 650px) {
-  .page-main .card-grid { gap: 13px !important; }
+@media (max-width: 760px) {
+  .page-main:has(.exercise-library-card) .card-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 13px !important;
+  }
   .page-main .exercise-library-card {
     grid-template-columns: 116px minmax(0,1fr);
     min-height: 190px;
