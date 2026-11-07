@@ -50,3 +50,15 @@
 .rail-hint{font-size:10px;color:#a0a6af;margin:0;transition:color .2s}
 @media(max-width:900px){.horizontal-rail-item{flex-basis:calc((100% - 22px)/2)}}
 @media(max-width:650px){.horizontal-rail-item{flex-basis:84%;min-width:250px}.rail-progress{width:48px}.featured-toggle{align-items:flex-start!important}}
+
+/* Featured rail: seamless autoplay and focused hover interaction */
+.horizontal-rail-top{gap:14px}
+.rail-autoplay-status{font-size:10px;color:#9299a4;white-space:nowrap;min-width:56px;text-align:right}
+.horizontal-rail-track{padding:14px 5px 30px;scroll-snap-type:none}
+.horizontal-rail-item{position:relative;z-index:1;transform:translateY(0) scale(1);transform-origin:center center;transition:transform .34s cubic-bezier(.2,.75,.25,1),opacity .3s ease,filter .3s ease}
+.horizontal-rail-item:hover{z-index:5;transform:translateY(-7px) scale(1.045);filter:drop-shadow(0 15px 22px rgba(28,45,72,.13))}
+.horizontal-rail:has(.horizontal-rail-item:hover) .horizontal-rail-item:not(:hover){opacity:.7;filter:saturate(.82)}
+.horizontal-rail.is-paused .rail-autoplay-status{color:#5276a8}
+.horizontal-rail.is-auto .rail-autoplay-status::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#78ad91;margin-right:6px;vertical-align:1px}
+.horizontal-rail.is-paused .rail-autoplay-status::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#8da4c5;margin-right:6px;vertical-align:1px}
+@media(prefers-reduced-motion:reduce){.horizontal-rail-item{transition:none}.horizontal-rail-track{scroll-behavior:auto}}
