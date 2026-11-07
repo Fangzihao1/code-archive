@@ -450,3 +450,10 @@
 @media(max-width:900px){
   .home-hero-copy h1 span{font-size:inherit!important}
 }
+
+
+/* Stronger desktop positioning adjustment requested for the hero. */
+@media(min-width:901px){
+  .home-hero-copy{top:-88px!important}
+  .home-hero>.hero-python-deck{left:54px!important}
+}
