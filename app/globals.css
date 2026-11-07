@@ -553,3 +553,40 @@
 .hero-python-deck .deck-card.is-dragging{
   transition:none!important;
 }
+
+
+/* Align editor line numbers precisely with their corresponding code rows. */
+.hero-python-deck .lab-editor{
+  display:grid!important;
+  grid-template-columns:24px minmax(0,1fr);
+  column-gap:14px!important;
+  align-items:start;
+}
+.hero-python-deck .lab-line-numbers{
+  width:24px;
+  min-width:24px;
+  align-items:stretch;
+  line-height:22px!important;
+  font-size:11px!important;
+  padding:0!important;
+  margin:0!important;
+}
+.hero-python-deck .lab-line-numbers span{
+  display:block;
+  height:22px;
+  line-height:22px;
+  box-sizing:border-box;
+}
+.hero-python-deck .lab-editor pre{
+  min-width:0;
+  padding:0!important;
+  margin:0!important;
+  line-height:22px!important;
+  font-size:11px!important;
+}
+.hero-python-deck .lab-code-line{
+  display:block;
+  min-height:22px;
+  line-height:22px!important;
+  box-sizing:border-box;
+}
