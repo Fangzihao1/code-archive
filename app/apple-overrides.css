@@ -5063,3 +5063,91 @@ html{scroll-behavior:auto}
     flex-direction: column;
   }
 }
+
+
+/* Exercise library finishing touches: left-aligned editorial header, no search toolbar. */
+.page-main:has(.exercise-library-card) .page-intro {
+  max-width: none !important;
+  margin: 0 0 34px !important;
+  text-align: left !important;
+}
+.page-main:has(.exercise-library-card) .page-intro .eyebrow {
+  margin-bottom: 15px !important;
+}
+.page-main:has(.exercise-library-card) .page-intro h1 {
+  text-align: left !important;
+}
+.page-main:has(.exercise-library-card) .page-intro p {
+  margin-top: 13px !important;
+  text-align: left !important;
+}
+.page-main:has(.exercise-library-card) .filter-bar {
+  display: none !important;
+}
+.page-main:has(.exercise-library-card) .quick-category-row {
+  justify-content: flex-start !important;
+  margin: 0 0 27px !important;
+  gap: 7px !important;
+}
+.page-main:has(.exercise-library-card) .quick-category {
+  padding: 8px 12px !important;
+  background: #f5f7fa !important;
+  border-color: #edf1f5 !important;
+  color: #738195 !important;
+}
+.page-main:has(.exercise-library-card) .quick-category.active {
+  background: #273f5b !important;
+  border-color: #273f5b !important;
+  color: #fff !important;
+}
+.page-main:has(.exercise-library-card) .result-line {
+  margin-bottom: 19px !important;
+  padding-bottom: 12px !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-card {
+  border-radius: 18px !important;
+  box-shadow: 0 2px 12px rgba(38,59,83,.035) !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 12px 28px rgba(38,59,83,.075) !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-visual {
+  background: linear-gradient(135deg, #f8faff 0%, #eff4fa 100%) !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-visual-top {
+  letter-spacing: .14em !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-code > strong {
+  color: #526f94 !important;
+  font-size: 46px !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-content {
+  padding: 19px 20px 16px !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-content h3 {
+  margin-top: 8px !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-content .tag-row span {
+  border-color: #edf1f6 !important;
+  background: #f8fafd !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-bottom {
+  padding-top: 11px !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-bottom strong span {
+  display: inline-block;
+  transition: transform .2s ease;
+}
+.page-main:has(.exercise-library-card) .exercise-library-card:hover .exercise-library-bottom strong span {
+  transform: translate(2px,-2px);
+}
+@media (max-width: 680px) {
+  .page-main:has(.exercise-library-card) .page-intro {
+    margin-bottom: 25px !important;
+    text-align: left !important;
+  }
+  .page-main:has(.exercise-library-card) .quick-category-row {
+    margin-bottom: 22px !important;
+  }
+}
