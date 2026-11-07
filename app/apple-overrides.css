@@ -4511,3 +4511,35 @@ html{scroll-behavior:auto}
   }
   .page-main .exercise-library-visual { min-height: 145px; }
 }
+
+
+/* FINAL layout lock: each exercise card has two stacked rows, never side-by-side. */
+.page-main:has(.exercise-library-card) .exercise-library-card {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-rows: auto auto !important;
+  flex-direction: initial !important;
+  align-content: start;
+  min-height: 0 !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-visual {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  width: 100%;
+  min-width: 0;
+  min-height: 158px;
+}
+.page-main:has(.exercise-library-card) .exercise-library-content {
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+  width: 100%;
+  min-width: 0;
+}
+.page-main:has(.exercise-library-card) .card-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+@media (max-width: 680px) {
+  .page-main:has(.exercise-library-card) .card-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
