@@ -5434,3 +5434,47 @@ body:has(.page-main.page-simple-background) {
 .gallery-main .gallery-preview-code i {
   color: #8190a4 !important;
 }
+
+
+/* Final gallery editor tone: match the soft light-gray featured exercise preview. */
+.gallery-main .gallery-code-preview {
+  background:
+    radial-gradient(ellipse at 78% 20%, rgba(188,211,238,.28), transparent 45%),
+    linear-gradient(145deg, #f5f8fc, #edf2f8) !important;
+  border: 1px solid #e3eaf2 !important;
+  border-radius: 13px !important;
+  color: #536477 !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9) !important;
+}
+.gallery-main .gallery-code-preview i {
+  color: #9aa8b8 !important;
+  border-right-color: #dce5ef !important;
+}
+.gallery-main .gallery-code-preview em {
+  color: #7891ad !important;
+}
+.gallery-main .gallery-preview-code {
+  background:
+    radial-gradient(ellipse at 78% 20%, rgba(188,211,238,.28), transparent 45%),
+    linear-gradient(145deg, #f5f8fc, #edf2f8) !important;
+  border: 1px solid #e3eaf2 !important;
+  border-radius: 14px !important;
+  color: #536477 !important;
+  overflow: hidden !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9) !important;
+}
+.gallery-main .gallery-preview-code i {
+  color: #9aa8b8 !important;
+}
+
+/* Longer animated underline beneath the header navigation labels. */
+.site-header nav a::after,
+.site-header nav a:after {
+  width: 52px !important;
+}
+.site-header nav a:hover::after,
+.site-header nav a.active::after,
+.site-header nav a:hover:after,
+.site-header nav a.active:after {
+  width: 52px !important;
+}
