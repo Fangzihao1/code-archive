@@ -530,3 +530,13 @@
 @media(min-width:901px){
   .home-hero>.hero-python-deck{left:106px!important}
 }
+
+
+/* Small supporting-copy increase and another gentle rightward card shift. */
+.home-hero-copy>p{
+  font-size:17px!important;
+  line-height:1.9!important;
+}
+@media(min-width:901px){
+  .home-hero>.hero-python-deck{left:130px!important}
+}
