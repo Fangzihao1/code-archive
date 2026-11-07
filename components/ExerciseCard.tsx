@@ -7,9 +7,9 @@ export default function ExerciseCard({ item }: { item: Exercise }) {
   return <Link href={`/exercises/${item.slug}`} className="exercise-card">
     <div className="card-visual">
       <span className="python-mark">Py</span>
-      <pre className="visual-lines" aria-label={`${item.title} 的 Python 源代码预览`}>{previewLines.map((line, index) => (
+      <div className="visual-lines" aria-label={`${item.title} 的 Python 源代码预览`}>{previewLines.map((line, index) => (
         <span key={index}>{String(index + 1).padStart(2, "0")}  {line || " "}</span>
-      ))}</pre>
+      ))}</div>
     </div>
     <div className="card-body">
       <div className="eyebrow">{item.category} <span>· Python</span></div>
