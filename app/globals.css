@@ -120,3 +120,8 @@
 .hero-python-deck .lab-live i{display:inline-block;width:5px;height:5px;border-radius:50%;background:#8ed5ae;margin-right:5px;vertical-align:1px}
 @media(max-width:900px){.hero-python-deck{position:relative;right:auto;top:auto;margin:48px 0 22px;width:min(100%,440px);height:440px}}
 @media(max-width:650px){.hero-python-deck{width:calc(100% - 20px);height:430px;margin:48px auto 18px}.hero-python-deck .lab-heading strong{font-size:23px}}
+
+.python-deck-back{display:flex;align-items:flex-start;justify-content:space-between;padding:15px 18px 0;color:#aeb9c8;font-size:11px;font-weight:650;letter-spacing:.3px}
+.python-deck-back small{font:8px "DM Mono";color:#758295;letter-spacing:1px}
+.python-deck-back-one{background:linear-gradient(135deg,#293445,#202936)}
+.python-deck-back-two{background:linear-gradient(135deg,#303440,#242832)}
