@@ -125,3 +125,52 @@
 .python-deck-back small{font:8px "DM Mono";color:#758295;letter-spacing:1px}
 .python-deck-back-one{background:linear-gradient(135deg,#293445,#202936)}
 .python-deck-back-two{background:linear-gradient(135deg,#303440,#242832)}
+
+
+/* Refined Apple-like swipe carousel */
+.hero-python-deck{position:absolute;right:14px;top:108px;width:420px;height:500px;z-index:3;user-select:none}
+.hero-deck-stage{position:relative;width:100%;height:455px;perspective:1200px}
+.hero-python-deck .deck-card{position:absolute;inset:0;width:100%;height:100%;margin:0;top:0;right:auto;display:flex;flex-direction:column;overflow:hidden;border:1px solid rgba(255,255,255,.1);border-radius:24px;background:linear-gradient(155deg,#202630 0%,#171c24 100%);box-shadow:0 28px 70px rgba(23,30,42,.16),0 4px 12px rgba(23,30,42,.08);transform-origin:50% 50%;transition:transform .58s cubic-bezier(.22,.75,.18,1),opacity .42s ease,box-shadow .42s ease;will-change:transform;touch-action:pan-y}
+.hero-python-deck .deck-card.is-active{cursor:grab;box-shadow:0 32px 80px rgba(23,30,42,.2),0 8px 22px rgba(23,30,42,.1)}
+.hero-python-deck .deck-card.is-active:active{cursor:grabbing}
+.hero-python-deck .deck-card.is-behind{pointer-events:none;filter:saturate(.82);box-shadow:0 18px 45px rgba(23,30,42,.12)}
+.hero-python-deck .deck-card.is-dragging{transition:none}
+.hero-python-deck .lab-topbar{height:48px;min-height:48px;border-bottom:1px solid rgba(255,255,255,.075);padding:0 21px;gap:9px}
+.hero-python-deck .lab-window-dots{display:flex;gap:5px}
+.hero-python-deck .lab-window-dots i{width:7px;height:7px;border-radius:50%;background:#697484}
+.hero-python-deck .lab-window-dots i:first-child{background:#e18c87}
+.hero-python-deck .lab-window-dots i:nth-child(2){background:#e4c17b}
+.hero-python-deck .lab-window-dots i:nth-child(3){background:#8ab99b}
+.hero-python-deck .lab-file-name{font:10px "DM Mono";color:#9da8b8;margin-left:5px}
+.hero-python-deck .lab-live{margin-left:auto;font:9px "DM Mono";letter-spacing:1.1px;color:#9eacc0}
+.hero-python-deck .lab-live i{display:inline-block;width:5px;height:5px;border-radius:50%;background:#8cc6a2;margin-right:6px}
+.hero-python-deck .lab-heading{padding:28px 28px 7px;display:flex;justify-content:space-between;align-items:center}
+.hero-python-deck .lab-kicker{font:9px "DM Mono";letter-spacing:1.6px;color:#8997aa}
+.hero-python-deck .lab-heading strong{display:block;margin-top:9px;font-size:30px;line-height:1.2;letter-spacing:-1px;color:#f3f6fb;font-weight:650}
+.hero-python-deck .lab-version{font:9px "DM Mono";color:#aab6c6;border:1px solid rgba(255,255,255,.14);padding:7px 9px;border-radius:7px}
+.hero-python-deck .lab-example-caption{padding:0 28px 20px;color:#9da9b9;font-size:12px}
+.hero-python-deck .lab-editor{display:flex;gap:17px;margin:0 20px;padding:18px 17px;background:rgba(8,12,18,.46);border:1px solid rgba(255,255,255,.065);border-radius:13px;min-height:130px}
+.hero-python-deck .lab-line-numbers{display:flex;flex-direction:column;gap:0;color:#69778a;font:11px/2 "DM Mono";text-align:right}
+.hero-python-deck .lab-editor pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;color:#e4eaf3;font:11px/2 "DM Mono"}
+.hero-python-deck .lab-code-line{display:block}
+.hero-python-deck .lab-code-line:first-child{color:#a9c9f5}
+.hero-python-deck .lab-output{margin:16px 20px 0;padding:14px 16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.065);border-radius:12px;flex:1;min-height:88px}
+.hero-python-deck .lab-output-heading{display:flex;justify-content:space-between;color:#8997a9;font:9px "DM Mono";letter-spacing:1.2px}
+.hero-python-deck .lab-output-status{color:#8997a9}
+.hero-python-deck .lab-output-status.done{color:#9bd3ae}
+.hero-python-deck .lab-output-result{font:11px/1.8 "DM Mono";color:#d0d9e6;white-space:pre-wrap;margin:12px 0 0;opacity:.62}
+.hero-python-deck .lab-output-result.visible{opacity:1;color:#a8ddb9}
+.hero-python-deck .lab-actions{display:flex;align-items:center;justify-content:space-between;padding:16px 21px 8px}
+.hero-python-deck .lab-run-button{border:0;border-radius:22px;background:#f2f5fa;color:#202833;padding:11px 17px;font-size:11px;font-weight:650;box-shadow:0 2px 8px rgba(0,0,0,.08);transition:transform .2s ease,background .2s ease}
+.hero-python-deck .lab-run-button:hover{transform:translateY(-1px);background:#fff}
+.hero-python-deck .lab-run-button span{font-size:9px;margin-right:6px}
+.hero-python-deck .lab-drag-hint{font-size:10px;color:#9ba7b7}
+.hero-python-deck .lab-drag-hint b{font-size:15px;font-weight:400;margin-left:5px}
+.hero-python-deck .lab-deck-pagination{display:flex;align-items:center;gap:6px;padding:11px 23px 17px}
+.hero-python-deck .lab-deck-pagination i{width:5px;height:5px;border-radius:4px;background:#586576;transition:width .35s ease,background .35s ease}
+.hero-python-deck .lab-deck-pagination i.active{width:18px;background:#b5c9e8}
+.hero-python-deck .lab-deck-pagination span{margin-left:auto;font:9px "DM Mono";color:#8290a3}
+.hero-deck-caption{display:flex;justify-content:space-between;align-items:center;padding:15px 5px 0;color:#929aa6;font:9px "DM Mono";letter-spacing:1.1px}
+.hero-deck-caption span+span{font:10px "Noto Sans SC",sans-serif;letter-spacing:0;color:#858d98}
+@media(max-width:900px){.hero-python-deck{position:relative;right:auto;top:auto;margin:48px auto 24px;width:min(100%,440px);height:500px}.hero-deck-stage{height:455px}}
+@media(max-width:650px){.hero-python-deck{width:calc(100% - 20px);height:475px}.hero-deck-stage{height:430px}.hero-python-deck .lab-heading{padding:23px 22px 7px}.hero-python-deck .lab-heading strong{font-size:26px}.hero-python-deck .lab-example-caption{padding-left:22px}.hero-python-deck .lab-editor{margin:0 14px}.hero-python-deck .lab-output{margin-left:14px;margin-right:14px}}
