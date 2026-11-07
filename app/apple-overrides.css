@@ -2796,3 +2796,60 @@ body { color: #1d1d1f; background: #fff; }
   .page-main .result-line button,
   .gallery-main .code-gallery-card { transition: none!important; }
 }
+
+
+/* About page: a calm, editorial introduction with generous reading space. */
+.about-page {
+  max-width: 1000px;
+  padding-top: 100px;
+  padding-bottom: 125px;
+}
+.about-page > .eyebrow {
+  color: #9aa4b1;
+  font: 9px "DM Mono", monospace;
+  letter-spacing: 1.7px;
+}
+.about-page h1 {
+  margin: 23px 0 24px;
+  color: #252d38;
+  font-size: clamp(44px, 6.2vw, 68px);
+  line-height: 1.2;
+  font-weight: 650;
+  letter-spacing: -.07em;
+}
+.about-page h1 span { color: #8e9bab; }
+.about-page .about-lead {
+  max-width: 720px;
+  margin: 0 0 82px;
+  color: #727e8c;
+  font-size: 16px;
+  line-height: 2.05;
+}
+.about-page .about-columns {
+  gap: 70px;
+  padding-top: 32px;
+  border-top-color: rgba(36,49,68,.08);
+}
+.about-page .about-columns > div {
+  position: relative;
+  padding-top: 5px;
+}
+.about-page .about-columns h2 {
+  margin: 0 0 15px;
+  color: #303a47;
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -.035em;
+}
+.about-page .about-columns p {
+  max-width: 390px;
+  color: #7b8794;
+  font-size: 12px;
+  line-height: 2.05;
+}
+@media (max-width: 760px) {
+  .about-page { padding-top: 66px; padding-bottom: 82px; }
+  .about-page h1 { font-size: clamp(39px, 10vw, 51px); }
+  .about-page .about-lead { margin-bottom: 48px; font-size: 14px; }
+  .about-page .about-columns { grid-template-columns: 1fr; gap: 28px; }
+}
