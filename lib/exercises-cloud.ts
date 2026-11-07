@@ -8,7 +8,7 @@ type ExerciseRow = {
   id: string; slug: string; title: string; summary: string; category: string;
   tags: string[]; date: string; code: string; stdin: string; expected: string;
   description: string; learning: string; allow_run: boolean; external_url: string;
-  published: boolean; created_at?: string; updated_at?: string;
+  published: boolean; featured: boolean; created_at?: string; updated_at?: string;
 };
 
 const MIGRATION_KEY = "code-archive-cloud-import-v1";
@@ -20,7 +20,7 @@ function toRow(item: Exercise): ExerciseRow {
     code: item.code, stdin: item.stdin, expected: item.expected,
     description: item.description, learning: item.learning,
     allow_run: item.allowRun, external_url: item.externalUrl,
-    published: item.published, updated_at: new Date().toISOString(),
+    published: item.published, featured: !!item.featured, updated_at: new Date().toISOString(),
   };
 }
 
@@ -31,14 +31,14 @@ function fromRow(row: ExerciseRow): Exercise {
     code: row.code, stdin: row.stdin, expected: row.expected,
     description: row.description, learning: row.learning,
     allowRun: row.allow_run, externalUrl: row.external_url,
-    published: row.published,
+    published: row.published, featured: !!row.featured,
   };
 }
 
 export async function getPublishedExercises(): Promise<Exercise[]> {
   const supabase = createClient();
   const { data, error } = await supabase.from("exercises").select("*")
-    .eq("published", true).order("date", { ascending: false });
+    .eq("published", true).eq("featured", true).order("date", { ascending: false });
   if (error) throw error;
   return (data ?? []).map((row) => fromRow(row as ExerciseRow));
 }
