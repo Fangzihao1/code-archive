@@ -73,3 +73,10 @@
 .horizontal-rail-track{padding:34px 10px 38px!important;overflow-y:hidden}
 .horizontal-rail-item{transform-origin:center center}
 .horizontal-rail-item:hover{transform:translateY(-5px) scale(1.045)}
+
+
+/* Expanded safe area for full-card hover zoom: reserve space above and below the rail. */
+.horizontal-rail{overflow:visible!important}
+.horizontal-rail-track{padding:76px 18px 68px!important;overflow-y:hidden!important;margin:-48px -8px -28px}
+.horizontal-rail-item{transform-origin:center center}
+.horizontal-rail-item:hover{transform:translateY(-2px) scale(1.035)!important}
