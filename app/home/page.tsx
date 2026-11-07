@@ -46,7 +46,7 @@ export default function HomePage() {
             <Link href="/exercises" className="text-link">查看全部练习 ↗</Link>
           </div>
           {items.length > 0
-            ? <HorizontalExerciseRail items={items.slice(0, 8)} />
+            ? <HorizontalExerciseRail items={items.slice(0, 12)} />
             : <div className="home-empty"><strong>练习档案正在整理中</strong><span>发布练习后，它们会出现在这里。</span><Link href="/exercises">浏览练习库 ↗</Link></div>}
         </section>
 
