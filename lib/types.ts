@@ -14,6 +14,7 @@ export type Exercise = {
   allowRun: boolean;
   externalUrl: string;
   published: boolean;
+  featured?: boolean;
 };
 
 export const STORAGE_KEY = "code-archive-exercises-v1";
