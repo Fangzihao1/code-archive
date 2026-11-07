@@ -457,3 +457,11 @@
   .home-hero-copy{top:-88px!important}
   .home-hero>.hero-python-deck{left:54px!important}
 }
+
+
+/* Final hero emphasis and spacing refinement. */
+@media(min-width:901px){
+  .home-hero-copy{top:-112px!important}
+  .home-hero-copy h1{font-weight:800!important}
+  .home-hero>.hero-python-deck{left:82px!important}
+}
