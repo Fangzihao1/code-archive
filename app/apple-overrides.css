@@ -4460,3 +4460,54 @@ html{scroll-behavior:auto}
   .page-main .exercise-library-visual { padding: 13px 11px 12px; }
   .page-main .exercise-library-content { padding: 15px 13px 13px; }
 }
+
+
+/* Exercise library: two compact cards per row; preview above, details below. */
+.page-main .card-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 22px !important;
+  align-items: stretch;
+}
+.page-main .exercise-library-card {
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0;
+  min-height: 0 !important;
+  overflow: hidden;
+  border-radius: 20px;
+}
+.page-main .exercise-library-visual {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 158px;
+  padding: 19px 22px 15px !important;
+}
+.page-main .exercise-library-code {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 18px;
+  min-height: 75px;
+}
+.page-main .exercise-library-code > div {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.page-main .exercise-library-content {
+  flex: 1;
+  padding: 20px 22px 18px !important;
+}
+.page-main .exercise-library-content h3 {
+  font-size: 17px;
+}
+.page-main .exercise-library-content > p {
+  min-height: 38px;
+}
+@media (max-width: 680px) {
+  .page-main .card-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 15px !important;
+  }
+  .page-main .exercise-library-visual { min-height: 145px; }
+}
