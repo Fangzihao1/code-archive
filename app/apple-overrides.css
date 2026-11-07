@@ -5279,3 +5279,19 @@ html{scroll-behavior:auto}
   pointer-events: none;
   background: linear-gradient(135deg, rgba(239,244,250,.42) 0%, transparent 38%, rgba(245,243,252,.34) 100%);
 }
+
+
+/* Full-bleed static page background: extend beyond the centered content column. */
+.page-main.page-simple-background {
+  background: transparent !important;
+  overflow: visible !important;
+}
+.page-main.page-simple-background::before {
+  left: calc(50% - 50vw) !important;
+  right: auto !important;
+  width: 100vw !important;
+  inset-block: 0 !important;
+  background:
+    linear-gradient(135deg, rgba(239,244,250,.42) 0%, transparent 38%, rgba(245,243,252,.34) 100%),
+    linear-gradient(180deg, #ffffff 0%, #fbfcfe 42%, #f7f9fc 100%) !important;
+}
