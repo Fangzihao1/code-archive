@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Exercise } from "@/lib/types";
 
 export default function ExerciseCard({ item }: { item: Exercise }) {
-  const previewLines = (item.code || "").split(/\r?\n/).slice(0, 3);
+  const previewLines = (item.code || "").split(/\r?\n/).slice(0, 2);
 
   return <Link href={`/exercises/${item.slug}`} className="exercise-card">
     <div className="card-visual">
