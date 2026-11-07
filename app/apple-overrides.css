@@ -2060,3 +2060,14 @@ body { color: #1d1d1f; background: #fff; }
   }
   .archive-reveal.archive-reveal-pending:not(.is-revealed) { opacity: 1; }
 }
+
+
+/* Align the floating return-to-top control closer to the right edge. */
+.back-to-top {
+  right: 12px;
+}
+@media (max-width: 600px) {
+  .back-to-top {
+    right: 8px;
+  }
+}
