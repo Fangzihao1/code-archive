@@ -81,7 +81,7 @@ export default function HorizontalExerciseRail({ items }: { items: Exercise[] })
           const gap = parseFloat(getComputedStyle(rail).columnGap || "22") || 22;
           const shift = first.offsetWidth + gap;
           // Keep the rail moving at a noticeably quicker, steady pace.
-          rail.scrollLeft += 110 * elapsed / 1000;
+          rail.scrollLeft += 90 * elapsed / 1000;
           if (rail.scrollLeft >= shift && pendingShift.current === 0) {
             pendingShift.current = shift;
             setOrderedItems(current => {
