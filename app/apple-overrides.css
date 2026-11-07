@@ -1909,7 +1909,7 @@ body { color: #1d1d1f; background: #fff; }
 }
 
 
-/* Gentle reveal as homepage sections enter the viewport */
-.archive-reveal { opacity:0; transform:translateY(18px); transition:opacity .72s cubic-bezier(.2,.7,.2,1),transform .72s cubic-bezier(.2,.7,.2,1); }
+/* Keep homepage sections visible even if the optional reveal observer is unavailable. */
+.archive-reveal { opacity:1; transform:none; transition:opacity .72s cubic-bezier(.2,.7,.2,1),transform .72s cubic-bezier(.2,.7,.2,1); }
 .archive-reveal.is-revealed { opacity:1; transform:translateY(0); }
 @media(prefers-reduced-motion:reduce) { .archive-reveal,.archive-reveal.is-revealed { opacity:1; transform:none; transition:none; } }
