@@ -5378,3 +5378,28 @@ body:has(.page-main.page-simple-background) {
     transition: none !important;
   }
 }
+
+
+/* Code gallery previews: switch both card snippets and enlarged source to a light editor. */
+.gallery-main .gallery-code-preview {
+  background: linear-gradient(145deg, #f8fafc 0%, #f1f5f9 100%) !important;
+  border: 1px solid #e7edf4 !important;
+  border-radius: 0 !important;
+  color: #405168 !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+}
+.gallery-main .gallery-code-preview i {
+  color: #a1afbf !important;
+  border-right-color: #e1e8f0 !important;
+}
+.gallery-main .gallery-code-preview em {
+  color: #8195ad !important;
+}
+.gallery-main .gallery-preview-code {
+  background: linear-gradient(145deg, #f8fafc 0%, #f0f4f8 100%) !important;
+  color: #405168 !important;
+  border-top: 1px solid #e8edf3;
+}
+.gallery-main .gallery-preview-code i {
+  color: #9aa9ba !important;
+}
