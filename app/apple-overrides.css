@@ -2071,3 +2071,249 @@ body { color: #1d1d1f; background: #fff; }
     right: 8px;
   }
 }
+
+
+/* CODE ARCHIVE — editorial finish: calmer hierarchy, spacing, and surfaces. */
+:root {
+  --archive-ink: #20232a;
+  --archive-muted: #7b8491;
+  --archive-line: rgba(36, 49, 68, .075);
+  --archive-blue: #3978c8;
+}
+.section.content-wrap,
+.category-section > .content-wrap {
+  max-width: 1194px;
+}
+.section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+  margin-bottom: 30px;
+}
+.section-heading > div { min-width: 0; }
+.section-heading .eyebrow,
+.category-section > .content-wrap > .eyebrow,
+.about-strip .eyebrow {
+  color: #9aa3af;
+  font: 9px/1.5 "DM Mono", monospace;
+  letter-spacing: 1.65px;
+}
+.section-heading h2,
+.category-section h2 {
+  margin: 10px 0 9px;
+  color: var(--archive-ink);
+  font-size: clamp(31px, 3.4vw, 43px);
+  line-height: 1.16;
+  font-weight: 650;
+  letter-spacing: -.055em;
+}
+.section-heading p,
+.category-section > .content-wrap > .muted {
+  margin: 0;
+  color: var(--archive-muted);
+  font-size: 13px;
+  line-height: 1.85;
+}
+.section-heading .text-link {
+  flex: 0 0 auto;
+  margin-bottom: 4px;
+  color: #477bb8;
+  font-size: 11px;
+  font-weight: 600;
+  transition: color .2s ease, transform .2s ease;
+}
+.section-heading .text-link:hover { color: #1d5fae; transform: translateX(2px); }
+
+/* Give the featured cards a quieter editorial structure. */
+.home-featured { padding-top: 94px; padding-bottom: 100px; }
+.home-featured .horizontal-rail-top { color: #969eaa; }
+.home-featured .exercise-card {
+  border: 1px solid var(--archive-line);
+  border-radius: 19px;
+  background: rgba(255,255,255,.96);
+  box-shadow: 0 5px 22px rgba(30,45,67,.035);
+}
+.home-featured .exercise-card .card-visual {
+  background: linear-gradient(145deg, #f5f7fa 0%, #eef2f7 100%);
+}
+.home-featured .exercise-card .card-body { padding: 21px 22px 19px; }
+.home-featured .exercise-card .card-body h3 {
+  color: #252b34;
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -.035em;
+}
+.home-featured .exercise-card .card-body p {
+  color: #7d8794;
+  font-size: 11px;
+  line-height: 1.8;
+}
+.home-featured .exercise-card .tag-row span {
+  border: 1px solid rgba(54,77,108,.07);
+  background: #f7f9fb;
+  color: #8490a0;
+}
+.home-featured .exercise-card .card-bottom {
+  border-top: 1px solid rgba(36,49,68,.065);
+  padding-top: 13px;
+}
+.home-featured .exercise-card .card-bottom strong {
+  color: #477bb8;
+  font-weight: 600;
+}
+
+/* The topic selector stays light, with stronger rhythm and a soft active state. */
+.category-section {
+  padding-top: 82px;
+  padding-bottom: 88px;
+}
+.category-section > .content-wrap > .muted { margin-bottom: 30px; }
+.category-section .topic-grid { gap: 14px; }
+.category-section .topic-grid .topic-choice {
+  min-height: 158px;
+  padding: 21px 22px 19px;
+  border-color: rgba(36,49,68,.075);
+  border-radius: 17px;
+  box-shadow: 0 3px 14px rgba(30,45,67,.025);
+}
+.category-section .topic-grid .topic-choice > span {
+  color: #9aa3af;
+  font: 9px "DM Mono", monospace;
+  letter-spacing: .7px;
+}
+.category-section .topic-grid .topic-choice > span i {
+  margin-left: 7px;
+  color: #aab2bd;
+  font: 9px "Noto Sans SC", sans-serif;
+}
+.category-section .topic-grid .topic-choice strong {
+  position: relative;
+  z-index: 1;
+  color: #303946;
+  font-size: 17px;
+  font-weight: 620;
+  letter-spacing: -.035em;
+}
+.category-section .topic-grid .topic-choice > b {
+  color: #9aa4b1;
+  font-size: 10px;
+  font-weight: 500;
+}
+.category-section .topic-grid .topic-choice.active {
+  border-color: color-mix(in srgb, var(--topic-accent) 28%, white);
+  background: linear-gradient(145deg, #fff 0%, color-mix(in srgb, var(--topic-accent) 4%, white) 100%);
+}
+.category-section .topic-detail-panel {
+  margin-top: 18px;
+  border: 1px solid rgba(36,49,68,.075);
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(248,250,252,.94));
+  box-shadow: 0 12px 36px rgba(30,45,67,.035);
+}
+.category-section .topic-detail-index {
+  color: #a0a9b5;
+  font: 9px "DM Mono", monospace;
+  letter-spacing: 1.5px;
+}
+.category-section .topic-detail-copy h3 {
+  color: #27313e;
+  font-size: 25px;
+  font-weight: 650;
+  letter-spacing: -.045em;
+}
+.category-section .topic-detail-copy p {
+  color: #7b8592;
+  font-size: 12px;
+  line-height: 1.9;
+}
+.category-section .topic-skill-list span {
+  border: 1px solid rgba(53,75,104,.07);
+  border-radius: 999px;
+  background: #f7f9fb;
+  color: #778494;
+}
+.category-section .topic-detail-bottom > a {
+  color: #477bb8;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* About strip: a quiet closing statement rather than another boxed module. */
+.about-strip {
+  max-width: 1194px;
+  margin-top: 48px;
+  margin-bottom: 64px;
+  padding: 54px 58px;
+  border: 1px solid rgba(36,49,68,.065);
+  border-radius: 22px;
+  background:
+    radial-gradient(ellipse at 90% 5%, rgba(111,150,205,.09), transparent 42%),
+    linear-gradient(135deg, #fafbfd 0%, #f6f8fb 100%);
+}
+.about-strip h2 {
+  margin: 12px 0 0;
+  color: #242b35;
+  font-size: clamp(29px, 3.2vw, 39px);
+  line-height: 1.25;
+  font-weight: 650;
+  letter-spacing: -.055em;
+}
+.about-strip > p {
+  max-width: 340px;
+  color: #788391;
+  font-size: 12px;
+  line-height: 2;
+}
+.about-strip .button-light {
+  border: 1px solid rgba(55,77,106,.12);
+  border-radius: 999px;
+  background: rgba(255,255,255,.76);
+  color: #4a617f;
+  box-shadow: 0 4px 14px rgba(35,55,80,.035);
+}
+
+/* A restrained footer with a clear typographic finish. */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 1194px;
+  margin: 0 auto;
+  padding: 30px 24px 34px;
+  border-top: 1px solid rgba(36,49,68,.075);
+  background: transparent;
+}
+.footer > div {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer > div strong {
+  color: #333c49;
+  font: 650 11px "DM Mono", monospace;
+  letter-spacing: 1.3px;
+}
+.footer > div span {
+  color: #9aa3af;
+  font-size: 10px;
+}
+.footer > small {
+  color: #a5adb8;
+  font: 9px "DM Mono", monospace;
+  letter-spacing: .2px;
+  text-align: right;
+}
+@media (max-width: 760px) {
+  .section-heading { align-items: flex-start; flex-direction: column; gap: 13px; }
+  .home-featured { padding-top: 68px; padding-bottom: 72px; }
+  .category-section { padding-top: 64px; padding-bottom: 68px; }
+  .about-strip { margin: 28px 20px 42px; padding: 32px 25px; }
+  .footer { align-items: flex-start; flex-direction: column; gap: 12px; padding: 25px 20px 28px; }
+  .footer > small { text-align: left; line-height: 1.7; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .section-heading .text-link { transition: none; }
+}
