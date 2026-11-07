@@ -43,7 +43,7 @@ export default function HeroPythonLab() {
       setDragX(0);
       setLeaving(false);
       setHasRun(false);
-    }, 520);
+    }, 700);
   }
 
   function onPointerDown(event: React.PointerEvent<HTMLElement>) {
