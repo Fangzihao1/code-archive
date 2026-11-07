@@ -27,3 +27,566 @@
 .auth-demo div{display:flex;flex-direction:column;gap:5px}.auth-demo strong{font-size:13px;font-weight:650}.auth-demo span{font-size:12px;color:var(--muted,#8b93a3)}
 .auth-demo button{border:0;border-radius:9px;padding:11px 13px;background:#2563eb;color:white;font-size:12px;font-weight:650;white-space:nowrap;cursor:pointer}.auth-demo button:disabled{opacity:.6;cursor:wait}
 @media(max-width:520px){.auth-demo{align-items:stretch;flex-direction:column}.auth-demo button{width:100%}}
+
+/* Featured exercise controls */
+.featured-toggle{display:flex!important;flex-direction:row!important;align-items:center!important;gap:12px!important;padding:14px 16px;border:1px solid #e8edf3;border-radius:12px;background:linear-gradient(110deg,#f8fbff,#fff);cursor:pointer}
+.featured-toggle input{width:17px!important;height:17px;accent-color:#1769e0;flex:0 0 auto}
+.featured-toggle span{display:flex;flex-direction:column;gap:4px}
+.featured-toggle strong{font-size:12px;color:#303640}
+.featured-toggle small{font-size:10px;color:#9299a3}
+.horizontal-rail{position:relative}
+.horizontal-rail-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;color:#9298a1;font-size:11px}
+.rail-controls{display:flex;align-items:center;gap:8px}
+.rail-progress{width:76px;height:3px;border-radius:4px;background:#e9edf2;overflow:hidden;margin-right:8px}
+.rail-progress i{display:block;width:100%;height:100%;background:#7e9fc8;transform-origin:left center;transition:transform .12s linear}
+.rail-controls button{width:34px;height:34px;border:1px solid #e8ebef;border-radius:50%;background:#fff;color:#3b4654;transition:background .18s,border-color .18s,transform .18s,opacity .18s}
+.rail-controls button:not(:disabled):hover{background:#17191d;color:#fff;border-color:#17191d;transform:scale(1.07)}
+.rail-controls button:disabled{opacity:.32;cursor:default}
+.horizontal-rail-track{display:flex;gap:22px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-x:contain;scrollbar-width:none;padding:4px 2px 22px;cursor:grab;touch-action:pan-x}
+.horizontal-rail-track:active{cursor:grabbing}
+.horizontal-rail-track::-webkit-scrollbar{display:none}
+.horizontal-rail-item{flex:0 0 calc((100% - 44px)/3);min-width:270px;scroll-snap-align:start;scroll-snap-stop:normal;transition:transform .22s ease}
+.horizontal-rail-item:hover{transform:translateY(-4px)}
+.rail-hint{font-size:10px;color:#a0a6af;margin:0;transition:color .2s}
+@media(max-width:900px){.horizontal-rail-item{flex-basis:calc((100% - 22px)/2)}}
+@media(max-width:650px){.horizontal-rail-item{flex-basis:84%;min-width:250px}.rail-progress{width:48px}.featured-toggle{align-items:flex-start!important}}
+
+/* Featured rail: seamless autoplay and focused hover interaction */
+.horizontal-rail-top{gap:14px}
+.rail-autoplay-status{font-size:10px;color:#9299a4;white-space:nowrap;min-width:56px;text-align:right}
+.horizontal-rail-track{padding:14px 5px 30px;scroll-snap-type:none}
+.horizontal-rail-item{position:relative;z-index:1;transform:translateY(0) scale(1);transform-origin:center center;transition:transform .34s cubic-bezier(.2,.75,.25,1),opacity .3s ease,filter .3s ease}
+.horizontal-rail-item:hover{z-index:5;transform:translateY(-7px) scale(1.045);filter:drop-shadow(0 15px 22px rgba(28,45,72,.13))}
+.horizontal-rail:has(.horizontal-rail-item:hover) .horizontal-rail-item:not(:hover){opacity:.7;filter:saturate(.82)}
+.horizontal-rail.is-paused .rail-autoplay-status{color:#5276a8}
+.horizontal-rail.is-auto .rail-autoplay-status::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#78ad91;margin-right:6px;vertical-align:1px}
+.horizontal-rail.is-paused .rail-autoplay-status::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#8da4c5;margin-right:6px;vertical-align:1px}
+@media(prefers-reduced-motion:reduce){.horizontal-rail-item{transition:none}.horizontal-rail-track{scroll-behavior:auto}}
+
+/* Keep frame-by-frame autoplay immediate; manual arrow actions still request smooth scrolling. */
+.horizontal-rail-track{scroll-behavior:auto!important;scroll-snap-type:none!important}
+.horizontal-rail.is-auto .horizontal-rail-track{cursor:default}
+.horizontal-rail-item{will-change:transform}
+
+
+/* Give enlarged featured cards enough breathing room so hover never clips their top edge. */
+.horizontal-rail-track{padding:34px 10px 38px!important;overflow-y:hidden}
+.horizontal-rail-item{transform-origin:center center}
+.horizontal-rail-item:hover{transform:translateY(-5px) scale(1.045)}
+
+
+/* Expanded safe area for full-card hover zoom: reserve space above and below the rail. */
+.horizontal-rail{overflow:visible!important}
+.horizontal-rail-track{padding:76px 18px 68px!important;overflow-y:hidden!important;margin:-48px -8px -28px}
+.horizontal-rail-item{transform-origin:center center}
+.horizontal-rail-item:hover{transform:translateY(-2px) scale(1.035)!important}
+
+.visual-lines span{display:block;white-space:pre;overflow:hidden;text-overflow:ellipsis;max-width:250px}
+
+
+/* Hero Python demo: three layered, draggable concept cards */
+.hero-python-deck{position:absolute;right:20px;top:140px;width:400px;height:440px;z-index:2;touch-action:pan-y;user-select:none}
+.python-deck-back{position:absolute;inset:0;border-radius:18px;background:#252b35;box-shadow:0 25px 65px #1c20271c;pointer-events:none}
+.python-deck-back-one{transform:translate(10px,10px) rotate(3deg);opacity:.58}
+.python-deck-back-two{transform:translate(19px,19px) rotate(6deg);opacity:.25}
+.hero-python-deck .deck-card{position:absolute;inset:0;width:100%;height:100%;top:0;right:auto;margin:0;transform-origin:center center;transition:transform .34s cubic-bezier(.2,.75,.25,1),box-shadow .25s;cursor:grab;display:flex;flex-direction:column}
+.hero-python-deck.is-dragging .deck-card{cursor:grabbing;transition:none}
+.hero-python-deck .lab-heading{padding:20px 22px 7px;display:flex;align-items:center;justify-content:space-between}
+.hero-python-deck .lab-heading strong{display:block;font-size:25px;letter-spacing:-.7px;margin-top:8px}
+.hero-python-deck .lab-kicker{font:9px "DM Mono",monospace;letter-spacing:1.5px;color:#8996a8}
+.hero-python-deck .lab-version{font:10px "DM Mono";color:#9ba7b8;border:1px solid #ffffff20;padding:6px 8px;border-radius:6px}
+.hero-python-deck .lab-example-caption{font-size:11px;color:#9da8b7;padding:0 22px 14px}
+.hero-python-deck .lab-editor{display:flex;gap:15px;margin:0 16px;padding:14px 13px;background:#141820;border:1px solid #ffffff0d;border-radius:10px;min-height:112px}
+.hero-python-deck .lab-line-numbers{display:flex;flex-direction:column;color:#647184;font:10px/1.9 "DM Mono";text-align:right}
+.hero-python-deck .lab-editor pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;color:#e3e9f2;font:10px/1.9 "DM Mono"}
+.hero-python-deck .lab-code-line{display:block}
+.hero-python-deck .lab-code-line:first-child{color:#a8cfff}
+.hero-python-deck .lab-output{margin:13px 16px 0;padding:11px 13px;background:#171c24;border:1px solid #ffffff0d;border-radius:9px;flex:1;min-height:72px}
+.hero-python-deck .lab-output-heading{display:flex;justify-content:space-between;color:#7e8b9d;font:8px "DM Mono";letter-spacing:1px}
+.hero-python-deck .lab-output-status{color:#8792a2}
+.hero-python-deck .lab-output-status.done{color:#8ed5ae}
+.hero-python-deck .lab-output-result{font:10px/1.8 "DM Mono";color:#c5d0df;white-space:pre-wrap;margin:9px 0 0;opacity:.65}
+.hero-python-deck .lab-output-result.visible{opacity:1;color:#a8ddb9}
+.hero-python-deck .lab-actions{display:flex;align-items:center;justify-content:space-between;padding:13px 17px 5px}
+.hero-python-deck .lab-run-button{border:0;border-radius:8px;background:#edf3fc;color:#18202b;padding:10px 13px;font-size:10px;font-weight:700}
+.hero-python-deck .lab-run-button span{font-size:9px;margin-right:5px}
+.hero-python-deck .lab-drag-hint{font-size:9px;color:#9aa6b6}
+.hero-python-deck .lab-drag-hint span{font-size:14px;margin-right:5px}
+.hero-python-deck .lab-deck-pagination{display:flex;align-items:center;gap:5px;padding:10px 19px 14px}
+.hero-python-deck .lab-deck-pagination i{width:5px;height:5px;border-radius:50%;background:#667181}
+.hero-python-deck .lab-deck-pagination i.active{width:17px;border-radius:5px;background:#a9c9f3}
+.hero-python-deck .lab-deck-pagination span{margin-left:auto;font:8px "DM Mono";color:#7e8b9d}
+.hero-python-deck .lab-live{font:8px "DM Mono";letter-spacing:1px;color:#9ab5d9}
+.hero-python-deck .lab-live i{display:inline-block;width:5px;height:5px;border-radius:50%;background:#8ed5ae;margin-right:5px;vertical-align:1px}
+@media(max-width:900px){.hero-python-deck{position:relative;right:auto;top:auto;margin:48px 0 22px;width:min(100%,440px);height:440px}}
+@media(max-width:650px){.hero-python-deck{width:calc(100% - 20px);height:430px;margin:48px auto 18px}.hero-python-deck .lab-heading strong{font-size:23px}}
+
+.python-deck-back{display:flex;align-items:flex-start;justify-content:space-between;padding:15px 18px 0;color:#aeb9c8;font-size:11px;font-weight:650;letter-spacing:.3px}
+.python-deck-back small{font:8px "DM Mono";color:#758295;letter-spacing:1px}
+.python-deck-back-one{background:linear-gradient(135deg,#293445,#202936)}
+.python-deck-back-two{background:linear-gradient(135deg,#303440,#242832)}
+
+
+/* Refined Apple-like swipe carousel */
+.hero-python-deck{position:absolute;right:14px;top:108px;width:420px;height:500px;z-index:3;user-select:none}
+.hero-deck-stage{position:relative;width:100%;height:455px;perspective:1200px}
+.hero-python-deck .deck-card{position:absolute;inset:0;width:100%;height:100%;margin:0;top:0;right:auto;display:flex;flex-direction:column;overflow:hidden;border:1px solid rgba(255,255,255,.1);border-radius:24px;background:linear-gradient(155deg,#202630 0%,#171c24 100%);box-shadow:0 28px 70px rgba(23,30,42,.16),0 4px 12px rgba(23,30,42,.08);transform-origin:50% 50%;transition:transform .58s cubic-bezier(.22,.75,.18,1),opacity .42s ease,box-shadow .42s ease;will-change:transform;touch-action:pan-y}
+.hero-python-deck .deck-card.is-active{cursor:grab;box-shadow:0 32px 80px rgba(23,30,42,.2),0 8px 22px rgba(23,30,42,.1)}
+.hero-python-deck .deck-card.is-active:active{cursor:grabbing}
+.hero-python-deck .deck-card.is-behind{pointer-events:none;filter:saturate(.82);box-shadow:0 18px 45px rgba(23,30,42,.12)}
+.hero-python-deck .deck-card.is-dragging{transition:none}
+.hero-python-deck .lab-topbar{height:48px;min-height:48px;border-bottom:1px solid rgba(255,255,255,.075);padding:0 21px;gap:9px}
+.hero-python-deck .lab-window-dots{display:flex;gap:5px}
+.hero-python-deck .lab-window-dots i{width:7px;height:7px;border-radius:50%;background:#697484}
+.hero-python-deck .lab-window-dots i:first-child{background:#e18c87}
+.hero-python-deck .lab-window-dots i:nth-child(2){background:#e4c17b}
+.hero-python-deck .lab-window-dots i:nth-child(3){background:#8ab99b}
+.hero-python-deck .lab-file-name{font:10px "DM Mono";color:#9da8b8;margin-left:5px}
+.hero-python-deck .lab-live{margin-left:auto;font:9px "DM Mono";letter-spacing:1.1px;color:#9eacc0}
+.hero-python-deck .lab-live i{display:inline-block;width:5px;height:5px;border-radius:50%;background:#8cc6a2;margin-right:6px}
+.hero-python-deck .lab-heading{padding:28px 28px 7px;display:flex;justify-content:space-between;align-items:center}
+.hero-python-deck .lab-kicker{font:9px "DM Mono";letter-spacing:1.6px;color:#8997aa}
+.hero-python-deck .lab-heading strong{display:block;margin-top:9px;font-size:30px;line-height:1.2;letter-spacing:-1px;color:#f3f6fb;font-weight:650}
+.hero-python-deck .lab-version{font:9px "DM Mono";color:#aab6c6;border:1px solid rgba(255,255,255,.14);padding:7px 9px;border-radius:7px}
+.hero-python-deck .lab-example-caption{padding:0 28px 20px;color:#9da9b9;font-size:12px}
+.hero-python-deck .lab-editor{display:flex;gap:17px;margin:0 20px;padding:18px 17px;background:rgba(8,12,18,.46);border:1px solid rgba(255,255,255,.065);border-radius:13px;min-height:130px}
+.hero-python-deck .lab-line-numbers{display:flex;flex-direction:column;gap:0;color:#69778a;font:11px/2 "DM Mono";text-align:right}
+.hero-python-deck .lab-editor pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;color:#e4eaf3;font:11px/2 "DM Mono"}
+.hero-python-deck .lab-code-line{display:block}
+.hero-python-deck .lab-code-line:first-child{color:#a9c9f5}
+.hero-python-deck .lab-output{margin:16px 20px 0;padding:14px 16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.065);border-radius:12px;flex:1;min-height:88px}
+.hero-python-deck .lab-output-heading{display:flex;justify-content:space-between;color:#8997a9;font:9px "DM Mono";letter-spacing:1.2px}
+.hero-python-deck .lab-output-status{color:#8997a9}
+.hero-python-deck .lab-output-status.done{color:#9bd3ae}
+.hero-python-deck .lab-output-result{font:11px/1.8 "DM Mono";color:#d0d9e6;white-space:pre-wrap;margin:12px 0 0;opacity:.62}
+.hero-python-deck .lab-output-result.visible{opacity:1;color:#a8ddb9}
+.hero-python-deck .lab-actions{display:flex;align-items:center;justify-content:space-between;padding:16px 21px 8px}
+.hero-python-deck .lab-run-button{border:0;border-radius:22px;background:#f2f5fa;color:#202833;padding:11px 17px;font-size:11px;font-weight:650;box-shadow:0 2px 8px rgba(0,0,0,.08);transition:transform .2s ease,background .2s ease}
+.hero-python-deck .lab-run-button:hover{transform:translateY(-1px);background:#fff}
+.hero-python-deck .lab-run-button span{font-size:9px;margin-right:6px}
+.hero-python-deck .lab-drag-hint{font-size:10px;color:#9ba7b7}
+.hero-python-deck .lab-drag-hint b{font-size:15px;font-weight:400;margin-left:5px}
+.hero-python-deck .lab-deck-pagination{display:flex;align-items:center;gap:6px;padding:11px 23px 17px}
+.hero-python-deck .lab-deck-pagination i{width:5px;height:5px;border-radius:4px;background:#586576;transition:width .35s ease,background .35s ease}
+.hero-python-deck .lab-deck-pagination i.active{width:18px;background:#b5c9e8}
+.hero-python-deck .lab-deck-pagination span{margin-left:auto;font:9px "DM Mono";color:#8290a3}
+.hero-deck-caption{display:flex;justify-content:space-between;align-items:center;padding:15px 5px 0;color:#929aa6;font:9px "DM Mono";letter-spacing:1.1px}
+.hero-deck-caption span+span{font:10px "Noto Sans SC",sans-serif;letter-spacing:0;color:#858d98}
+@media(max-width:900px){.hero-python-deck{position:relative;right:auto;top:auto;margin:48px auto 24px;width:min(100%,440px);height:500px}.hero-deck-stage{height:455px}}
+@media(max-width:650px){.hero-python-deck{width:calc(100% - 20px);height:475px}.hero-deck-stage{height:430px}.hero-python-deck .lab-heading{padding:23px 22px 7px}.hero-python-deck .lab-heading strong{font-size:26px}.hero-python-deck .lab-example-caption{padding-left:22px}.hero-python-deck .lab-editor{margin:0 14px}.hero-python-deck .lab-output{margin-left:14px;margin-right:14px}}
+
+
+/* CODE ARCHIVE — light, balanced hero carousel layout */
+.home-hero{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  align-items:center;
+  column-gap:54px;
+  min-height:690px;
+  padding:76px 0 86px!important;
+  overflow:visible;
+}
+.home-hero-copy{position:relative;z-index:2;max-width:520px;align-self:center}
+.home-hero-copy h1{font-size:clamp(48px,5.1vw,70px)!important;line-height:1.2!important;letter-spacing:-.075em!important;margin:20px 0 22px!important}
+.home-hero-copy>p{font-size:14px;line-height:2;color:#747982;margin:0 0 28px}
+.home-hero-actions{display:flex;align-items:center;gap:25px}
+.hero-python-deck{
+  position:relative!important;inset:auto!important;
+  width:min(100%,440px)!important;height:510px!important;
+  margin:0 auto!important;justify-self:center;align-self:center;
+  z-index:3;overflow:visible;
+}
+.hero-deck-stage{height:465px!important;width:100%;overflow:visible}
+.hero-python-deck .deck-card{
+  background:#fff!important;color:#20242b!important;
+  border:1px solid rgba(27,39,56,.075)!important;
+  border-radius:25px!important;
+  box-shadow:0 24px 65px rgba(34,47,66,.11),0 3px 12px rgba(34,47,66,.045)!important;
+}
+.hero-python-deck .deck-card.is-active{box-shadow:0 28px 72px rgba(34,47,66,.14),0 5px 16px rgba(34,47,66,.055)!important}
+.hero-python-deck .deck-card.is-behind{background:#fbfcfe!important;box-shadow:0 16px 40px rgba(34,47,66,.09)!important}
+.hero-python-deck .lab-topbar{border-bottom:1px solid #edf0f4!important}
+.hero-python-deck .lab-window-dots i{background:#d2d7df!important}
+.hero-python-deck .lab-window-dots i:first-child{background:#ff6b63!important}
+.hero-python-deck .lab-window-dots i:nth-child(2){background:#f5bd4f!important}
+.hero-python-deck .lab-window-dots i:nth-child(3){background:#61c454!important}
+.hero-python-deck .lab-file-name{color:#737d8b!important}
+.hero-python-deck .lab-live{color:#71839b!important}
+.hero-python-deck .lab-live i{background:#58b887!important}
+.hero-python-deck .lab-heading strong{color:#1e2530!important}
+.hero-python-deck .lab-kicker{color:#929ba8!important}
+.hero-python-deck .lab-version{color:#667181!important;border-color:#e6e9ee!important}
+.hero-python-deck .lab-example-caption{color:#788291!important}
+.hero-python-deck .lab-editor{background:#f5f7fa!important;border:1px solid #edf0f4!important}
+.hero-python-deck .lab-line-numbers{color:#a1a9b5!important}
+.hero-python-deck .lab-editor pre{color:#343d4a!important}
+.hero-python-deck .lab-code-line:first-child{color:#356db4!important}
+.hero-python-deck .lab-output{background:#fafbfc!important;border:1px solid #edf0f4!important}
+.hero-python-deck .lab-output-heading{color:#8a94a2!important}
+.hero-python-deck .lab-output-status{color:#9aa3af!important}
+.hero-python-deck .lab-output-status.done{color:#39845f!important}
+.hero-python-deck .lab-output-result{color:#596575!important}
+.hero-python-deck .lab-output-result.visible{color:#28784f!important}
+.hero-python-deck .lab-run-button{background:#20242b!important;color:#fff!important;box-shadow:0 3px 9px rgba(25,32,42,.12)!important}
+.hero-python-deck .lab-run-button:hover{background:#3a424e!important}
+.hero-python-deck .lab-drag-hint{color:#8993a1!important}
+.hero-python-deck .lab-deck-pagination i{background:#d4d9e0!important}
+.hero-python-deck .lab-deck-pagination i.active{background:#596b86!important}
+.hero-python-deck .lab-deck-pagination span{color:#8c96a4!important}
+.hero-deck-caption{color:#8d96a2!important;padding:13px 3px 0!important}
+.hero-deck-caption span+span{color:#8d96a2!important}
+@media(max-width:1000px){
+ .home-hero{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);column-gap:24px}
+ .hero-python-deck{width:min(100%,410px)!important}
+}
+@media(max-width:900px){
+ .home-hero{display:flex!important;flex-direction:column;align-items:flex-start;gap:28px;min-height:0;padding:72px 0 80px!important}
+ .home-hero-copy{width:100%;max-width:620px}
+ .hero-python-deck{width:min(100%,440px)!important;margin:10px auto 0!important;align-self:center}
+}
+@media(max-width:650px){
+ .home-hero{padding:58px 0 64px!important;gap:20px}
+ .home-hero-copy h1{font-size:clamp(42px,11vw,54px)!important}
+ .hero-python-deck{width:calc(100% - 18px)!important;height:475px!important}
+ .hero-deck-stage{height:430px!important}
+}
+
+
+/* Hero follow-up: restore original left typography and give the full card a real safe area. */
+.home-hero{
+  grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)!important;
+  column-gap:38px!important;
+  min-height:750px!important;
+  padding:76px 0 92px!important;
+}
+.home-hero-copy{max-width:560px!important}
+.home-hero-copy h1{
+  font-size:clamp(48px,7vw,82px)!important;
+  line-height:1.16!important;
+  letter-spacing:-.07em!important;
+  margin:25px 0!important;
+}
+.home-hero-copy>p{
+  font-size:14px!important;
+  line-height:2!important;
+  color:#747982!important;
+  margin:0 0 28px!important;
+}
+.hero-python-deck{
+  width:min(100%,440px)!important;
+  height:600px!important;
+  margin:0 auto!important;
+  overflow:visible!important;
+}
+.hero-deck-stage{
+  height:550px!important;
+  min-height:550px!important;
+  overflow:visible!important;
+}
+.hero-python-deck .deck-card{
+  height:540px!important;
+  min-height:540px!important;
+  overflow:hidden!important;
+}
+.hero-python-deck .lab-output{flex:1 0 88px!important;min-height:88px!important}
+.hero-python-deck .lab-deck-pagination{flex:0 0 auto!important;padding-bottom:17px!important}
+.hero-deck-caption{padding-top:12px!important}
+@media(max-width:1000px){
+ .home-hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;column-gap:24px!important}
+ .hero-python-deck{width:min(100%,420px)!important;height:600px!important}
+}
+@media(max-width:900px){
+ .home-hero{display:flex!important;flex-direction:column;align-items:flex-start;gap:28px;min-height:0!important;padding:72px 0 80px!important}
+ .home-hero-copy{width:100%;max-width:620px!important}
+ .home-hero-copy h1{font-size:clamp(48px,7vw,82px)!important;line-height:1.16!important}
+ .hero-python-deck{width:min(100%,440px)!important;height:600px!important;margin:10px auto 0!important;align-self:center}
+ .hero-deck-stage{height:550px!important;min-height:550px!important}
+ .hero-python-deck .deck-card{height:540px!important;min-height:540px!important}
+}
+@media(max-width:650px){
+ .home-hero-copy h1{font-size:48px!important;line-height:1.16!important}
+ .hero-python-deck{width:calc(100% - 18px)!important;height:570px!important}
+ .hero-deck-stage{height:525px!important;min-height:525px!important}
+ .hero-python-deck .deck-card{height:515px!important;min-height:515px!important}
+}
+
+
+/* Hero copy follows the reference composition: align to the left content edge. */
+@media(min-width:901px){
+  .home-hero-copy{padding-left:0!important}
+}
+.hero-python-deck .deck-card{
+  height:560px!important;
+  min-height:560px!important;
+}
+.hero-deck-stage{
+  height:570px!important;
+  min-height:570px!important;
+}
+.hero-python-deck{
+  height:620px!important;
+}
+.hero-python-deck .lab-output{
+  box-sizing:border-box!important;
+  flex:0 0 auto!important;
+  min-width:0!important;
+  min-height:118px!important;
+  height:auto!important;
+  overflow:visible!important;
+}
+.hero-python-deck .lab-output-result{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  white-space:pre-wrap!important;
+  overflow-wrap:anywhere!important;
+  word-break:break-word!important;
+  box-sizing:border-box!important;
+}
+@media(max-width:900px){
+  .home-hero-copy{padding-left:0!important}
+  .hero-python-deck{height:620px!important}
+  .hero-deck-stage{height:570px!important;min-height:570px!important}
+  .hero-python-deck .deck-card{height:560px!important;min-height:560px!important}
+}
+@media(max-width:650px){
+  .hero-python-deck{height:590px!important}
+  .hero-deck-stage{height:540px!important;min-height:540px!important}
+  .hero-python-deck .deck-card{height:530px!important;min-height:530px!important}
+  .hero-python-deck .lab-output{min-height:112px!important;margin-top:12px!important}
+}
+
+
+/* Hero copy: align diagonally with the demo panel on desktop. */
+@media(min-width:901px){
+  .home-hero-copy{
+    position:relative!important;
+    left:0!important;
+    top:-42px!important;
+  }
+}
+.home-hero-copy h1 span{
+  display:inline-block!important;
+  white-space:nowrap!important;
+  font-size:clamp(48px,5.8vw,70px)!important;
+}
+@media(max-width:900px){
+  .home-hero-copy{left:0!important}
+  .home-hero-copy h1 span{font-size:clamp(42px,8vw,62px)!important}
+}
+@media(max-width:650px){
+  .home-hero-copy h1 span{font-size:clamp(38px,9.6vw,48px)!important}
+}
+
+
+/* Full-bleed hero background: remove the side gutters and extend the glow canvas
+   across the complete hero viewport, including the lower edge. */
+.home-hero{
+  position:relative!important;
+  width:100%!important;
+  max-width:none!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  padding-left:max(24px,calc((100% - 1160px)/2))!important;
+  padding-right:max(24px,calc((100% - 1160px)/2))!important;
+  min-height:max(790px,calc(100svh - 76px))!important;
+  isolation:isolate;
+  background:#fff;
+}
+.hero-glow-field{
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  z-index:0!important;
+  pointer-events:none!important;
+}
+.home-hero-copy,.home-hero>.hero-python-deck{
+  position:relative;
+  z-index:2!important;
+}
+@media(max-width:900px){
+  .home-hero{
+    min-height:0!important;
+    padding-left:24px!important;
+    padding-right:24px!important;
+  }
+}
+@media(max-width:650px){
+  .home-hero{
+    padding-left:18px!important;
+    padding-right:18px!important;
+  }
+}
+
+
+/* Reference layout: keep the hero content balanced inside a centered wide canvas. */
+.home-hero{
+  grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)!important;
+  column-gap:38px!important;
+  padding-left:max(24px,calc((100% - 1194px)/2))!important;
+  padding-right:max(24px,calc((100% - 1194px)/2))!important;
+  overflow:hidden!important;
+}
+@media(max-width:900px){
+  .home-hero{overflow:visible!important}
+}
+
+
+/* Fine-tune hero typography and horizontal balance to match the reference. */
+@media(min-width:901px){
+  .home-hero-copy{top:-58px!important}
+  .home-hero>.hero-python-deck{
+    position:relative!important;
+    left:22px!important;
+  }
+}
+.home-hero-copy h1 span{
+  font-size:inherit!important;
+  line-height:inherit!important;
+}
+@media(max-width:900px){
+  .home-hero-copy h1 span{font-size:inherit!important}
+}
+
+
+/* Stronger desktop positioning adjustment requested for the hero. */
+@media(min-width:901px){
+  .home-hero-copy{top:-88px!important}
+  .home-hero>.hero-python-deck{left:54px!important}
+}
+
+
+/* Final hero emphasis and spacing refinement. */
+@media(min-width:901px){
+  .home-hero-copy{top:-112px!important}
+  .home-hero-copy h1{font-weight:800!important}
+  .home-hero>.hero-python-deck{left:82px!important}
+}
+
+
+/* Reduce the headline weight slightly for a cleaner Apple-like feel. */
+@media(min-width:901px){
+  .home-hero-copy h1{font-weight:600!important}
+}
+
+
+/* Match the supplied headline reference: large, bold, and visually dominant. */
+@media(min-width:901px){
+  .home-hero-copy{max-width:760px!important}
+  .home-hero-copy h1{
+    font-size:clamp(76px,8.6vw,112px)!important;
+    line-height:1.06!important;
+    font-weight:800!important;
+    letter-spacing:-.065em!important;
+  }
+  .home-hero-copy h1 span{
+    font-size:inherit!important;
+    font-weight:inherit!important;
+    line-height:inherit!important;
+  }
+}
+@media(min-width:651px) and (max-width:900px){
+  .home-hero-copy h1{
+    font-size:clamp(64px,9vw,88px)!important;
+    line-height:1.08!important;
+    font-weight:800!important;
+  }
+  .home-hero-copy h1 span{font-size:inherit!important;font-weight:inherit!important}
+}
+
+
+/* Balance the headline: between the original and oversized reference pass. */
+@media(min-width:901px){
+  .home-hero-copy h1{
+    font-size:clamp(64px,7.1vw,90px)!important;
+    line-height:1.12!important;
+    font-weight:700!important;
+    letter-spacing:-.065em!important;
+  }
+  .home-hero-copy h1 span{
+    font-size:inherit!important;
+    font-weight:inherit!important;
+    line-height:inherit!important;
+  }
+}
+@media(min-width:651px) and (max-width:900px){
+  .home-hero-copy h1{
+    font-size:clamp(56px,7.8vw,76px)!important;
+    line-height:1.12!important;
+    font-weight:700!important;
+  }
+  .home-hero-copy h1 span{font-size:inherit!important;font-weight:inherit!important}
+}
+
+
+/* Slightly enlarge the hero supporting copy and give the demo more right-side space. */
+.home-hero-copy>p{
+  font-size:16px!important;
+  line-height:1.9!important;
+}
+@media(min-width:901px){
+  .home-hero>.hero-python-deck{left:106px!important}
+}
+
+
+/* Small supporting-copy increase and another gentle rightward card shift. */
+.home-hero-copy>p{
+  font-size:17px!important;
+  line-height:1.9!important;
+}
+@media(min-width:901px){
+  .home-hero>.hero-python-deck{left:130px!important}
+}
+
+
+/* Smoother, more deliberate card transitions for the hero carousel. */
+.hero-python-deck .deck-card{
+  transition:
+    transform .72s cubic-bezier(.22,.72,.18,1),
+    opacity .62s ease,
+    box-shadow .48s ease,
+    filter .62s ease!important;
+}
+.hero-python-deck .deck-card.is-dragging{
+  transition:none!important;
+}
+
+
+/* Align editor line numbers precisely with their corresponding code rows. */
+.hero-python-deck .lab-editor{
+  display:grid!important;
+  grid-template-columns:24px minmax(0,1fr);
+  column-gap:14px!important;
+  align-items:start;
+}
+.hero-python-deck .lab-line-numbers{
+  width:24px;
+  min-width:24px;
+  align-items:stretch;
+  line-height:22px!important;
+  font-size:11px!important;
+  padding:0!important;
+  margin:0!important;
+}
+.hero-python-deck .lab-line-numbers span{
+  display:block;
+  height:22px;
+  line-height:22px;
+  box-sizing:border-box;
+}
+.hero-python-deck .lab-editor pre{
+  min-width:0;
+  padding:0!important;
+  margin:0!important;
+  line-height:22px!important;
+  font-size:11px!important;
+}
+.hero-python-deck .lab-code-line{
+  display:block;
+  min-height:22px;
+  line-height:22px!important;
+  box-sizing:border-box;
+}

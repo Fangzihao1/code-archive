@@ -6,20 +6,30 @@ import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 import HorizontalExerciseRail from "@/components/HorizontalExerciseRail";
 import HeroPythonLab from "@/components/HeroPythonLab";
+import HeroGlowField from "@/components/HeroGlowField";
+import InteractiveTopicGrid from "@/components/InteractiveTopicGrid";
+import HomeSectionWheelSnap from "@/components/HomeSectionWheelSnap";
 import { getExercises } from "@/lib/storage";
+import { getFeaturedExercises } from "@/lib/exercises-cloud";
 import type { Exercise } from "@/lib/types";
 
 export default function HomePage() {
   const [items, setItems] = useState<Exercise[]>([]);
-  useEffect(() => { setItems(getExercises().filter((item) => item.published)); }, []);
+  useEffect(() => {
+    let active = true;
+    getFeaturedExercises().then((rows) => { if (active) setItems(rows); })
+      .catch(() => { if (active) setItems(getExercises().filter((item) => item.published && item.featured)); });
+    return () => { active = false; };
+  }, []);
 
   return (
     <>
       <SiteHeader />
+      <HomeSectionWheelSnap />
       <main>
         <section className="home-hero content-wrap">
+          <HeroGlowField />
           <div className="home-hero-copy">
-            <div className="eyebrow">A PERSONAL PYTHON ARCHIVE</div>
             <h1>把代码，变成<br /><span>看得见的成长。</span></h1>
             <p>从课堂练习到实际应用，整理每一次编程实践。<br />用代码梳理思路，用运行验证想法。</p>
             <div className="home-hero-actions">
@@ -28,7 +38,6 @@ export default function HomePage() {
             </div>
           </div>
           <HeroPythonLab />
-          <div className="hero-bottom-note"><span>SCROLL TO EXPLORE</span><span>学习 · 实践 · 归档</span></div>
         </section>
 
         <section className="section content-wrap home-featured">
@@ -37,7 +46,7 @@ export default function HomePage() {
             <Link href="/exercises" className="text-link">查看全部练习 ↗</Link>
           </div>
           {items.length > 0
-            ? <HorizontalExerciseRail items={items.slice(0, 8)} />
+            ? <HorizontalExerciseRail items={items.slice(0, 12)} />
             : <div className="home-empty"><strong>练习档案正在整理中</strong><span>发布练习后，它们会出现在这里。</span><Link href="/exercises">浏览练习库 ↗</Link></div>}
         </section>
 
@@ -46,11 +55,7 @@ export default function HomePage() {
             <div className="eyebrow">EXPLORE BY TOPIC / 02</div>
             <h2>从一个知识点开始。</h2>
             <p className="muted">按照课堂知识结构整理，让每一次练习都更容易找到。</p>
-            <div className="topic-grid">{["基础语法", "输入与输出", "条件判断", "循环结构", "函数与模块", "列表与字典", "算法与逻辑", "综合课堂作业"].map((item, index) => (
-              <Link href={`/exercises?category=${encodeURIComponent(item)}`} key={item}>
-                <span>0{index + 1}</span><strong>{item}</strong><b>↗</b>
-              </Link>
-            ))}</div>
+            <InteractiveTopicGrid />
           </div>
         </section>
 
