@@ -5,7 +5,7 @@ import { getExercises } from "@/lib/storage";
 import { getAdminExercises, saveCloudExercise, deleteCloudExercise, importLocalExercisesOnce } from "@/lib/exercises-cloud";
 import type { Exercise } from "@/lib/types";
 
-const blank: Exercise = { id:"", slug:"", title:"", summary:"", category:"基础语法", tags:[], date:new Date().toISOString().slice(0,10), code:"print('Hello, Python!')", stdin:"", expected:"", description:"", learning:"", allowRun:true, externalUrl:"https://www.online-python.com/", published:false };
+const blank: Exercise = { id:"", slug:"", title:"", summary:"", category:"基础语法", tags:[], date:new Date().toISOString().slice(0,10), code:"print('Hello, Python!')", stdin:"", expected:"", description:"", learning:"", allowRun:true, externalUrl:"https://www.online-python.com/", published:false, featured:false };
 
 export default function AdminPage() {
   const [items, setItems] = useState<Exercise[]>([]);
@@ -64,11 +64,11 @@ export default function AdminPage() {
           <div className="form-grid"><label>示例输入（每行一项）<textarea rows={3} value={form.stdin} onChange={e=>setForm({...form,stdin:e.target.value})}/></label><label>预期输出<textarea rows={3} value={form.expected} onChange={e=>setForm({...form,expected:e.target.value})}/></label></div>
           <label>学习总结<textarea rows={3} value={form.learning} onChange={e=>setForm({...form,learning:e.target.value})}/></label>
           <label>外部运行平台 URL<input value={form.externalUrl} onChange={e=>setForm({...form,externalUrl:e.target.value})}/></label>
-          <div className="check-row"><label><input type="checkbox" checked={form.allowRun} onChange={e=>setForm({...form,allowRun:e.target.checked})}/> 允许网页内运行</label><label><input type="checkbox" checked={form.published} onChange={e=>setForm({...form,published:e.target.checked})}/> 立即公开发布</label></div>
+          <div className="check-row"><label><input type="checkbox" checked={form.allowRun} onChange={e=>setForm({...form,allowRun:e.target.checked})}/> 允许网页内运行</label><label><input type="checkbox" checked={form.published} onChange={e=>setForm({...form,published:e.target.checked})}/> 立即公开发布</label><label className="featured-toggle"><input type="checkbox" checked={!!form.featured} onChange={e=>setForm({...form,featured:e.target.checked})}/> <span><strong>显示在主页精选练习</strong><small>开启后会出现在主页横向精选区域；关闭后仍保留在练习库。</small></span></label></div>
           <div className="form-actions"><button type="button" className="button button-light" onClick={()=>{setEditing(false);setForm(blank);}}>取消</button><button className="button button-primary">保存练习</button></div>
         </form>}
         {message&&<p className="success-message">{message}</p>}
-        <div className="admin-list">{items.map(x=><div className="admin-row" key={x.id}><div><strong>{x.title}</strong><small>{x.category} · {x.date} · {x.published?"已发布":"草稿"}</small></div><div className="row-actions"><button onClick={()=>edit(x)}>编辑</button><button onClick={()=>remove(x.id)}>删除</button></div></div>)}</div>
+        <div className="admin-list">{items.map(x=><div className="admin-row" key={x.id}><div><strong>{x.title}</strong><small>{x.category} · {x.date} · {x.published?"已发布":"草稿"} · {x.featured?"主页精选":"未精选"}</small></div><div className="row-actions"><button onClick={()=>edit(x)}>编辑</button><button onClick={()=>remove(x.id)}>删除</button></div></div>)}</div>
       </div> : <div className="admin-panel">
         <div className="panel-heading"><div><h2>{activeSection}</h2><p>模块入口已接通。以下为当前项目中可读取的数据与功能状态。</p></div></div>
         {activeSection==="分类管理" ? <div className="admin-list">{Array.from(new Set(items.map(x=>x.category))).map(category=><div className="admin-row" key={category}><div><strong>{category}</strong><small>{items.filter(x=>x.category===category).length} 条练习</small></div></div>)}</div>
