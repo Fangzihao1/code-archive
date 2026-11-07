@@ -27,7 +27,8 @@ export default function HomePage() {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("is-revealed");
-          observer.unobserve(entry.target);
+        } else {
+          entry.target.classList.remove("is-revealed");
         }
       });
     }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
