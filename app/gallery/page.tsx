@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
+import HeroGlowField from "@/components/HeroGlowField";
 import Footer from "@/components/Footer";
 import { getExercises } from "@/lib/storage";
 import { getPublishedExercises } from "@/lib/exercises-cloud";
@@ -55,7 +56,7 @@ export default function GalleryPage() {
     }
   }
 
-  return <><SiteHeader /><main className="content-wrap page-main gallery-main">
+  return <><SiteHeader /><main className="content-wrap page-main gallery-main page-ambient">\n    <HeroGlowField/>
     <div className="page-intro"><div className="eyebrow">CODE GALLERY / LIVE COLLECTION</div><h1>代码图库<span>.</span></h1><p>从已发布的课堂练习中，浏览代码片段、筛选知识点，并进入完整练习。</p></div>
     <div className="gallery-toolbar">
       <label className="gallery-search"><span>⌕</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索代码、练习名称或知识点…" aria-label="搜索代码片段" /></label>
