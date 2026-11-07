@@ -3833,3 +3833,47 @@ html{scroll-behavior:auto}
 .gallery-main .gallery-preview-backdrop,.gallery-main .gallery-preview-dialog{animation:none!important}
 .page-main:not(.gallery-main) .exercise-card:before,.gallery-main .code-gallery-card:before{display:none}
 }
+
+
+/* Align title underlines to the exact heading edge across all public pages. */
+.home-hero-copy h1,
+.page-main .page-intro h1,
+.about-page h1 {
+  position:relative;
+  width:fit-content;
+  max-width:100%;
+  padding-bottom:22px;
+}
+.home-hero-copy h1::after,
+.page-main .page-intro h1::after,
+.about-page h1::after {
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:54px;
+  height:2px;
+  border-radius:3px;
+  background:linear-gradient(90deg,#79a5d2 0%,#b8cde3 72%,rgba(184,205,227,0) 100%);
+}
+.page-main .page-intro {
+  border-bottom:0!important;
+}
+.page-main .page-intro h1 {
+  margin-bottom:19px;
+}
+.page-main .page-intro p {
+  margin-top:0;
+}
+.about-page h1 {
+  padding-bottom:22px;
+  margin-bottom:24px;
+}
+@media(max-width:760px) {
+  .home-hero-copy h1,
+  .page-main .page-intro h1,
+  .about-page h1 { padding-bottom:18px; }
+  .home-hero-copy h1::after,
+  .page-main .page-intro h1::after,
+  .about-page h1::after { width:46px; }
+}
