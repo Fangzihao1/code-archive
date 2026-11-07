@@ -8,8 +8,8 @@ export default function HorizontalExerciseRail({ items }: { items: Exercise[] })
   const paused = useRef(false);
   const pauseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pendingShift = useRef(0);
+  const progressRef = useRef<HTMLElement>(null);
   const [orderedItems, setOrderedItems] = useState(items);
-  const [progress, setProgress] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
@@ -49,7 +49,10 @@ export default function HorizontalExerciseRail({ items }: { items: Exercise[] })
     if (!first) return;
     const gap = parseFloat(getComputedStyle(rail).columnGap || "22") || 22;
     const cycleWidth = first.offsetWidth + gap;
-    setProgress(cycleWidth > 0 ? Math.min(1, rail.scrollLeft / cycleWidth) : 0);
+    if (progressRef.current) {
+      const progress = cycleWidth > 0 ? Math.min(1, rail.scrollLeft / cycleWidth) : 0;
+      progressRef.current.style.transform = `scaleX(${Math.max(.04, progress)})`;
+    }
   }, []);
 
   const move = useCallback((direction: -1 | 1) => {
@@ -77,7 +80,8 @@ export default function HorizontalExerciseRail({ items }: { items: Exercise[] })
         if (first) {
           const gap = parseFloat(getComputedStyle(rail).columnGap || "22") || 22;
           const shift = first.offsetWidth + gap;
-          rail.scrollLeft += 36 * elapsed / 1000;
+          // Keep the rail moving at a noticeably quicker, steady pace.
+          rail.scrollLeft += 110 * elapsed / 1000;
           if (rail.scrollLeft >= shift && pendingShift.current === 0) {
             pendingShift.current = shift;
             setOrderedItems(current => {
@@ -103,7 +107,7 @@ export default function HorizontalExerciseRail({ items }: { items: Exercise[] })
         <span>{items.length} 个精选条目</span>
         <div className="rail-controls">
           <span className="rail-autoplay-status">{isPaused ? "悬停暂停" : "自动向左滚动"}</span>
-          <div className="rail-progress" aria-label="浏览进度"><i style={{ transform: `scaleX(${Math.max(.04, progress)})` }} /></div>
+          <div className="rail-progress" aria-label="浏览进度"><i ref={progressRef} /></div>
           <button type="button" onClick={() => move(-1)} aria-label="向左浏览">←</button>
           <button type="button" onClick={() => move(1)} aria-label="向右浏览">→</button>
         </div>
