@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
+import HeroGlowField from "@/components/HeroGlowField";
 import Footer from "@/components/Footer";
 import { getExercises } from "@/lib/storage";
 import { getPublishedExercises } from "@/lib/exercises-cloud";
@@ -53,7 +54,7 @@ export default function ExercisesPage() {
     const pick = filtered[Math.floor(Math.random() * filtered.length)];
     router.push(`/exercises/${pick.slug}`);
   }
-  return <><SiteHeader/><main className="content-wrap page-main">
+  return <><SiteHeader/><main className="content-wrap page-main page-ambient">\n    <HeroGlowField/>
     <div className="page-intro"><div className="eyebrow">THE EXERCISE LIBRARY</div><h1>Python 课堂练习<span>.</span></h1><p>整理每一次编程实践，记录学习过程中的思考与收获。</p></div>
     <div className="filter-bar"><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="搜索练习名称、关键词或知识点…" aria-label="搜索练习"/><select value={category} onChange={e=>setCategory(e.target.value)} aria-label="选择知识分类">{categories.map(x=><option key={x}>{x}</option>)}</select><select value={sort} onChange={e=>setSort(e.target.value)} aria-label="排序方式"><option value="new">最新发布</option><option value="old">最早发布</option></select></div>
     <div className="quick-category-row" aria-label="快速选择分类">{categories.map(x=><button type="button" key={x} className={category===x?"quick-category active":"quick-category"} onClick={()=>setCategory(x)}>{x}</button>)}</div>
