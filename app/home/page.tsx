@@ -40,7 +40,7 @@ export default function HomePage() {
           <HeroPythonLab />
         </section>
 
-        <section className="section content-wrap home-featured">
+        <section className="section content-wrap home-featured archive-reveal">
           <div className="section-heading">
             <div><div className="eyebrow">SELECTED WORK / 01</div><h2>精选练习</h2><p>横向浏览值得记录的 Python 学习成果。</p></div>
             <Link href="/exercises" className="text-link">查看全部练习 ↗</Link>
@@ -50,7 +50,7 @@ export default function HomePage() {
             : <div className="home-empty"><strong>练习档案正在整理中</strong><span>发布练习后，它们会出现在这里。</span><Link href="/exercises">浏览练习库 ↗</Link></div>}
         </section>
 
-        <section className="section category-section">
+        <section className="section category-section archive-reveal">
           <div className="content-wrap">
             <div className="eyebrow">EXPLORE BY TOPIC / 02</div>
             <h2>从一个知识点开始。</h2>
@@ -59,7 +59,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="section content-wrap about-strip">
+        <section className="section content-wrap about-strip archive-reveal">
           <div><div className="eyebrow">ABOUT THIS ARCHIVE / 03</div><h2>每一段代码，<br />都是成长的记录。</h2></div>
           <p>这是一个持续更新的个人 Python 学习档案，记录课堂练习、代码思路和实际运行结果。</p>
           <Link className="button button-light" href="/about">关于这个档案 ↗</Link>
