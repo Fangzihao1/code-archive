@@ -174,3 +174,79 @@
 .hero-deck-caption span+span{font:10px "Noto Sans SC",sans-serif;letter-spacing:0;color:#858d98}
 @media(max-width:900px){.hero-python-deck{position:relative;right:auto;top:auto;margin:48px auto 24px;width:min(100%,440px);height:500px}.hero-deck-stage{height:455px}}
 @media(max-width:650px){.hero-python-deck{width:calc(100% - 20px);height:475px}.hero-deck-stage{height:430px}.hero-python-deck .lab-heading{padding:23px 22px 7px}.hero-python-deck .lab-heading strong{font-size:26px}.hero-python-deck .lab-example-caption{padding-left:22px}.hero-python-deck .lab-editor{margin:0 14px}.hero-python-deck .lab-output{margin-left:14px;margin-right:14px}}
+
+
+/* CODE ARCHIVE — light, balanced hero carousel layout */
+.home-hero{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  align-items:center;
+  column-gap:54px;
+  min-height:690px;
+  padding:76px 0 86px!important;
+  overflow:visible;
+}
+.home-hero-copy{position:relative;z-index:2;max-width:520px;align-self:center}
+.home-hero-copy h1{font-size:clamp(48px,5.1vw,70px)!important;line-height:1.2!important;letter-spacing:-.075em!important;margin:20px 0 22px!important}
+.home-hero-copy>p{font-size:14px;line-height:2;color:#747982;margin:0 0 28px}
+.home-hero-actions{display:flex;align-items:center;gap:25px}
+.hero-python-deck{
+  position:relative!important;inset:auto!important;
+  width:min(100%,440px)!important;height:510px!important;
+  margin:0 auto!important;justify-self:center;align-self:center;
+  z-index:3;overflow:visible;
+}
+.hero-deck-stage{height:465px!important;width:100%;overflow:visible}
+.hero-python-deck .deck-card{
+  background:#fff!important;color:#20242b!important;
+  border:1px solid rgba(27,39,56,.075)!important;
+  border-radius:25px!important;
+  box-shadow:0 24px 65px rgba(34,47,66,.11),0 3px 12px rgba(34,47,66,.045)!important;
+}
+.hero-python-deck .deck-card.is-active{box-shadow:0 28px 72px rgba(34,47,66,.14),0 5px 16px rgba(34,47,66,.055)!important}
+.hero-python-deck .deck-card.is-behind{background:#fbfcfe!important;box-shadow:0 16px 40px rgba(34,47,66,.09)!important}
+.hero-python-deck .lab-topbar{border-bottom:1px solid #edf0f4!important}
+.hero-python-deck .lab-window-dots i{background:#d2d7df!important}
+.hero-python-deck .lab-window-dots i:first-child{background:#ff6b63!important}
+.hero-python-deck .lab-window-dots i:nth-child(2){background:#f5bd4f!important}
+.hero-python-deck .lab-window-dots i:nth-child(3){background:#61c454!important}
+.hero-python-deck .lab-file-name{color:#737d8b!important}
+.hero-python-deck .lab-live{color:#71839b!important}
+.hero-python-deck .lab-live i{background:#58b887!important}
+.hero-python-deck .lab-heading strong{color:#1e2530!important}
+.hero-python-deck .lab-kicker{color:#929ba8!important}
+.hero-python-deck .lab-version{color:#667181!important;border-color:#e6e9ee!important}
+.hero-python-deck .lab-example-caption{color:#788291!important}
+.hero-python-deck .lab-editor{background:#f5f7fa!important;border:1px solid #edf0f4!important}
+.hero-python-deck .lab-line-numbers{color:#a1a9b5!important}
+.hero-python-deck .lab-editor pre{color:#343d4a!important}
+.hero-python-deck .lab-code-line:first-child{color:#356db4!important}
+.hero-python-deck .lab-output{background:#fafbfc!important;border:1px solid #edf0f4!important}
+.hero-python-deck .lab-output-heading{color:#8a94a2!important}
+.hero-python-deck .lab-output-status{color:#9aa3af!important}
+.hero-python-deck .lab-output-status.done{color:#39845f!important}
+.hero-python-deck .lab-output-result{color:#596575!important}
+.hero-python-deck .lab-output-result.visible{color:#28784f!important}
+.hero-python-deck .lab-run-button{background:#20242b!important;color:#fff!important;box-shadow:0 3px 9px rgba(25,32,42,.12)!important}
+.hero-python-deck .lab-run-button:hover{background:#3a424e!important}
+.hero-python-deck .lab-drag-hint{color:#8993a1!important}
+.hero-python-deck .lab-deck-pagination i{background:#d4d9e0!important}
+.hero-python-deck .lab-deck-pagination i.active{background:#596b86!important}
+.hero-python-deck .lab-deck-pagination span{color:#8c96a4!important}
+.hero-deck-caption{color:#8d96a2!important;padding:13px 3px 0!important}
+.hero-deck-caption span+span{color:#8d96a2!important}
+@media(max-width:1000px){
+ .home-hero{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);column-gap:24px}
+ .hero-python-deck{width:min(100%,410px)!important}
+}
+@media(max-width:900px){
+ .home-hero{display:flex!important;flex-direction:column;align-items:flex-start;gap:28px;min-height:0;padding:72px 0 80px!important}
+ .home-hero-copy{width:100%;max-width:620px}
+ .hero-python-deck{width:min(100%,440px)!important;margin:10px auto 0!important;align-self:center}
+}
+@media(max-width:650px){
+ .home-hero{padding:58px 0 64px!important;gap:20px}
+ .home-hero-copy h1{font-size:clamp(42px,11vw,54px)!important}
+ .hero-python-deck{width:calc(100% - 18px)!important;height:475px!important}
+ .hero-deck-stage{height:430px!important}
+}
