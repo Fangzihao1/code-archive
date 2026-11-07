@@ -4613,3 +4613,41 @@ html{scroll-behavior:auto}
     grid-template-columns: minmax(0, 1fr) !important;
   }
 }
+
+
+/* Refined neutral silver palette: quiet, crisp and consistent with the site's Apple-minimal look. */
+.page-main:has(.exercise-library-card) .exercise-library-visual {
+  color: #3d4146 !important;
+  background:
+    linear-gradient(118deg, rgba(255,255,255,.96) 0%, rgba(255,255,255,.35) 42%, transparent 72%),
+    linear-gradient(145deg, #fafafa 0%, #f3f4f4 54%, #eceeef 100%) !important;
+  border-bottom: 1px solid rgba(25,30,36,.055) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+}
+.page-main:has(.exercise-library-card) .exercise-library-visual-top {
+  color: #92969a !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-visual-top i {
+  color: #c0c3c6 !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-code > strong {
+  color: #777d83 !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.8);
+}
+.page-main:has(.exercise-library-card) .exercise-library-code > div {
+  color: #555b61 !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-code span i {
+  color: #b0b4b8 !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-visual > small {
+  color: #a0a4a8 !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-card {
+  border-color: rgba(32,38,44,.075) !important;
+  box-shadow: 0 8px 28px rgba(25,30,36,.035), 0 1px 2px rgba(25,30,36,.025) !important;
+}
+.page-main:has(.exercise-library-card) .exercise-library-card:hover {
+  border-color: rgba(32,38,44,.13) !important;
+  box-shadow: 0 16px 38px rgba(25,30,36,.075) !important;
+}
