@@ -7405,3 +7405,363 @@ body:has(.page-main.page-simple-background) {
   max-width: none !important;
   text-align: center !important;
 }
+
+
+/* =========================================================
+   MOBILE REBUILD — responsive layout pass
+   Desktop styles remain untouched; this section is mobile-only.
+   ========================================================= */
+@media (max-width: 760px) {
+  html, body { width:100%; max-width:100%; overflow-x:clip; }
+  body { -webkit-text-size-adjust:100%; }
+  *, *::before, *::after { min-width:0; }
+  img, video, canvas, iframe { max-width:100%; }
+  button, input, select, textarea { max-width:100%; font:inherit; }
+  button, a { -webkit-tap-highlight-color:transparent; }
+
+  /* Main site header: brand/actions on the first row, navigation below. */
+  .site-header {
+    position:relative !important;
+    top:auto !important;
+    z-index:30 !important;
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) auto !important;
+    grid-template-rows:auto auto !important;
+    align-items:center !important;
+    gap:11px 10px !important;
+    width:100% !important;
+    min-height:0 !important;
+    height:auto !important;
+    padding:13px 18px 11px !important;
+    box-sizing:border-box !important;
+  }
+  .site-header > .brand {
+    grid-column:1 !important; grid-row:1 !important;
+    max-width:100% !important; overflow:hidden !important;
+    white-space:nowrap !important; text-overflow:ellipsis !important;
+    font-size:12px !important; letter-spacing:.045em !important;
+  }
+  .site-header > .brand span { font-size:10px !important; }
+  .site-header > nav {
+    grid-column:1 / -1 !important; grid-row:2 !important;
+    display:flex !important; align-items:center !important;
+    justify-content:flex-start !important; gap:0 !important;
+    width:100% !important; max-width:100% !important;
+    overflow-x:auto !important; overflow-y:hidden !important;
+    white-space:nowrap !important; scrollbar-width:none !important;
+    -webkit-overflow-scrolling:touch !important;
+    padding:2px 0 3px !important;
+  }
+  .site-header > nav::-webkit-scrollbar { display:none !important; }
+  .site-header > nav a {
+    flex:0 0 auto !important;
+    padding:7px 12px !important;
+    font-size:12px !important;
+    line-height:1.4 !important;
+  }
+  .site-header .header-actions {
+    grid-column:2 !important; grid-row:1 !important;
+    display:flex !important; align-items:center !important;
+    justify-content:flex-end !important; gap:8px !important;
+    min-width:0 !important;
+  }
+  .site-header .admin-link,
+  .site-header .logout-button {
+    display:inline-flex !important; align-items:center !important;
+    justify-content:center !important;
+    min-height:32px !important;
+    padding:6px 9px !important;
+    font-size:10px !important; line-height:1.3 !important;
+    white-space:nowrap !important;
+  }
+
+  .content-wrap { width:100% !important; max-width:100% !important; }
+  .page-main, .detail-main, .gallery-main {
+    width:100% !important;
+    padding-left:20px !important;
+    padding-right:20px !important;
+    box-sizing:border-box !important;
+  }
+  .page-main { padding-top:30px !important; }
+  .page-intro { margin-bottom:25px !important; }
+  .page-intro h1 { font-size:clamp(29px,8vw,39px) !important; line-height:1.2 !important; }
+  .page-intro p { max-width:100% !important; font-size:13px !important; line-height:1.8 !important; }
+
+  /* Login: a single readable column with a compact intro. */
+  .auth-screen { min-height:100svh !important; padding-bottom:28px !important; overflow:hidden !important; }
+  .auth-topbar {
+    width:100% !important; height:auto !important; min-height:66px !important;
+    padding:12px 18px !important; gap:8px !important;
+    justify-content:space-between !important; flex-wrap:wrap !important;
+  }
+  .auth-brand { font-size:12px !important; }
+  .auth-top-note { font-size:8px !important; letter-spacing:.12em !important; }
+  .auth-layout {
+    display:flex !important; flex-direction:column !important;
+    align-items:stretch !important; justify-content:flex-start !important;
+    gap:22px !important; width:100% !important; max-width:100% !important;
+    padding:26px 20px 0 !important; margin:0 auto !important;
+    box-sizing:border-box !important;
+  }
+  .auth-intro { width:100% !important; max-width:100% !important; }
+  .auth-intro h1 { font-size:clamp(34px,9vw,45px) !important; line-height:1.22 !important; }
+  .auth-intro p { font-size:12px !important; line-height:1.8 !important; }
+  .auth-intro-meta { gap:12px !important; flex-wrap:wrap !important; font-size:9px !important; }
+  .auth-card {
+    width:100% !important; max-width:440px !important; min-width:0 !important;
+    height:auto !important; min-height:0 !important;
+    margin:0 auto !important; transform:none !important;
+  }
+  .auth-card-flipper { min-height:0 !important; }
+  .auth-card-face { box-sizing:border-box !important; padding:25px 21px !important; }
+  .auth-card-front, .auth-card-back { min-height:470px !important; }
+  .auth-card input { width:100% !important; min-height:44px !important; box-sizing:border-box !important; }
+  .auth-card button { min-height:42px !important; }
+  .auth-card form { gap:13px !important; }
+
+  /* Home hero and sections. */
+  .home-hero {
+    display:flex !important; flex-direction:column !important;
+    align-items:stretch !important; gap:28px !important;
+    min-height:0 !important; padding:52px 20px 36px !important;
+    box-sizing:border-box !important;
+  }
+  .home-hero-copy { width:100% !important; max-width:100% !important; }
+  .home-hero-copy h1 { font-size:clamp(35px,9.2vw,48px) !important; line-height:1.22 !important; }
+  .home-hero-copy p { font-size:13px !important; line-height:1.9 !important; }
+  .home-hero-actions { display:flex !important; flex-wrap:wrap !important; gap:12px 18px !important; }
+  .hero-python-deck, .hero-python-lab, .home-hero .hero-python-deck {
+    width:100% !important; max-width:100% !important; min-width:0 !important;
+    margin:0 !important; transform:none !important;
+  }
+  .hero-python-deck { min-height:0 !important; }
+  .hero-python-deck * { max-width:100%; }
+  .section { padding-top:46px !important; padding-bottom:46px !important; }
+  .section-heading { display:flex !important; flex-direction:column !important; align-items:flex-start !important; gap:12px !important; }
+  .section-heading > * { max-width:100% !important; }
+  .about-strip { display:flex !important; flex-direction:column !important; align-items:flex-start !important; gap:16px !important; }
+  .about-strip > * { max-width:100% !important; }
+  .category-section .content-wrap { padding-left:20px !important; padding-right:20px !important; }
+  .back-to-top { right:16px !important; bottom:18px !important; }
+
+  /* Exercise library filters and cards. */
+  .filter-bar, .gallery-toolbar {
+    display:grid !important; grid-template-columns:minmax(0,1fr) !important;
+    gap:10px !important; width:100% !important;
+    padding:0 !important; margin:0 0 18px !important;
+  }
+  .filter-bar > *, .gallery-toolbar > *, .gallery-search, .gallery-sort-control {
+    width:100% !important; min-width:0 !important; box-sizing:border-box !important;
+  }
+  .filter-bar input, .filter-bar select,
+  .gallery-toolbar input, .gallery-toolbar select {
+    width:100% !important; min-height:44px !important;
+    box-sizing:border-box !important; font-size:13px !important;
+  }
+  .quick-category-row {
+    display:flex !important; flex-wrap:nowrap !important;
+    width:100% !important; max-width:100% !important;
+    overflow-x:auto !important; overflow-y:hidden !important;
+    padding:3px 0 10px !important; gap:8px !important;
+    scrollbar-width:none !important; -webkit-overflow-scrolling:touch !important;
+  }
+  .quick-category-row::-webkit-scrollbar { display:none !important; }
+  .quick-category-row > * { flex:0 0 auto !important; }
+  .exercise-library-grid, .gallery-grid, .detail-related-grid {
+    display:grid !important; grid-template-columns:minmax(0,1fr) !important;
+    width:100% !important; gap:15px !important;
+  }
+  .exercise-library-card, .gallery-card, .detail-related-grid > * {
+    width:100% !important; min-width:0 !important; box-sizing:border-box !important;
+  }
+  .exercise-library-visual { min-height:150px !important; }
+  .exercise-library-content { padding:17px !important; }
+  .exercise-library-content h3 { font-size:17px !important; line-height:1.45 !important; }
+  .exercise-library-content p { font-size:12px !important; line-height:1.75 !important; }
+  .exercise-library-bottom { gap:10px !important; flex-wrap:wrap !important; }
+  .gallery-main .gallery-toolbar { grid-template-columns:minmax(0,1fr) !important; }
+  .gallery-card pre, .gallery-card code { max-width:100% !important; }
+  .gallery-card { overflow:hidden !important; }
+  .gallery-card pre { overflow-x:auto !important; }
+
+  /* Exercise detail: readable sections and horizontally scrollable code only. */
+  .detail-title { padding-top:22px !important; }
+  .detail-title h1 { font-size:clamp(29px,8vw,40px) !important; line-height:1.22 !important; overflow-wrap:anywhere !important; }
+  .detail-title-top, .detail-meta, .detail-title-actions {
+    display:flex !important; flex-wrap:wrap !important; gap:9px !important;
+  }
+  .detail-title-actions > button { flex:1 1 140px !important; }
+  .detail-step-nav {
+    display:flex !important; width:100% !important; max-width:100% !important;
+    overflow-x:auto !important; gap:5px !important;
+    padding:8px 0 !important; scrollbar-width:none !important;
+  }
+  .detail-step-nav::-webkit-scrollbar { display:none !important; }
+  .detail-step-nav button { flex:0 0 auto !important; white-space:nowrap !important; }
+  .detail-section { display:grid !important; grid-template-columns:1fr !important; gap:10px !important; padding:30px 0 !important; }
+  .detail-section > * { min-width:0 !important; max-width:100% !important; }
+  .detail-section h2 { font-size:24px !important; }
+  .detail-section p { font-size:13px !important; line-height:1.85 !important; }
+  .source-code, .source-code pre, .python-runner, .runner-panel { max-width:100% !important; min-width:0 !important; }
+  .source-code { overflow:hidden !important; }
+  .source-code pre { overflow-x:auto !important; -webkit-overflow-scrolling:touch !important; }
+  .source-code pre > div { min-width:max-content !important; }
+  .source-top { flex-wrap:wrap !important; gap:8px !important; }
+  .source-actions { display:flex !important; flex-wrap:wrap !important; gap:7px !important; }
+  .detail-image-gallery { display:grid !important; grid-template-columns:1fr !important; gap:10px !important; }
+  .detail-image-gallery img { width:100% !important; height:auto !important; object-fit:contain !important; }
+  .detail-pagination { display:grid !important; grid-template-columns:minmax(0,1fr) !important; gap:12px !important; }
+  .detail-page-link { min-width:0 !important; width:100% !important; box-sizing:border-box !important; }
+  .detail-related { display:block !important; }
+  .detail-related-grid { margin-top:16px !important; }
+
+  /* Admin dashboard: sidebar becomes a horizontal section switcher. */
+  .admin-shell {
+    display:block !important; width:100% !important; max-width:100% !important;
+    min-height:100svh !important; overflow-x:clip !important;
+  }
+  .admin-sidebar {
+    position:sticky !important; top:0 !important; z-index:50 !important;
+    display:flex !important; flex-direction:row !important; flex-wrap:nowrap !important;
+    align-items:center !important; gap:6px !important;
+    width:100% !important; height:auto !important; min-height:0 !important;
+    padding:10px 14px !important; box-sizing:border-box !important;
+    overflow-x:auto !important; overflow-y:hidden !important;
+    white-space:nowrap !important; scrollbar-width:none !important;
+    background:rgba(255,255,255,.97) !important;
+    border-bottom:1px solid #edf0f4 !important;
+  }
+  .admin-sidebar::-webkit-scrollbar { display:none !important; }
+  .admin-sidebar > .brand {
+    flex:0 0 auto !important; margin:0 8px 0 0 !important;
+    font-size:11px !important;
+  }
+  .admin-sidebar .admin-label { display:none !important; }
+  .admin-sidebar .side-item {
+    flex:0 0 auto !important; width:auto !important;
+    min-height:36px !important; margin:0 !important;
+    padding:8px 11px !important; font-size:11px !important;
+    white-space:nowrap !important;
+  }
+  .admin-sidebar .side-logout {
+    flex:0 0 auto !important; margin:0 0 0 4px !important;
+    padding:8px 10px !important; font-size:10px !important;
+    white-space:nowrap !important;
+  }
+  .admin-content {
+    width:100% !important; max-width:100% !important;
+    margin:0 !important; padding:23px 16px 35px !important;
+    box-sizing:border-box !important;
+  }
+  .admin-top {
+    display:flex !important; flex-direction:column !important;
+    align-items:stretch !important; gap:16px !important;
+    width:100% !important;
+  }
+  .admin-top h1 { font-size:30px !important; line-height:1.2 !important; }
+  .admin-top p { font-size:12px !important; line-height:1.75 !important; }
+  .admin-top-actions {
+    display:flex !important; flex-wrap:wrap !important;
+    align-items:center !important; gap:8px !important;
+  }
+  .admin-top-actions > * { flex:1 1 120px !important; min-width:0 !important; }
+  .admin-top-actions button, .admin-top-actions a {
+    justify-content:center !important; min-height:40px !important;
+    box-sizing:border-box !important; font-size:11px !important;
+  }
+  .stats-grid {
+    display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:10px !important; margin:20px 0 !important;
+  }
+  .stats-grid > * { min-width:0 !important; padding:13px !important; box-sizing:border-box !important; }
+  .stats-grid strong { font-size:23px !important; }
+  .admin-panel, .admin-history-panel {
+    width:100% !important; min-width:0 !important;
+    padding:16px 13px !important; box-sizing:border-box !important;
+    border-radius:15px !important;
+  }
+  .panel-heading {
+    display:flex !important; flex-direction:column !important;
+    align-items:stretch !important; gap:12px !important;
+  }
+  .panel-heading h2 { font-size:18px !important; }
+  .panel-heading p { font-size:11px !important; line-height:1.7 !important; }
+  .panel-heading > button { width:100% !important; min-height:42px !important; }
+  .admin-list { width:100% !important; min-width:0 !important; }
+  .admin-row {
+    display:flex !important; flex-direction:column !important;
+    align-items:stretch !important; gap:11px !important;
+    width:100% !important; min-width:0 !important;
+    padding:15px 0 !important; box-sizing:border-box !important;
+  }
+  .admin-row > div:first-child, .admin-row-main { width:100% !important; min-width:0 !important; }
+  .admin-row strong { overflow-wrap:anywhere !important; }
+  .admin-row small { overflow-wrap:anywhere !important; line-height:1.65 !important; }
+  .admin-row .row-actions, .row-actions {
+    display:flex !important; flex-wrap:wrap !important;
+    align-items:center !important; gap:7px !important;
+    width:100% !important; padding-left:0 !important;
+  }
+  .admin-row .row-actions button, .row-actions button {
+    flex:1 1 95px !important; min-width:0 !important;
+    min-height:38px !important; padding:8px 9px !important;
+    font-size:11px !important; white-space:normal !important;
+  }
+  .admin-bulk-bar {
+    display:flex !important; flex-direction:column !important;
+    align-items:stretch !important; gap:10px !important;
+    width:100% !important; box-sizing:border-box !important;
+    padding:13px !important;
+  }
+  .admin-bulk-bar > label { display:flex !important; align-items:center !important; gap:9px !important; }
+  .admin-bulk-bar .row-actions { display:grid !important; grid-template-columns:1fr !important; }
+  .exercise-form { display:flex !important; flex-direction:column !important; gap:15px !important; width:100% !important; }
+  .exercise-form .form-grid { display:grid !important; grid-template-columns:minmax(0,1fr) !important; gap:14px !important; }
+  .exercise-form > label, .exercise-form .form-grid > label { width:100% !important; min-width:0 !important; }
+  .exercise-form input:not([type="checkbox"]), .exercise-form select,
+  .exercise-form textarea { width:100% !important; min-height:44px !important; box-sizing:border-box !important; }
+  .exercise-form textarea { min-height:100px !important; }
+  .exercise-form .check-row { display:grid !important; grid-template-columns:1fr !important; gap:9px !important; }
+  .exercise-form .check-row > label,
+  .exercise-form .check-row > label:not(.featured-toggle) { width:100% !important; box-sizing:border-box !important; }
+  .exercise-form .form-actions { display:grid !important; grid-template-columns:1fr 1fr !important; gap:9px !important; }
+  .exercise-form .form-actions button { min-height:42px !important; }
+  .admin-image-grid { display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:9px !important; }
+  .admin-image-grid img { width:100% !important; height:auto !important; object-fit:cover !important; }
+  .admin-warning { font-size:10px !important; line-height:1.8 !important; }
+
+  /* Shared controls and footer. */
+  .button, .button-primary, .button-light { min-height:42px !important; }
+  .site-footer, footer { max-width:100% !important; }
+  .site-footer .content-wrap, footer .content-wrap {
+    display:flex !important; flex-direction:column !important;
+    align-items:flex-start !important; gap:10px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .site-header { padding-left:14px !important; padding-right:14px !important; }
+  .site-header > .brand { font-size:10px !important; }
+  .site-header > .brand span { font-size:9px !important; }
+  .site-header .admin-link, .site-header .logout-button {
+    padding:5px 7px !important; font-size:9px !important;
+  }
+  .site-header > nav a { padding-left:10px !important; padding-right:10px !important; }
+  .auth-topbar { padding-left:14px !important; padding-right:14px !important; }
+  .auth-top-note { display:none !important; }
+  .auth-layout { padding-left:16px !important; padding-right:16px !important; }
+  .auth-intro-meta { gap:8px !important; }
+  .auth-card-face { padding:22px 17px !important; }
+  .home-hero { padding-left:16px !important; padding-right:16px !important; }
+  .page-main, .detail-main, .gallery-main { padding-left:16px !important; padding-right:16px !important; }
+  .admin-content { padding-left:12px !important; padding-right:12px !important; }
+  .admin-sidebar { padding-left:10px !important; padding-right:10px !important; }
+  .stats-grid > * { padding:11px !important; }
+  .exercise-form .form-actions { grid-template-columns:1fr !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header *, .auth-screen *, .home-hero *, .admin-shell * {
+    scroll-behavior:auto !important; transition-duration:.01ms !important;
+    animation-duration:.01ms !important; animation-iteration-count:1 !important;
+  }
+}
