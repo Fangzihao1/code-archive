@@ -6613,3 +6613,59 @@ body:has(.page-main.page-simple-background) {
     transition: none !important;
   }
 }
+
+
+/* Admin bulk tools and version history layout. */
+.admin-bulk-bar {
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px 18px;
+  margin:16px 0 18px;
+  padding:13px 15px;
+  border:1px solid rgba(49,69,94,.07);
+  border-radius:13px;
+  background:rgba(247,249,252,.8);
+  color:#73849a;
+  font-size:12px;
+}
+.admin-bulk-bar > label,
+.admin-row-check {
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+}
+.admin-bulk-bar input,
+.admin-row-check input {
+  width:15px;
+  height:15px;
+  accent-color:#5b8fca;
+}
+.admin-bulk-bar > span { color:#92a0af; }
+.admin-bulk-bar .row-actions { margin-left:auto; }
+.admin-bulk-bar button:disabled { opacity:.42;cursor:not-allowed;transform:none!important; }
+.admin-row-main {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+.admin-row-check { flex:0 0 auto; }
+.admin-row-main > div { min-width:0; }
+.admin-history-panel {
+  margin:18px 0;
+  padding:18px;
+  border:1px solid rgba(74,111,153,.12);
+  border-radius:15px;
+  background:linear-gradient(145deg,#fbfdff,#f7f9fc);
+}
+.admin-history-panel .panel-heading { margin-bottom:12px; }
+.admin-history-panel .admin-row:last-child { border-bottom:0; }
+@media(max-width:620px) {
+  .admin-bulk-bar { align-items:flex-start; }
+  .admin-bulk-bar .row-actions { width:100%;margin-left:0;flex-wrap:wrap; }
+  .admin-bulk-bar .row-actions button { flex:1 1 auto; }
+  .admin-history-panel { padding:13px; }
+  .admin-row-main { align-items:flex-start; }
+}

@@ -147,6 +147,9 @@ export async function bulkSetPublished(ids: string[], published: boolean): Promi
     : { published: false, featured: false, updated_at: new Date().toISOString() };
   const { error } = await supabase.from("exercises").update(patch).in("id", ids).eq("archived", false);
   if (error) throw error;
+  saveExercises(getExercises().map((item) => ids.includes(item.id)
+    ? { ...item, published, featured: published ? item.featured : false }
+    : item));
 }
 
 export async function bulkArchiveExercises(ids: string[]): Promise<void> {
@@ -167,6 +170,9 @@ export async function renameExerciseCategory(currentName: string, nextName: stri
     category: nextName, updated_at: new Date().toISOString(),
   }).eq("category", currentName);
   if (error) throw error;
+  saveExercises(getExercises().map((item) => item.category === currentName
+    ? { ...item, category: nextName }
+    : item));
 }
 
 export async function renameExerciseTag(currentName: string, nextName: string): Promise<void> {

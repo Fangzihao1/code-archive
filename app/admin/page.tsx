@@ -261,7 +261,7 @@ export default function AdminPage() {
 
   return <main className="admin-shell">
     <aside className="admin-sidebar"><Link href="/home" className="brand">CODE ARCHIVE</Link><div className="admin-label">CONTENT MANAGER</div>
-      {sections.map((section, index) => <button type="button" key={section} onClick={() => { setActiveSection(section); if (section !== "练习管理") { setEditing(false); setForm(blank); } if (section !== "练习管理") setHistoryItem(null); }} className={activeSection === section ? "side-item selected" : "side-item"} aria-current={activeSection === section ? "page" : undefined}>{["⌂", "▤", "▦", "#", "↺"][index]}　{section}</button>)}
+      {sections.map((section, index) => <button type="button" key={section} onClick={() => { setActiveSection(section); setSelectedIds([]); if (section !== "练习管理") { setEditing(false); setForm(blank); } if (section !== "练习管理") setHistoryItem(null); }} className={activeSection === section ? "side-item selected" : "side-item"} aria-current={activeSection === section ? "page" : undefined}>{["⌂", "▤", "▦", "#", "↺"][index]}　{section}</button>)}
       <Link href="/home" className="side-logout">返回作品集</Link>
     </aside>
 
