@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -23,7 +23,9 @@ export default function LoginPage() {
     return () => window.removeEventListener("pointermove", updateHighlight);
   }, []);
   const [mode, setMode] = useState<"signin" | "signup">("signin");
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [cardRotation, setCardRotation] = useState(0);
+  const isFlipped = ((cardRotation % 360) + 360) % 360 >= 90 && ((cardRotation % 360) + 360) % 360 < 270;
+  const cardRotationStyle = { "--auth-card-transform": `rotateY(${cardRotation}deg)` } as CSSProperties;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -111,12 +113,12 @@ export default function LoginPage() {
           <div className="auth-intro-meta"><span>01 / LEARN</span><span>02 / BUILD</span><span>03 / ARCHIVE</span></div>
         </div>
         <div ref={authCardRef} className={`auth-card${isFlipped ? " is-flipped" : ""}`}>
-          <div className="auth-card-flipper">
+          <div className="auth-card-flipper" style={cardRotationStyle}>
             <section className="auth-card-face auth-card-front" aria-hidden={isFlipped}>
               <button
                 type="button"
                 className="auth-flip-trigger"
-                onClick={() => setIsFlipped(true)}
+                onClick={() => setCardRotation((angle) => angle + 180)}
                 aria-label="翻转卡片，查看 CODE ARCHIVE 介绍"
                 tabIndex={isFlipped ? -1 : 0}
               >↗</button>
@@ -166,7 +168,7 @@ export default function LoginPage() {
                 <div><i>02</i><span><strong>代码图库</strong><small>收藏值得保留的代码片段</small></span><b>↗</b></div>
                 <div><i>03</i><span><strong>持续归档</strong><small>让每一次进步都有迹可循</small></span><b>↗</b></div>
               </div>
-              <button type="button" className="auth-back-return" onClick={() => setIsFlipped(false)} tabIndex={isFlipped ? 0 : -1}>
+              <button type="button" className="auth-back-return" onClick={() => setCardRotation((angle) => angle + 180)} tabIndex={isFlipped ? 0 : -1}>
                 <span>↶</span> 翻回登录卡片
               </button>
               <div className="auth-card-foot"><span>YOUR WORK, YOUR PROGRESS</span><span>EST. 2026</span></div>
