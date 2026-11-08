@@ -159,6 +159,32 @@ export async function restoreArchivedExercise(id: string): Promise<void> {
   saveExercises(getExercises().map((item) => item.id === id ? { ...item, archived: false } : item));
 }
 
+export async function permanentlyDeleteArchivedExercise(item: Exercise): Promise<void> {
+  if (!item.archived) throw new Error("只能永久删除已归档的练习。");
+  const supabase = createClient();
+
+  // Remove the linked history first so no orphaned versions remain.
+  const { error: versionsError } = await supabase
+    .from("exercise_versions")
+    .delete()
+    .eq("original_exercise_id", item.id);
+  if (versionsError) throw versionsError;
+
+  // Remove only files belonging to this exercise from the site's image bucket.
+  for (const imageUrl of item.imageUrls ?? []) {
+    await deleteExerciseImage(imageUrl);
+  }
+
+  const { error: exerciseError } = await supabase
+    .from("exercises")
+    .delete()
+    .eq("id", item.id)
+    .eq("archived", true);
+  if (exerciseError) throw exerciseError;
+
+  saveExercises(getExercises().filter((entry) => entry.id !== item.id));
+}
+
 export async function importLocalExercisesOnce(): Promise<void> {
   if (typeof window === "undefined" || localStorage.getItem(MIGRATION_KEY) === "done") return;
   const supabase = createClient();
