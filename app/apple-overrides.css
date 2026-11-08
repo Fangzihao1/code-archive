@@ -6444,3 +6444,40 @@ body:has(.page-main.page-simple-background) {
 .auth-card.is-flipped .auth-card-flipper {
   transform: var(--auth-card-transform, rotateY(180deg)) !important;
 }
+
+
+/* Attach the pointer-following highlight to the visible card shell, not its outer perspective wrapper. */
+.auth-card::before {
+  content: none !important;
+  display: none !important;
+}
+.auth-card-flipper {
+  position: relative !important;
+}
+.auth-card-flipper::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  z-index: 5 !important;
+  top: 0 !important;
+  left: var(--auth-pointer-x, 50%) !important;
+  width: 112px !important;
+  height: 1px !important;
+  opacity: var(--auth-pointer-visible, 0) !important;
+  transform: translateX(-50%) !important;
+  border-radius: 999px !important;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(130,174,224,.18) 18%,
+    rgba(177,207,240,.72) 42%,
+    rgba(255,255,255,.96) 50%,
+    rgba(177,207,240,.72) 58%,
+    rgba(130,174,224,.18) 82%,
+    transparent 100%) !important;
+  box-shadow: 0 0 5px rgba(128,174,224,.16), 0 1px 10px rgba(128,174,224,.10) !important;
+  pointer-events: none !important;
+  transition: none !important;
+}
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .auth-card-flipper::before { transition: none !important; }
+}
