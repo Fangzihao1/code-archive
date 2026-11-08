@@ -7342,3 +7342,48 @@ body:has(.page-main.page-simple-background) {
   background: initial !important;
   box-shadow: none !important;
 }
+
+
+/* Unified subtle checkboxes for exercise selection and select-all. */
+.admin-shell .admin-row-main > .admin-row-title {
+  gap: 13px !important;
+}
+.admin-shell .admin-row-check input[type="checkbox"],
+.admin-shell .admin-bulk-bar > label input[type="checkbox"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  display: inline-grid !important;
+  place-content: center !important;
+  flex: 0 0 15px !important;
+  width: 15px !important;
+  height: 15px !important;
+  min-height: 15px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 1px solid #cbd0d8 !important;
+  border-radius: 3px !important;
+  background: #fff !important;
+  box-shadow: none !important;
+  outline: none !important;
+  cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+.admin-shell .admin-row-check input[type="checkbox"]:checked,
+.admin-shell .admin-bulk-bar > label input[type="checkbox"]:checked {
+  border-color: #8b9bb1 !important;
+  background: #8b9bb1 !important;
+}
+.admin-shell .admin-row-check input[type="checkbox"]:checked::after,
+.admin-shell .admin-bulk-bar > label input[type="checkbox"]:checked::after {
+  content: "";
+  width: 6px;
+  height: 3px;
+  border: solid #fff;
+  border-width: 0 0 1.5px 1.5px;
+  transform: rotate(-45deg) translateY(-1px);
+}
+.admin-shell .admin-row-check input[type="checkbox"]:focus-visible,
+.admin-shell .admin-bulk-bar > label input[type="checkbox"]:focus-visible {
+  outline: 2px solid #b9c8dc !important;
+  outline-offset: 2px !important;
+}
