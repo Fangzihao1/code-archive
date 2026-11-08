@@ -94,7 +94,17 @@ export default function LoginPage() {
           <p>一个持续生长的 Python 学习档案。<br />整理代码，记录思考，也展示每一步进步。</p>
           <div className="auth-intro-meta"><span>01 / LEARN</span><span>02 / BUILD</span><span>03 / ARCHIVE</span></div>
         </div>
-        <div className="auth-card">
+        <div
+          className="auth-card"
+          onMouseMove={(event) => {
+            const bounds = event.currentTarget.getBoundingClientRect();
+            const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+            event.currentTarget.style.setProperty("--auth-pointer-x", String(Math.max(0, Math.min(100, x))) + "%");
+          }}
+          onMouseLeave={(event) => {
+            event.currentTarget.style.setProperty("--auth-pointer-x", "50%");
+          }}
+        >
           <div className="auth-card-heading">
             <span className="auth-card-kicker">{mode === "signin" ? "WELCOME BACK" : "GET STARTED"}</span>
             <h2>{mode === "signin" ? "登录你的档案" : "创建学习账号"}</h2>
