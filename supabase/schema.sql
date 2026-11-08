@@ -111,3 +111,36 @@ where not exists (
   select 1 from public.exercise_versions v
   where v.original_exercise_id = e.id
 );
+
+ 
+alter table public.exercises
+  add column if not exists image_urls text[] not null default '{}';
+
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('exercise-images', 'exercise-images', true, 5242880, array['image/jpeg', 'image/png', 'image/webp'])
+on conflict (id) do update
+set public = excluded.public,
+    file_size_limit = excluded.file_size_limit,
+    allowed_mime_types = excluded.allowed_mime_types;
+
+drop policy if exists "Admins can upload exercise images" on storage.objects;
+create policy "Admins can upload exercise images"
+on storage.objects for insert to authenticated
+with check (
+  bucket_id = 'exercise-images'
+  and (select auth.uid()) = any (array[
+    '434cba7d-ea37-41b0-ba55-2f72ec65bc3a'::uuid,
+    '96ea8313-e433-4813-9d46-f320cb773be6'::uuid
+  ])
+);
+
+drop policy if exists "Admins can delete exercise images" on storage.objects;
+create policy "Admins can delete exercise images"
+on storage.objects for delete to authenticated
+using (
+  bucket_id = 'exercise-images'
+  and (select auth.uid()) = any (array[
+    '434cba7d-ea37-41b0-ba55-2f72ec65bc3a'::uuid,
+    '96ea8313-e433-4813-9d46-f320cb773be6'::uuid
+  ])
+);

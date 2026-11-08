@@ -8,7 +8,7 @@ type ExerciseRow = {
   id: string; slug: string; title: string; summary: string; category: string;
   tags: string[]; date: string; code: string; stdin: string; expected: string;
   description: string; learning: string; allow_run: boolean; external_url: string;
-  published: boolean; featured: boolean; archived: boolean;
+  published: boolean; featured: boolean; archived: boolean; image_urls: string[];
   created_at?: string; updated_at?: string;
 };
 
@@ -22,7 +22,7 @@ function toRow(item: Exercise): ExerciseRow {
     description: item.description, learning: item.learning,
     allow_run: item.allowRun, external_url: item.externalUrl,
     published: item.published, featured: !!item.featured,
-    archived: !!item.archived, updated_at: new Date().toISOString(),
+    archived: !!item.archived, image_urls: item.imageUrls ?? [], updated_at: new Date().toISOString(),
   };
 }
 
@@ -34,7 +34,7 @@ function fromRow(row: ExerciseRow): Exercise {
     description: row.description, learning: row.learning,
     allowRun: row.allow_run, externalUrl: row.external_url,
     published: row.published, featured: !!row.featured, archived: !!row.archived,
-    updatedAt: row.updated_at,
+    updatedAt: row.updated_at, imageUrls: row.image_urls ?? [],
   };
 }
 
@@ -183,4 +183,27 @@ export async function renameExerciseTag(currentName: string, nextName: string): 
       tags: Array.from(new Set(item.tags.map((tag) => tag === currentName ? nextName : tag))),
     });
   }
+}
+
+export async function uploadExerciseImage(file: File): Promise<string> {
+  if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) throw new Error("仅支持 JPG、PNG 或 WebP 图片。");
+  if (file.size > 5 * 1024 * 1024) throw new Error("单张图片不能超过 5MB。");
+  const supabase = createClient();
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]+/g, "-").slice(-80) || "image";
+  const path = crypto.randomUUID() + "-" + safeName;
+  const { error } = await supabase.storage.from("exercise-images").upload(path, file, { contentType: file.type, upsert: false });
+  if (error) throw error;
+  return supabase.storage.from("exercise-images").getPublicUrl(path).data.publicUrl;
+}
+
+export async function deleteExerciseImage(publicUrl: string): Promise<void> {
+  const marker = "/storage/v1/object/public/exercise-images/";
+  const pathname = new URL(publicUrl).pathname;
+  const markerIndex = pathname.indexOf(marker);
+  if (markerIndex < 0) throw new Error("图片地址不属于作品集图片空间。");
+  const path = decodeURIComponent(pathname.slice(markerIndex + marker.length));
+  if (!path) throw new Error("图片路径无效。");
+  const supabase = createClient();
+  const { error } = await supabase.storage.from("exercise-images").remove([path]);
+  if (error) throw error;
 }

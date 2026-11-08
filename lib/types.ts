@@ -17,6 +17,7 @@ export type Exercise = {
   featured?: boolean;
   archived?: boolean;
   updatedAt?: string;
+  imageUrls?: string[];
 };
 
 export type ExerciseVersion = {
