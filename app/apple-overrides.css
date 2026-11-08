@@ -5794,21 +5794,18 @@ body:has(.page-main.page-simple-background) {
   }
 }
 
-/* The login card's top highlight follows the pointer horizontally. */
+/* The login card's top highlight tracks the pointer across the whole viewport. */
 .auth-card::before {
   top: 0 !important;
   left: var(--auth-pointer-x, 50%) !important;
   width: 150px !important;
   height: 2px !important;
-  opacity: 0 !important;
+  opacity: var(--auth-pointer-visible, 0) !important;
   transform: translateX(-50%) !important;
   background: linear-gradient(90deg, transparent, rgba(0,113,227,.78), rgba(157,190,235,.9), transparent) !important;
   filter: drop-shadow(0 0 5px rgba(0,113,227,.22));
-  transition: left .09s linear, opacity .2s ease !important;
-}
-.auth-card:hover::before {
-  left: var(--auth-pointer-x, 50%) !important;
-  opacity: 1 !important;
+  transition: none !important;
+  will-change: left, opacity;
 }
 @media (hover: none), (prefers-reduced-motion: reduce) {
   .auth-card::before {
