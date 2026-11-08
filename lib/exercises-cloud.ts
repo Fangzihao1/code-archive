@@ -34,6 +34,7 @@ function fromRow(row: ExerciseRow): Exercise {
     description: row.description, learning: row.learning,
     allowRun: row.allow_run, externalUrl: row.external_url,
     published: row.published, featured: !!row.featured, archived: !!row.archived,
+    updatedAt: row.updated_at,
   };
 }
 
@@ -136,4 +137,44 @@ export async function importLocalExercisesOnce(): Promise<void> {
     if (insertError) throw insertError;
   }
   localStorage.setItem(MIGRATION_KEY, "done");
+}
+
+export async function bulkSetPublished(ids: string[], published: boolean): Promise<void> {
+  if (!ids.length) return;
+  const supabase = createClient();
+  const patch = published
+    ? { published: true, updated_at: new Date().toISOString() }
+    : { published: false, featured: false, updated_at: new Date().toISOString() };
+  const { error } = await supabase.from("exercises").update(patch).in("id", ids).eq("archived", false);
+  if (error) throw error;
+}
+
+export async function bulkArchiveExercises(ids: string[]): Promise<void> {
+  if (!ids.length) return;
+  const supabase = createClient();
+  const { error } = await supabase.from("exercises").update({
+    archived: true, published: false, featured: false, updated_at: new Date().toISOString(),
+  }).in("id", ids).eq("archived", false);
+  if (error) throw error;
+  saveExercises(getExercises().map((item) => ids.includes(item.id)
+    ? { ...item, archived: true, published: false, featured: false }
+    : item));
+}
+
+export async function renameExerciseCategory(currentName: string, nextName: string): Promise<void> {
+  const supabase = createClient();
+  const { error } = await supabase.from("exercises").update({
+    category: nextName, updated_at: new Date().toISOString(),
+  }).eq("category", currentName);
+  if (error) throw error;
+}
+
+export async function renameExerciseTag(currentName: string, nextName: string): Promise<void> {
+  const items = await getAdminExercises();
+  for (const item of items.filter((entry) => entry.tags.includes(currentName))) {
+    await saveCloudExercise({
+      ...item,
+      tags: Array.from(new Set(item.tags.map((tag) => tag === currentName ? nextName : tag))),
+    });
+  }
 }

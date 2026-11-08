@@ -4,8 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { getExercises } from "@/lib/storage";
 import {
-  archiveCloudExercise, getAdminExercises, getExerciseVersions, importLocalExercisesOnce,
-  restoreArchivedExercise, restoreExerciseVersion, saveCloudExercise,
+  archiveCloudExercise, bulkArchiveExercises, bulkSetPublished, getAdminExercises, getExerciseVersions, importLocalExercisesOnce,
+  renameExerciseCategory, renameExerciseTag, restoreArchivedExercise, restoreExerciseVersion, saveCloudExercise,
 } from "@/lib/exercises-cloud";
 import type { Exercise, ExerciseVersion } from "@/lib/types";
 
@@ -23,6 +23,7 @@ export default function AdminPage() {
   const [historyItem, setHistoryItem] = useState<Exercise | null>(null);
   const [versions, setVersions] = useState<ExerciseVersion[]>([]);
   const [historyLoading, setHistoryLoading] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const loadItems = useCallback(async () => {
@@ -83,6 +84,67 @@ export default function AdminPage() {
       setMessage("保存失败：请确认当前账号具有管理员权限，稍后可重试。");
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function bulkPublish(published: boolean) {
+    if (!selectedIds.length) return;
+    try {
+      await bulkSetPublished(selectedIds, published);
+      setItems((current) => current.map((item) => selectedIds.includes(item.id)
+        ? { ...item, published, featured: published ? item.featured : false }
+        : item));
+      setMessage(published ? `已批量发布 ${selectedIds.length} 条练习。` : `已批量下架 ${selectedIds.length} 条练习。`);
+      setSelectedIds([]);
+    } catch {
+      setMessage("批量操作失败，请检查管理员权限或网络连接。");
+    }
+  }
+
+  async function bulkArchive() {
+    if (!selectedIds.length) return;
+    if (!window.confirm(`确定将选中的 ${selectedIds.length} 条练习移入回收站吗？`)) return;
+    try {
+      await bulkArchiveExercises(selectedIds);
+      setItems((current) => current.map((item) => selectedIds.includes(item.id)
+        ? { ...item, archived: true, published: false, featured: false }
+        : item));
+      setMessage(`已将 ${selectedIds.length} 条练习移入回收站。`);
+      setSelectedIds([]);
+    } catch {
+      setMessage("批量归档失败，请检查网络或账号权限。");
+    }
+  }
+
+  async function renameCategory(category: string) {
+    const nextName = window.prompt("输入新的分类名称", category)?.trim();
+    if (!nextName || nextName === category) return;
+    if (categories.includes(nextName)) {
+      setMessage("这个分类名称已经存在。");
+      return;
+    }
+    try {
+      await renameExerciseCategory(category, nextName);
+      await loadItems();
+      setMessage(`分类“${category}”已更名为“${nextName}”。`);
+    } catch {
+      setMessage("分类修改失败，请检查网络或账号权限。");
+    }
+  }
+
+  async function renameTag(tag: string) {
+    const nextName = window.prompt("输入新的标签名称", tag)?.trim();
+    if (!nextName || nextName === tag) return;
+    if (tags.includes(nextName)) {
+      setMessage("这个标签名称已经存在。");
+      return;
+    }
+    try {
+      await renameExerciseTag(tag, nextName);
+      await loadItems();
+      setMessage(`标签“${tag}”已更名为“${nextName}”。`);
+    } catch {
+      setMessage("标签修改失败，请检查网络或账号权限。");
     }
   }
 
@@ -233,17 +295,23 @@ export default function AdminPage() {
           <div className="form-actions"><button type="button" className="button button-light" onClick={() => { setEditing(false); setForm(blank); }}>取消</button><button className="button button-primary" disabled={saving}>{saving ? "正在保存…" : "保存练习"}</button></div>
         </form>}
 
+        <div className="admin-bulk-bar">
+          <label><input type="checkbox" checked={activeItems.length > 0 && activeItems.every((item) => selectedIds.includes(item.id))} onChange={(event) => setSelectedIds(event.target.checked ? activeItems.map((item) => item.id) : [])}/> 全选当前练习</label>
+          <span>已选择 {selectedIds.length} 条</span>
+          <div className="row-actions"><button onClick={() => void bulkPublish(true)} disabled={!selectedIds.length}>批量发布</button><button onClick={() => void bulkPublish(false)} disabled={!selectedIds.length}>批量下架</button><button className="danger" onClick={() => void bulkArchive()} disabled={!selectedIds.length}>批量归档</button></div>
+        </div>
+
         {historyItem && <div className="admin-history-panel">
           <div className="panel-heading"><div><h2>历史版本 · {historyItem.title}</h2><p>每次保存前，系统都会自动留存上一版内容。</p></div><button className="button button-light" onClick={() => { setHistoryItem(null); setVersions([]); }}>关闭</button></div>
           {historyLoading ? <div className="admin-loading">正在读取历史版本…</div> : versions.length ? <div className="admin-list">{versions.map((version) => <div className="admin-row" key={version.id}><div><strong>版本 {version.versionNumber} · {version.snapshot.title}</strong><small>{new Date(version.createdAt).toLocaleString("zh-CN")} · {version.snapshot.category} · {version.snapshot.code.split("\n").length} 行代码</small></div><div className="row-actions"><button onClick={() => void restoreVersion(version)}>恢复此版本</button></div></div>)}</div> : <div className="admin-empty">暂时没有可查看的历史版本。</div>}
         </div>}
 
         {message && <p className={isError ? "admin-message error" : "admin-message"} role="status">{message}</p>}
-        {loading ? <div className="admin-loading">正在从云端读取练习数据…</div> : <div className="admin-list">{activeItems.length ? activeItems.map((item) => <div className="admin-row" key={item.id}><div><strong>{item.title}</strong><small>{item.category} · {item.date} · {item.published ? "已发布" : "草稿"} · {item.published && item.featured ? "主页精选" : "未精选"}</small></div><div className="row-actions"><button onClick={() => void openHistory(item)}>历史版本</button><button onClick={() => edit(item)}>编辑</button><button className="danger" onClick={() => void archive(item)}>移入回收站</button></div></div>) : <div className="admin-empty"><strong>还没有练习内容</strong><p>创建第一条 Python 练习后，可以在这里编辑和发布。</p></div>}</div>}
+        {loading ? <div className="admin-loading">正在从云端读取练习数据…</div> : <div className="admin-list">{activeItems.length ? activeItems.map((item) => <div className="admin-row" key={item.id}><div className="admin-row-main"><label className="admin-row-check"><input type="checkbox" checked={selectedIds.includes(item.id)} onChange={(event) => setSelectedIds((current) => event.target.checked ? [...current, item.id] : current.filter((id) => id !== item.id))}/></label><div><strong>{item.title}</strong><small>{item.category} · {item.date} · {item.published ? "已发布" : "草稿"} · {item.published && item.featured ? "主页精选" : "未精选"} · 最近修改 {item.updatedAt ? new Date(item.updatedAt).toLocaleDateString("zh-CN") : "—"}</small></div></div><div className="row-actions"><button onClick={() => void openHistory(item)}>历史版本</button><button onClick={() => edit(item)}>编辑</button><button className="danger" onClick={() => void archive(item)}>移入回收站</button></div></div>) : <div className="admin-empty"><strong>还没有练习内容</strong><p>创建第一条 Python 练习后，可以在这里编辑和发布。</p></div>}</div>}
       </div> : <div className="admin-panel">
         <div className="panel-heading"><div><h2>{activeSection}</h2><p>以下数据根据云端练习内容自动汇总。</p></div></div>
-        {loading ? <div className="admin-loading">正在读取数据…</div> : activeSection === "分类管理" ? <div className="admin-list">{categories.length ? categories.map((category) => <div className="admin-row" key={category}><div><strong>{category}</strong><small>{activeItems.filter((item) => item.category === category).length} 条练习</small></div><span className="admin-count">{activeItems.filter((item) => item.category === category && item.published).length} 条已发布</span></div>) : <div className="admin-empty">暂无分类数据。</div>}</div>
-          : <div className="admin-list">{tags.length ? tags.map((tag) => <div className="admin-row" key={tag}><div><strong>#{tag}</strong><small>{activeItems.filter((item) => item.tags.includes(tag)).length} 条练习使用</small></div><span className="admin-count">{activeItems.filter((item) => item.tags.includes(tag) && item.published).length} 条已发布</span></div>) : <div className="admin-empty">暂无标签数据。</div>}</div>}
+        {loading ? <div className="admin-loading">正在读取数据…</div> : activeSection === "分类管理" ? <div className="admin-list">{categories.length ? categories.map((category) => <div className="admin-row" key={category}><div><strong>{category}</strong><small>{activeItems.filter((item) => item.category === category).length} 条练习</small></div><div className="row-actions"><span className="admin-count">{activeItems.filter((item) => item.category === category && item.published).length} 条已发布</span><button onClick={() => void renameCategory(category)}>修改名称</button></div></div>) : <div className="admin-empty">暂无分类数据。</div>}</div>
+          : <div className="admin-list">{tags.length ? tags.map((tag) => <div className="admin-row" key={tag}><div><strong>#{tag}</strong><small>{activeItems.filter((item) => item.tags.includes(tag)).length} 条练习使用</small></div><div className="row-actions"><span className="admin-count">{activeItems.filter((item) => item.tags.includes(tag) && item.published).length} 条已发布</span><button onClick={() => void renameTag(tag)}>修改名称</button></div></div>) : <div className="admin-empty">暂无标签数据。</div>}</div>}
       </div>}
       <p className="admin-warning">账号访问由 Supabase Auth 保护。练习内容保存在 Supabase 云端；访客页面只展示已发布内容。移入回收站不会立即删除数据，历史版本会继续保留。</p>
     </section>

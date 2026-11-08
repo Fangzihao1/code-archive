@@ -49,7 +49,7 @@ export default function HomePage() {
   useEffect(() => {
     let active = true;
     getFeaturedExercises().then((rows) => { if (active) setItems(rows); })
-      .catch(() => { if (active) setItems(getExercises().filter((item) => item.published && item.featured && !item.archived)); });
+      .catch(() => { if (active) setItems(getExercises().filter((item) => item.published && item.featured)); });
     return () => { active = false; };
   }, []);
 

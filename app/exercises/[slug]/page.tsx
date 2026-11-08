@@ -23,7 +23,7 @@ export default function ExerciseDetailPage() {
     setLoading(true);
     getPublishedExercises()
       .then((rows) => { if (active) setItems(rows); })
-      .catch(() => { if (active) setItems(getExercises().filter((x) => x.published && !x.archived)); })
+      .catch(() => { if (active) setItems(getExercises().filter((x) => x.published)); })
       .finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
   }, []);

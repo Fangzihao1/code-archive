@@ -16,6 +16,7 @@ export type Exercise = {
   published: boolean;
   featured?: boolean;
   archived?: boolean;
+  updatedAt?: string;
 };
 
 export type ExerciseVersion = {
