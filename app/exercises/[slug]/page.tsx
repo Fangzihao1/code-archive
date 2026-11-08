@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
+import BackButton from "@/components/BackButton";
 import PythonRunner from "@/components/PythonRunner";
 import { getExercises } from "@/lib/storage";
 import { getPublishedExercises } from "@/lib/exercises-cloud";
@@ -88,7 +89,7 @@ export default function ExerciseDetailPage() {
   ];
 
   return <><SiteHeader /><main className="content-wrap detail-main">
-    <div className="breadcrumb"><Link href="/home">首页</Link><span>/</span><Link href="/exercises">课堂练习</Link><span>/</span><span>{item.title}</span></div>
+    <BackButton fallbackHref="/exercises" label="返回练习列表" /><div className="breadcrumb"><Link href="/home">首页</Link><span>/</span><Link href="/exercises">课堂练习</Link><span>/</span><span>{item.title}</span></div>
     <header className="detail-title">
       <div className="detail-title-top"><span className="eyebrow">{item.category} · PYTHON EXERCISE</span><span className="detail-index">EXERCISE {String(currentIndex + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}</span></div>
       <h1>{item.title}</h1><p>{item.summary}</p>
