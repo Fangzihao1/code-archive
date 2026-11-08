@@ -5928,3 +5928,29 @@ body:has(.page-main.page-simple-background) {
     column-gap: 12px !important;
   }
 }
+
+
+/* Optical baseline correction for the centered login masthead. */
+.auth-topbar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  column-gap: 18px !important;
+}
+.auth-brand {
+  display: inline-flex !important;
+  align-items: baseline !important;
+  height: 16px !important;
+  line-height: 16px !important;
+}
+.auth-brand span {
+  line-height: 16px !important;
+}
+.auth-top-note {
+  display: inline-block !important;
+  height: 16px !important;
+  line-height: 16px !important;
+  position: relative !important;
+  top: 2px !important;
+  margin: 0 !important;
+}
