@@ -5851,3 +5851,20 @@ body:has(.page-main.page-simple-background) {
   white-space: nowrap !important;
   margin: 0 !important;
 }
+
+/* Put both login masthead text groups on the exact same typographic baseline. */
+.auth-topbar {
+  align-items: baseline !important;
+}
+.auth-brand {
+  display: inline-block !important;
+  line-height: 16px !important;
+}
+.auth-brand span {
+  line-height: inherit !important;
+}
+.auth-top-note {
+  display: inline-block !important;
+  line-height: 16px !important;
+  vertical-align: baseline !important;
+}
