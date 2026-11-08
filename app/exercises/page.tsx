@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
+import BackButton from "@/components/BackButton";
 import { getExercises } from "@/lib/storage";
 import { getPublishedExercises } from "@/lib/exercises-cloud";
 import type { Exercise } from "@/lib/types";
