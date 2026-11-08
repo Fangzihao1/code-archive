@@ -7259,3 +7259,56 @@ body:has(.page-main.page-simple-background) {
     align-items: center !important;
   }
 }
+
+
+/* Keep the selection checkbox tightly beside the exercise title. */
+.admin-shell .admin-row-main {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  min-width: 0;
+}
+.admin-shell .admin-row-main > .admin-row-title {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 5px !important;
+  min-width: 0;
+  max-width: 100%;
+}
+.admin-shell .admin-row-main > .admin-row-title > strong {
+  display: block !important;
+  margin: 0 !important;
+  line-height: 1.45 !important;
+}
+.admin-shell .admin-row-main > .admin-row-title > .admin-row-check {
+  display: inline-flex !important;
+  flex: 0 0 14px !important;
+  width: 14px !important;
+  min-width: 14px !important;
+  height: 16px !important;
+  min-height: 16px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.admin-shell .admin-row-main > .admin-row-title > .admin-row-check input[type="checkbox"] {
+  display: block !important;
+  flex: 0 0 14px !important;
+  width: 14px !important;
+  height: 14px !important;
+  min-height: 14px !important;
+  margin: 0 !important;
+}
+.admin-shell .admin-row-main > small {
+  display: block !important;
+  max-width: 100%;
+  line-height: 1.6 !important;
+}
+@media (max-width: 760px) {
+  .admin-shell .admin-row-main { align-items: flex-start !important; }
+}
