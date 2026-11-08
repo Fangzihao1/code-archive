@@ -7765,3 +7765,35 @@ body:has(.page-main.page-simple-background) {
     animation-duration:.01ms !important; animation-iteration-count:1 !important;
   }
 }
+
+
+/* Mobile admin utility actions: compact horizontal pill buttons. */
+@media (max-width: 760px) {
+  .admin-top-actions {
+    display:flex !important;
+    flex-direction:row !important;
+    flex-wrap:wrap !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    gap:8px !important;
+    width:100% !important;
+  }
+  .admin-top-actions > button,
+  .admin-top-actions > a {
+    flex:0 0 auto !important;
+    width:auto !important;
+    min-width:0 !important;
+    min-height:34px !important;
+    height:34px !important;
+    padding:0 15px !important;
+    border-radius:999px !important;
+    font-size:11px !important;
+    line-height:1 !important;
+    white-space:nowrap !important;
+    box-sizing:border-box !important;
+  }
+  .admin-top-actions > a {
+    display:inline-flex !important;
+    align-items:center !important;
+  }
+}
