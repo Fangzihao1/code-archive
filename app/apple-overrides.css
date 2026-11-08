@@ -5826,3 +5826,28 @@ body:has(.page-main.page-simple-background) {
     transition: none !important;
   }
 }
+
+
+/* Align the login masthead wordmark and its right-side descriptor on one optical baseline. */
+.auth-topbar {
+  display: flex !important;
+  align-items: center !important;
+}
+.auth-brand {
+  display: inline-flex !important;
+  align-items: baseline !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+.auth-brand span {
+  display: inline !important;
+  line-height: 1 !important;
+  vertical-align: baseline !important;
+}
+.auth-top-note {
+  display: inline-flex !important;
+  align-items: baseline !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+}
