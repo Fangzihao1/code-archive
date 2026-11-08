@@ -5954,3 +5954,34 @@ body:has(.page-main.page-simple-background) {
   top: 2px !important;
   margin: 0 !important;
 }
+
+
+/* Final baseline lock: both header labels share the same flex baseline, with no manual vertical offset. */
+.auth-topbar {
+  display: flex !important;
+  align-items: baseline !important;
+  justify-content: center !important;
+  column-gap: 18px !important;
+}
+.auth-brand {
+  display: inline-block !important;
+  height: auto !important;
+  line-height: 1 !important;
+  vertical-align: baseline !important;
+}
+.auth-brand span {
+  line-height: inherit !important;
+  vertical-align: baseline !important;
+}
+.auth-top-note {
+  display: inline-block !important;
+  height: auto !important;
+  line-height: 1 !important;
+  position: static !important;
+  top: auto !important;
+  margin: 0 !important;
+  vertical-align: baseline !important;
+}
+@media (max-width: 560px) {
+  .auth-topbar { column-gap: 12px !important; }
+}
