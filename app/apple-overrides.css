@@ -6561,3 +6561,55 @@ body:has(.page-main.page-simple-background) {
   opacity: 1 !important;
   transform: translate3d(0, 0, 0) scale(1) !important;
 }
+
+
+/* Stronger, more visible reveal for homepage sections. */
+.archive-reveal {
+  transition:
+    opacity 1.25s cubic-bezier(.16, 1, .3, 1),
+    transform 1.25s cubic-bezier(.16, 1, .3, 1) !important;
+}
+.archive-reveal.archive-reveal-pending:not(.is-revealed) {
+  opacity: 0 !important;
+  transform: translate3d(0, 58px, 0) scale(.975) !important;
+}
+.archive-reveal.archive-reveal-pending.is-revealed {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) scale(1) !important;
+}
+
+/* The cover copy and interactive Python demo enter in a staggered sequence. */
+@keyframes home-cover-reveal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 42px, 0) scale(.985);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+.home-hero-copy {
+  animation: home-cover-reveal 1.2s cubic-bezier(.16, 1, .3, 1) .12s both !important;
+}
+.home-hero .hero-python-deck {
+  animation: home-cover-reveal 1.35s cubic-bezier(.16, 1, .3, 1) .38s both !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-hero-copy,
+  .home-hero .hero-python-deck {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .archive-reveal,
+  .archive-reveal.archive-reveal-pending:not(.is-revealed),
+  .archive-reveal.archive-reveal-pending.is-revealed {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
