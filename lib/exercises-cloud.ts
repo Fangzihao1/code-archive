@@ -79,6 +79,42 @@ export async function getExerciseVersions(exerciseId: string): Promise<ExerciseV
   }));
 }
 
+
+export async function getAllExerciseVersions(): Promise<ExerciseVersion[]> {
+  const supabase = createClient();
+  const { data, error } = await supabase.from("exercise_versions")
+    .select("id, exercise_id, original_exercise_id, version_number, snapshot, created_at")
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return (data ?? []).map((row) => ({
+    id: row.id as string,
+    exerciseId: row.exercise_id as string,
+    originalExerciseId: row.original_exercise_id as string,
+    versionNumber: row.version_number as number,
+    snapshot: fromRow(row.snapshot as ExerciseRow),
+    createdAt: row.created_at as string,
+  }));
+}
+
+export async function importExerciseVersions(versions: ExerciseVersion[]): Promise<void> {
+  if (!versions.length) return;
+  const supabase = createClient();
+  const rows = versions.map((version) => ({
+    id: version.id,
+    exercise_id: version.exerciseId,
+    original_exercise_id: version.originalExerciseId,
+    version_number: version.versionNumber,
+    snapshot: { ...toRow(version.snapshot), updated_at: version.snapshot.updatedAt ?? version.createdAt },
+    created_at: version.createdAt,
+    created_by: null,
+  }));
+  const { error } = await supabase.from("exercise_versions").upsert(rows, {
+    onConflict: "original_exercise_id,version_number",
+    ignoreDuplicates: true,
+  });
+  if (error) throw error;
+}
+
 export async function restoreExerciseVersion(version: ExerciseVersion): Promise<void> {
   const supabase = createClient();
   const { error } = await supabase.from("exercises")

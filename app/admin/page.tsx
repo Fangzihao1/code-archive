@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { getExercises } from "@/lib/storage";
 import {
-  archiveCloudExercise, bulkArchiveExercises, bulkSetPublished, getAdminExercises, getExerciseVersions, importLocalExercisesOnce,
+  archiveCloudExercise, bulkArchiveExercises, bulkSetPublished, getAdminExercises, getAllExerciseVersions, getExerciseVersions, importExerciseVersions, importLocalExercisesOnce,
   renameExerciseCategory, renameExerciseTag, restoreArchivedExercise, restoreExerciseVersion, saveCloudExercise, uploadExerciseImage, deleteExerciseImage,
 } from "@/lib/exercises-cloud";
 import type { Exercise, ExerciseVersion } from "@/lib/types";
@@ -232,24 +232,31 @@ export default function AdminPage() {
     }
   }
 
-  function exportBackup() {
-    const backup = {
-      product: "CODE ARCHIVE",
-      formatVersion: 2,
-      exportedAt: new Date().toISOString(),
-      itemCount: items.length,
-      exercises: items,
-    };
-    const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = `code-archive-backup-${new Date().toISOString().slice(0, 10)}.json`;
-    document.body.appendChild(anchor);
-    anchor.click();
-    anchor.remove();
-    URL.revokeObjectURL(url);
-    setMessage("备份文件已生成，包含练习内容与回收站状态，请妥善保存。");
+  async function exportBackup() {
+    try {
+      const versions = await getAllExerciseVersions();
+      const backup = {
+        product: "CODE ARCHIVE",
+        formatVersion: 3,
+        exportedAt: new Date().toISOString(),
+        itemCount: items.length,
+        versionCount: versions.length,
+        exercises: items,
+        versions,
+      };
+      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `code-archive-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+      setMessage(`备份文件已生成，包含 ${items.length} 条练习和 ${versions.length} 条历史版本。`);
+    } catch {
+      setMessage("备份导出失败，请检查历史版本表的访问权限后重试。");
+    }
   }
 
   async function importBackup(event: React.ChangeEvent<HTMLInputElement>) {
@@ -277,8 +284,24 @@ export default function AdminPage() {
       if (!window.confirm(`准备导入 ${imported.length} 条练习。相同 ID 的内容会被备份覆盖，其他记录保留，不会清空云端数据。是否继续？`)) return;
       setSaving(true);
       for (const item of imported) await saveCloudExercise(item);
+      const rawVersions = (payload as { versions?: unknown }).versions;
+      let restoredVersionCount = 0;
+      if (Array.isArray(rawVersions)) {
+        const validVersions = rawVersions.filter((value): value is ExerciseVersion => {
+          const version = value as Partial<ExerciseVersion>;
+          return typeof version.id === "string"
+            && typeof version.originalExerciseId === "string"
+            && typeof version.exerciseId === "string"
+            && typeof version.versionNumber === "number"
+            && typeof version.createdAt === "string"
+            && !!version.snapshot
+            && typeof version.snapshot === "object";
+        });
+        await importExerciseVersions(validVersions);
+        restoredVersionCount = validVersions.length;
+      }
       await loadItems();
-      setMessage(`已导入 ${imported.length} 条练习。相同 ID 的旧内容已由数据库自动保留历史版本。`);
+      setMessage(`已导入 ${imported.length} 条练习和 ${restoredVersionCount} 条历史版本。备份外的云端记录不会被删除。`);
     } catch {
       setMessage("导入失败：请确认文件是 CODE ARCHIVE 导出的有效 JSON 备份。");
     } finally {
