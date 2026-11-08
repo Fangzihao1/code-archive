@@ -5992,3 +5992,9 @@ body:has(.page-main.page-simple-background) {
   position: relative !important;
   top: 1px !important;
 }
+
+
+/* Lower the complete centered login masthead group slightly within the header. */
+.auth-topbar {
+  transform: translateY(8px) !important;
+}
