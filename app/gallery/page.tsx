@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
+import BackButton from "@/components/BackButton";
 import { getExercises } from "@/lib/storage";
 import { getPublishedExercises } from "@/lib/exercises-cloud";
 import type { Exercise } from "@/lib/types";
@@ -62,7 +63,7 @@ export default function GalleryPage() {
   }
 
   return <><SiteHeader /><main className="content-wrap page-main gallery-main page-simple-background">
-    <div className="page-intro"><div className="eyebrow">CODE GALLERY / LIVE COLLECTION</div><h1>代码图库<span>.</span></h1><p>从已发布的课堂练习中，浏览代码片段、筛选知识点，并进入完整练习。</p></div>
+    <BackButton fallbackHref="/home" /><div className="page-intro"><div className="eyebrow">CODE GALLERY / LIVE COLLECTION</div><h1>代码图库<span>.</span></h1><p>从已发布的课堂练习中，浏览代码片段、筛选知识点，并进入完整练习。</p></div>
     <div className="gallery-toolbar">
       <label className="gallery-search"><span>⌕</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索代码、练习名称或知识点…" aria-label="搜索代码片段" /></label>
       <label className="gallery-sort-control"><span>排序</span><select className="gallery-sort" value={sortBy} onChange={(event) => setSortBy(event.target.value as "newest" | "title" | "category")} aria-label="代码片段排序"><option value="newest">最新添加</option><option value="title">按名称</option><option value="category">按分类</option></select></label>
