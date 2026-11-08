@@ -5998,3 +5998,9 @@ body:has(.page-main.page-simple-background) {
 .auth-topbar {
   transform: translateY(8px) !important;
 }
+
+
+/* Give the centered login masthead more breathing room from the top edge. */
+.auth-topbar {
+  transform: translateY(20px) !important;
+}
