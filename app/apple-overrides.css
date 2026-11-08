@@ -5666,3 +5666,75 @@ body:has(.page-main.page-simple-background) {
     order: 3;
   }
 }
+
+
+/* Consistent quiet back navigation across inner pages. */
+.page-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 34px;
+  margin: 0 0 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #748397;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color .22s ease, transform .22s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.page-back-button span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  border: 1px solid #e6ebf1;
+  border-radius: 50%;
+  background: rgba(255,255,255,.72);
+  color: #64768c;
+  font-size: 15px;
+  transition: border-color .22s ease, background .22s ease, transform .22s ease;
+}
+.page-back-button:hover {
+  color: #2465a6;
+  transform: translateX(-2px);
+}
+.page-back-button:hover span {
+  border-color: #d5e3f2;
+  background: #f2f7fd;
+  transform: translateX(-2px);
+}
+.page-back-button:focus-visible {
+  outline: 2px solid rgba(0,113,227,.35);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+.admin-back-link {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0 12px;
+  color: #78879a;
+  font-size: 12px;
+  text-decoration: none;
+  transition: color .2s ease, transform .2s ease;
+}
+.admin-back-link:hover {
+  color: #2465a6;
+  transform: translateX(-2px);
+}
+@media (max-width: 640px) {
+  .page-back-button {
+    margin-bottom: 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-back-button,
+  .page-back-button span,
+  .admin-back-link {
+    transition: none !important;
+  }
+}
