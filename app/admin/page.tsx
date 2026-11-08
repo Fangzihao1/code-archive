@@ -90,6 +90,26 @@ export default function AdminPage() {
     }
   }
 
+  function exportBackup() {
+    const backup = {
+      product: "CODE ARCHIVE",
+      formatVersion: 1,
+      exportedAt: new Date().toISOString(),
+      itemCount: items.length,
+      exercises: items,
+    };
+    const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `code-archive-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    URL.revokeObjectURL(url);
+    setMessage("备份文件已生成，请妥善保存到安全位置。");
+  }
+
   const isError = /失败|请先|已被使用/.test(message);
   const categories = Array.from(new Set(items.map((item) => item.category))).sort();
   const tags = Array.from(new Set(items.flatMap((item) => item.tags))).sort();
@@ -101,7 +121,7 @@ export default function AdminPage() {
     </aside>
 
     <section className="admin-content">
-      <div className="admin-top"><div><div className="eyebrow">ADMIN / DASHBOARD</div><h1>{activeSection}</h1><p>{activeSection === "工作台" ? "查看内容概况，快速进入练习管理。" : activeSection === "练习管理" ? "创建、编辑、发布或下架 Python 课堂练习。" : "查看当前练习中实际使用的分类与标签。"}</p></div><div className="admin-top-actions"><button className="button button-light" onClick={() => void loadItems()} disabled={loading}>{loading ? "同步中…" : "↻ 刷新数据"}</button><Link href="/home" className="text-link">查看网站 ↗</Link></div></div>
+      <div className="admin-top"><div><div className="eyebrow">ADMIN / DASHBOARD</div><h1>{activeSection}</h1><p>{activeSection === "工作台" ? "查看内容概况，快速进入练习管理。" : activeSection === "练习管理" ? "创建、编辑、发布或下架 Python 课堂练习。" : "查看当前练习中实际使用的分类与标签。"}</p></div><div className="admin-top-actions"><button className="button button-light" onClick={exportBackup} disabled={loading || items.length === 0}>↓ 导出备份</button><button className="button button-light" onClick={() => void loadItems()} disabled={loading}>{loading ? "同步中…" : "↻ 刷新数据"}</button><Link href="/home" className="text-link">查看网站 ↗</Link></div></div>
 
       <div className="stats-grid"><div><span>练习总数</span><strong>{loading ? "—" : items.length}</strong></div><div><span>已发布</span><strong>{loading ? "—" : items.filter((item) => item.published).length}</strong></div><div><span>草稿</span><strong>{loading ? "—" : items.filter((item) => !item.published).length}</strong></div><div><span>主页精选</span><strong>{loading ? "—" : items.filter((item) => item.published && item.featured).length}</strong></div></div>
 
