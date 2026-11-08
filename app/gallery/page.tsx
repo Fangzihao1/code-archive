@@ -15,6 +15,7 @@ export default function GalleryPage() {
   const [query, setQuery] = useState("");
   const [copied, setCopied] = useState<string | null>(null);
   const [layout, setLayout] = useState<"grid" | "list">("grid");
+  const [sortBy, setSortBy] = useState<"newest" | "title" | "category">("newest");
   const [previewItem, setPreviewItem] = useState<Exercise | null>(null);
 
   useEffect(() => {
@@ -44,6 +45,11 @@ export default function GalleryPage() {
     const matchesQuery = !q || `${item.title} ${item.summary} ${item.code} ${item.tags.join(" ")}`.toLowerCase().includes(q);
     return matchesCategory && matchesQuery;
   }), [items, category, query]);
+  const sortedItems = useMemo(() => [...filtered].sort((a, b) => {
+    if (sortBy === "title") return a.title.localeCompare(b.title, "zh-CN");
+    if (sortBy === "category") return a.category.localeCompare(b.category, "zh-CN") || a.title.localeCompare(b.title, "zh-CN");
+    return b.date.localeCompare(a.date);
+  }), [filtered, sortBy]);
 
   async function copyCode(item: Exercise) {
     try {
@@ -59,6 +65,7 @@ export default function GalleryPage() {
     <div className="page-intro"><div className="eyebrow">CODE GALLERY / LIVE COLLECTION</div><h1>代码图库<span>.</span></h1><p>从已发布的课堂练习中，浏览代码片段、筛选知识点，并进入完整练习。</p></div>
     <div className="gallery-toolbar">
       <label className="gallery-search"><span>⌕</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索代码、练习名称或知识点…" aria-label="搜索代码片段" /></label>
+      <label className="gallery-sort-control"><span>排序</span><select className="gallery-sort" value={sortBy} onChange={(event) => setSortBy(event.target.value as "newest" | "title" | "category")} aria-label="代码片段排序"><option value="newest">最新添加</option><option value="title">按名称</option><option value="category">按分类</option></select></label>
       <div className="gallery-view-toggle" aria-label="切换展示方式"><button className={layout === "grid" ? "active" : ""} onClick={() => setLayout("grid")} aria-pressed={layout === "grid"}>▦ 网格</button><button className={layout === "list" ? "active" : ""} onClick={() => setLayout("list")} aria-pressed={layout === "list"}>☷ 列表</button></div>
     </div>
     <div className="gallery-filter-row">{categories.map((entry) => <button key={entry} className={category === entry ? "active" : ""} onClick={() => setCategory(entry)}>{entry}</button>)}</div>
@@ -66,7 +73,7 @@ export default function GalleryPage() {
 
     {loading ? <div className="detail-loading"><span className="loading-dot" /><p>正在同步已发布的代码片段…</p></div>
       : filtered.length ? <div className={layout === "grid" ? "code-gallery-grid" : "code-gallery-list"}>
-        {filtered.map((item, index) => <article className="code-gallery-card" key={item.id}>
+        {sortedItems.map((item, index) => <article className="code-gallery-card" key={item.id}>
           <div className="code-gallery-top"><span className="gallery-window-dots"><i /><i /><i /></span><small>{item.category} / {String(index + 1).padStart(2, "0")}</small><button onClick={() => setPreviewItem(item)}>放大预览 ↗</button></div>
           <div className="code-gallery-info"><span className="eyebrow">{item.category} · PYTHON</span><h2>{item.title}</h2><p>{item.summary}</p></div>
           <pre className="gallery-code-preview">{item.code.split("\n").slice(0, 7).map((line, lineIndex) => <span key={lineIndex}><i>{String(lineIndex + 1).padStart(2, "0")}</i>{line || " "}</span>)}{item.code.split("\n").length > 7 && <em>… 更多代码</em>}</pre>
