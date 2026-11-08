@@ -6481,3 +6481,16 @@ body:has(.page-main.page-simple-background) {
 @media (hover: none), (prefers-reduced-motion: reduce) {
   .auth-card-flipper::before { transition: none !important; }
 }
+
+
+/* Keep both ends of the pointer highlight within the card's left and right edges. */
+.auth-card-flipper::before {
+  left: clamp(56px, var(--auth-pointer-x, 50%), calc(100% - 56px)) !important;
+  max-width: calc(100% - 24px) !important;
+}
+@media (max-width: 420px) {
+  .auth-card-flipper::before {
+    left: clamp(48px, var(--auth-pointer-x, 50%), calc(100% - 48px)) !important;
+    width: 96px !important;
+  }
+}
