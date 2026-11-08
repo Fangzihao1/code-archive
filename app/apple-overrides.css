@@ -6516,3 +6516,32 @@ body:has(.page-main.page-simple-background) {
   transition: opacity .16s ease-out !important;
   pointer-events: none !important;
 }
+
+
+/* Respect the rounded top corners: keep the moving highlight away from the card's curved ends. */
+.auth-card-flipper::before {
+  left: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  top: 1px !important;
+  height: 2px !important;
+  transform: none !important;
+  border-radius: 0 !important;
+  clip-path: inset(0 22px 0 22px round 999px) !important;
+  background: radial-gradient(
+    ellipse 76px 4px at var(--auth-pointer-x, 50%) 50%,
+    rgba(255,255,255,.98) 0%,
+    rgba(177,207,240,.72) 30%,
+    rgba(130,174,224,.18) 64%,
+    transparent 100%
+  ) !important;
+  box-shadow: none !important;
+  opacity: var(--auth-pointer-visible, 0) !important;
+  transition: opacity .22s ease-out !important;
+  pointer-events: none !important;
+}
+@media (max-width: 420px) {
+  .auth-card-flipper::before {
+    clip-path: inset(0 18px 0 18px round 999px) !important;
+  }
+}
