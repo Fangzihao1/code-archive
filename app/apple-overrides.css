@@ -6004,3 +6004,23 @@ body:has(.page-main.page-simple-background) {
 .auth-topbar {
   transform: translateY(20px) !important;
 }
+
+
+/* Restore the masthead divider to its original header height; center the text group in the space above it. */
+.auth-topbar {
+  height: 76px !important;
+  min-height: 76px !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  column-gap: 18px !important;
+}
+.auth-top-note {
+  position: relative !important;
+  top: 1px !important;
+}
+@media (max-width: 560px) {
+  .auth-topbar { column-gap: 12px !important; }
+}
