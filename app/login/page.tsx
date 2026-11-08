@@ -23,6 +23,7 @@ export default function LoginPage() {
     return () => window.removeEventListener("pointermove", updateHighlight);
   }, []);
   const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [isFlipped, setIsFlipped] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -109,39 +110,65 @@ export default function LoginPage() {
           <p>一个持续生长的 Python 学习档案。<br />整理代码，记录思考，也展示每一步进步。</p>
           <div className="auth-intro-meta"><span>01 / LEARN</span><span>02 / BUILD</span><span>03 / ARCHIVE</span></div>
         </div>
-        <div ref={authCardRef} className="auth-card">
-          <div className="auth-card-heading">
-            <span className="auth-card-kicker">{mode === "signin" ? "WELCOME BACK" : "GET STARTED"}</span>
-            <h2>{mode === "signin" ? "登录你的档案" : "创建学习账号"}</h2>
-            <p>{mode === "signin" ? "输入账号信息，继续你的学习记录。" : "注册个人账号，开启代码收藏之旅。"}</p>
+        <div ref={authCardRef} className={`auth-card${isFlipped ? " is-flipped" : ""}`}>
+          <div className="auth-card-flipper">
+            <section className="auth-card-face auth-card-front" aria-hidden={isFlipped}>
+              <button
+                type="button"
+                className="auth-flip-trigger"
+                onClick={() => setIsFlipped(true)}
+                aria-label="翻转卡片，查看 CODE ARCHIVE 介绍"
+                tabIndex={isFlipped ? -1 : 0}
+              >↗</button>
+              <div className="auth-card-heading">
+                <span className="auth-card-kicker">{mode === "signin" ? "WELCOME BACK" : "GET STARTED"}</span>
+                <h2>{mode === "signin" ? "登录你的档案" : "创建学习账号"}</h2>
+                <p>{mode === "signin" ? "输入账号信息，继续你的学习记录。" : "注册个人账号，开启代码收藏之旅。"}</p>
+              </div>
+              <form onSubmit={submit} className="auth-form">
+                <label>邮箱地址
+                  <input type="email" required autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@example.com" />
+                </label>
+                <label>密码
+                  <input type="password" required minLength={6} autoComplete={mode === "signin" ? "current-password" : "new-password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="至少 6 位字符" />
+                </label>
+                {mode === "signup" && <label>确认密码
+                  <input type="password" required minLength={6} autoComplete="new-password" value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="再次输入密码" />
+                </label>}
+                {error && <div className="auth-alert auth-error" role="alert">{error}</div>}
+                {message && <div className="auth-alert auth-success" role="status">{message}</div>}
+                <button className="auth-submit" disabled={busy}>{busy ? "请稍候…" : mode === "signin" ? "登录" : "创建账号"} <span>↗</span></button>
+              </form>
+              <div className="auth-switch">
+                {mode === "signin" ? "还没有账号？" : "已经拥有账号？"}
+                <button type="button" onClick={() => { setMode(mode === "signin" ? "signup" : "signin"); setError(""); setMessage(""); }}>
+                  {mode === "signin" ? "立即注册" : "返回登录"}
+                </button>
+              </div>
+              {mode === "signin" && (
+                <div className="auth-demo">
+                  <div><strong>教师 / 访客体验</strong><span>无需注册，直接进入体验环境。</span></div>
+                  <button type="button" onClick={enterDemo} disabled={demoBusy}>{demoBusy ? "正在进入…" : "进入体验账号 ↗"}</button>
+                </div>
+              )}
+              <div className="auth-card-foot"><span>SECURE SIGN IN</span><span>© CODE ARCHIVE 2026</span></div>
+            </section>
+            <section className="auth-card-face auth-card-back" aria-hidden={!isFlipped}>
+              <div className="auth-back-mark">CA<span>/ PYTHON</span></div>
+              <span className="auth-card-kicker">A PERSONAL LEARNING SPACE</span>
+              <h2>让代码留下<br /><em>成长的轨迹。</em></h2>
+              <p>CODE ARCHIVE 是一个持续生长的 Python 学习档案，用来整理练习、收藏代码，也记录每一次探索与进步。</p>
+              <div className="auth-back-index">
+                <span><i>01</i> LEARN</span>
+                <span><i>02</i> BUILD</span>
+                <span><i>03</i> ARCHIVE</span>
+              </div>
+              <button type="button" className="auth-back-return" onClick={() => setIsFlipped(false)} tabIndex={isFlipped ? 0 : -1}>
+                <span>↶</span> 返回登录
+              </button>
+              <div className="auth-card-foot"><span>CODE ARCHIVE / PYTHON</span><span>EST. 2026</span></div>
+            </section>
           </div>
-          <form onSubmit={submit} className="auth-form">
-            <label>邮箱地址
-              <input type="email" required autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@example.com" />
-            </label>
-            <label>密码
-              <input type="password" required minLength={6} autoComplete={mode === "signin" ? "current-password" : "new-password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="至少 6 位字符" />
-            </label>
-            {mode === "signup" && <label>确认密码
-              <input type="password" required minLength={6} autoComplete="new-password" value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="再次输入密码" />
-            </label>}
-            {error && <div className="auth-alert auth-error" role="alert">{error}</div>}
-            {message && <div className="auth-alert auth-success" role="status">{message}</div>}
-            <button className="auth-submit" disabled={busy}>{busy ? "请稍候…" : mode === "signin" ? "登录" : "创建账号"} <span>↗</span></button>
-          </form>
-          <div className="auth-switch">
-            {mode === "signin" ? "还没有账号？" : "已经拥有账号？"}
-            <button type="button" onClick={() => { setMode(mode === "signin" ? "signup" : "signin"); setError(""); setMessage(""); }}>
-              {mode === "signin" ? "立即注册" : "返回登录"}
-            </button>
-          </div>
-          {mode === "signin" && (
-            <div className="auth-demo">
-              <div><strong>教师 / 访客体验</strong><span>无需注册，直接进入体验环境。</span></div>
-              <button type="button" onClick={enterDemo} disabled={demoBusy}>{demoBusy ? "正在进入…" : "进入体验账号 ↗"}</button>
-            </div>
-          )}
-          <div className="auth-card-foot"><span>SECURE SIGN IN</span><span>© CODE ARCHIVE 2026</span></div>
         </div>
       </section>
     </main>
