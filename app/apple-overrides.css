@@ -5985,3 +5985,10 @@ body:has(.page-main.page-simple-background) {
 @media (max-width: 560px) {
   .auth-topbar { column-gap: 12px !important; }
 }
+
+
+/* Tiny optical drop for the descriptor only; preserve the centered wordmark baseline. */
+.auth-top-note {
+  position: relative !important;
+  top: 1px !important;
+}
