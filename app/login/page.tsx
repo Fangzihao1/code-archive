@@ -1,12 +1,27 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
   const router = useRouter();
+  const authCardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateHighlight = (event: PointerEvent) => {
+      const card = authCardRef.current;
+      if (!card) return;
+      const bounds = card.getBoundingClientRect();
+      const rawX = ((event.clientX - bounds.left) / bounds.width) * 100;
+      const x = Math.max(0, Math.min(100, rawX));
+      card.style.setProperty("--auth-pointer-x", `${x}%`);
+      card.style.setProperty("--auth-pointer-visible", rawX > 0 && rawX < 100 ? "1" : "0");
+    };
+    window.addEventListener("pointermove", updateHighlight, { passive: true });
+    return () => window.removeEventListener("pointermove", updateHighlight);
+  }, []);
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -94,17 +109,7 @@ export default function LoginPage() {
           <p>一个持续生长的 Python 学习档案。<br />整理代码，记录思考，也展示每一步进步。</p>
           <div className="auth-intro-meta"><span>01 / LEARN</span><span>02 / BUILD</span><span>03 / ARCHIVE</span></div>
         </div>
-        <div
-          className="auth-card"
-          onMouseMove={(event) => {
-            const bounds = event.currentTarget.getBoundingClientRect();
-            const x = ((event.clientX - bounds.left) / bounds.width) * 100;
-            event.currentTarget.style.setProperty("--auth-pointer-x", String(Math.max(0, Math.min(100, x))) + "%");
-          }}
-          onMouseLeave={(event) => {
-            event.currentTarget.style.setProperty("--auth-pointer-x", "50%");
-          }}
-        >
+        <div ref={authCardRef} className="auth-card">
           <div className="auth-card-heading">
             <span className="auth-card-kicker">{mode === "signin" ? "WELCOME BACK" : "GET STARTED"}</span>
             <h2>{mode === "signin" ? "登录你的档案" : "创建学习账号"}</h2>
