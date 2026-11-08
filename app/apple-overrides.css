@@ -5738,3 +5738,58 @@ body:has(.page-main.page-simple-background) {
     transition: none !important;
   }
 }
+
+/* Login entrance: reveal the copy and form card in a calm, staggered sequence. */
+.auth-intro {
+  animation: none !important;
+}
+.auth-intro > .auth-eyebrow,
+.auth-intro > h1,
+.auth-intro > p,
+.auth-intro > .auth-intro-meta {
+  opacity: 0;
+  animation: auth-copy-reveal .95s cubic-bezier(.2,.72,.25,1) both;
+}
+.auth-intro > .auth-eyebrow { animation-delay: .12s; }
+.auth-intro > h1 { animation-delay: .32s; }
+.auth-intro > p { animation-delay: .56s; }
+.auth-intro > .auth-intro-meta { animation-delay: .78s; }
+.auth-card {
+  animation: auth-card-reveal 1.05s cubic-bezier(.2,.72,.25,1) .38s both !important;
+}
+.auth-card-heading,
+.auth-form,
+.auth-switch,
+.auth-demo,
+.auth-card-foot {
+  opacity: 0;
+  animation: auth-copy-reveal .8s cubic-bezier(.2,.72,.25,1) both;
+}
+.auth-card-heading { animation-delay: .58s; }
+.auth-form { animation-delay: .76s; }
+.auth-switch { animation-delay: .94s; }
+.auth-demo { animation-delay: 1.08s; }
+.auth-card-foot { animation-delay: 1.2s; }
+@keyframes auth-copy-reveal {
+  from { opacity: 0; transform: translate3d(0,16px,0); }
+  to { opacity: 1; transform: translate3d(0,0,0); }
+}
+@keyframes auth-card-reveal {
+  from { opacity: 0; transform: translate3d(0,26px,0) scale(.985); }
+  to { opacity: 1; transform: translate3d(0,0,0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .auth-intro > .auth-eyebrow,
+  .auth-intro > h1,
+  .auth-intro > p,
+  .auth-intro > .auth-intro-meta,
+  .auth-card,
+  .auth-card-heading,
+  .auth-form,
+  .auth-switch,
+  .auth-demo,
+  .auth-card-foot {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}
