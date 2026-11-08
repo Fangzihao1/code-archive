@@ -6435,3 +6435,12 @@ body:has(.page-main.page-simple-background) {
     transition: none !important;
   }
 }
+
+
+/* Keep every card turn moving in the same left-to-right direction, including return. */
+.auth-card-flipper {
+  transform: var(--auth-card-transform, rotateY(0deg)) !important;
+}
+.auth-card.is-flipped .auth-card-flipper {
+  transform: var(--auth-card-transform, rotateY(180deg)) !important;
+}
