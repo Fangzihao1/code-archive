@@ -7797,3 +7797,30 @@ body:has(.page-main.page-simple-background) {
     align-items:center !important;
   }
 }
+
+
+/* Prevent the homepage closing statement card from overflowing narrow screens. */
+@media (max-width: 760px) {
+  main > .about-strip {
+    width: calc(100% - 32px) !important;
+    max-width: calc(100% - 32px) !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    margin: 30px auto 38px !important;
+    padding: 28px 20px !important;
+  }
+  main > .about-strip > * {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  main > .about-strip h2,
+  main > .about-strip > p {
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+  }
+  main > .about-strip .button-light {
+    max-width: 100% !important;
+    white-space: normal !important;
+  }
+}
