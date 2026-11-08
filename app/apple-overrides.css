@@ -6345,3 +6345,93 @@ body:has(.page-main.page-simple-background) {
     margin-top: 16px !important;
   }
 }
+
+
+/* Rebuild the login card as a true two-face 3D card; avoid overflow clipping that flattens the 3D scene. */
+.auth-card {
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  perspective: 1600px !important;
+  transform-style: preserve-3d !important;
+}
+.auth-card:hover {
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+.auth-card-flipper {
+  position: relative !important;
+  display: grid !important;
+  grid-template-areas: "card-face" !important;
+  width: 100% !important;
+  height: auto !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: 20px !important;
+  background: transparent !important;
+  box-shadow: 0 18px 55px rgba(29,29,31,.08) !important;
+  transform-style: preserve-3d !important;
+  transition: transform .82s cubic-bezier(.2,.72,.18,1) !important;
+  will-change: transform;
+}
+.auth-card.is-flipped .auth-card-flipper {
+  transform: rotateY(180deg) !important;
+}
+.auth-card-face {
+  grid-area: card-face !important;
+  position: relative !important;
+  inset: auto !important;
+  width: 100% !important;
+  min-height: 540px !important;
+  box-sizing: border-box !important;
+  padding: 34px !important;
+  border: 1px solid #e8e8ed !important;
+  border-radius: 20px !important;
+  background: #fff !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+  transform-style: preserve-3d !important;
+}
+.auth-card-front {
+  z-index: 1 !important;
+  transform: rotateY(0deg) !important;
+  pointer-events: auto !important;
+}
+.auth-card-back {
+  z-index: 2 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  transform: rotateY(180deg) !important;
+  pointer-events: none !important;
+  overflow: visible !important;
+  background:
+    radial-gradient(ellipse at 88% 8%, rgba(197,219,246,.52), transparent 48%),
+    linear-gradient(145deg, #fff 0%, #f7faff 100%) !important;
+}
+.auth-card.is-flipped .auth-card-front {
+  pointer-events: none !important;
+}
+.auth-card.is-flipped .auth-card-back {
+  pointer-events: auto !important;
+}
+.auth-card-back .auth-card-foot {
+  margin-top: auto !important;
+}
+.auth-card:hover .auth-card-flipper {
+  box-shadow: 0 24px 64px rgba(29,29,31,.11) !important;
+}
+@media (max-width: 600px) {
+  .auth-card-face {
+    min-height: 540px !important;
+    padding: 25px 20px !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .auth-card-flipper {
+    transition: none !important;
+  }
+}
