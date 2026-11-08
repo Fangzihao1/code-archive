@@ -6212,3 +6212,136 @@ body:has(.page-main.page-simple-background) {
     transition: none !important;
   }
 }
+
+
+/* Correct face stacking and hit-testing so the reverse side is usable and can flip back. */
+.auth-card-front {
+  z-index: auto !important;
+  pointer-events: auto;
+  transform: rotateY(0deg);
+}
+.auth-card-back {
+  z-index: 2 !important;
+  pointer-events: none;
+  transform: rotateY(180deg);
+}
+.auth-card.is-flipped .auth-card-front {
+  pointer-events: none;
+}
+.auth-card.is-flipped .auth-card-back {
+  pointer-events: auto;
+}
+.auth-card-flipper {
+  position: relative !important;
+  transform-style: preserve-3d !important;
+}
+.auth-card-face {
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+}
+
+/* The reverse is an archive information panel, not a second login screen. */
+.auth-card-back {
+  justify-content: flex-start !important;
+  padding-top: 30px !important;
+  background:
+    radial-gradient(ellipse at 88% 8%, rgba(197,219,246,.52), transparent 48%),
+    linear-gradient(145deg, #fff 0%, #f7faff 100%) !important;
+}
+.auth-back-top {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 38px;
+}
+.auth-back-mark {
+  margin: 0 !important;
+  font-size: 15px !important;
+  letter-spacing: -.35px;
+}
+.auth-back-mark span {
+  margin-left: 4px;
+  font-size: 9px !important;
+  letter-spacing: 1px !important;
+}
+.auth-back-number {
+  color: #a2afbf;
+  font: 9px "DM Mono", monospace;
+  letter-spacing: 1px;
+}
+.auth-card-back h2 {
+  margin: 15px 0 12px !important;
+  font-size: 31px !important;
+  line-height: 1.35 !important;
+}
+.auth-card-back > p {
+  max-width: 300px !important;
+  font-size: 11px !important;
+}
+.auth-back-features {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 24px;
+  border-top: 1px solid #e9eef5;
+}
+.auth-back-features > div {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-height: 48px;
+  border-bottom: 1px solid #e9eef5;
+}
+.auth-back-features > div > i {
+  color: #7d9fc6;
+  font: 9px "DM Mono", monospace;
+  font-style: normal;
+}
+.auth-back-features > div > span {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+}
+.auth-back-features strong {
+  color: #35465b;
+  font-size: 11px;
+  font-weight: 600;
+}
+.auth-back-features small {
+  color: #9aa7b7;
+  font-size: 9px;
+}
+.auth-back-features b {
+  color: #9aacc1;
+  font-size: 13px;
+  font-weight: 400;
+}
+.auth-back-return {
+  margin-top: 22px !important;
+}
+.auth-card-back .auth-card-foot {
+  margin-top: auto !important;
+}
+@media (max-width: 600px) {
+  .auth-card-back {
+    padding-top: 24px !important;
+  }
+  .auth-back-top {
+    margin-bottom: 26px;
+  }
+  .auth-card-back h2 {
+    font-size: 27px !important;
+  }
+  .auth-back-features {
+    margin-top: 18px;
+  }
+  .auth-back-features > div {
+    min-height: 44px;
+  }
+  .auth-back-return {
+    margin-top: 16px !important;
+  }
+}
