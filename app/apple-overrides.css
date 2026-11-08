@@ -7312,3 +7312,33 @@ body:has(.page-main.page-simple-background) {
 @media (max-width: 760px) {
   .admin-shell .admin-row-main { align-items: flex-start !important; }
 }
+
+
+/* Slightly loosen title-checkbox spacing and restore a plain native checkbox. */
+.admin-shell .admin-row-main > .admin-row-title {
+  gap: 9px !important;
+}
+.admin-shell .admin-row-main > .admin-row-title > .admin-row-check input[type="checkbox"] {
+  appearance: auto !important;
+  -webkit-appearance: checkbox !important;
+  display: inline-block !important;
+  width: 14px !important;
+  height: 14px !important;
+  min-height: 14px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: initial !important;
+  border-radius: 0 !important;
+  background: initial !important;
+  box-shadow: none !important;
+  accent-color: auto !important;
+  vertical-align: middle !important;
+}
+.admin-shell .admin-row-main > .admin-row-title > .admin-row-check input[type="checkbox"]::after {
+  content: none !important;
+}
+.admin-shell .admin-row-main > .admin-row-title > .admin-row-check input[type="checkbox"]:checked {
+  border: initial !important;
+  background: initial !important;
+  box-shadow: none !important;
+}
