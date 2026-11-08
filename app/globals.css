@@ -590,3 +590,39 @@
   line-height:22px!important;
   box-sizing:border-box;
 }
+
+
+/* In-app permanent deletion confirmation dialog */
+.permanent-delete-overlay{
+  position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:rgba(25,30,38,.28);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);
+  animation:deleteOverlayIn .18s ease-out;
+}
+.permanent-delete-dialog{
+  width:min(100%,420px);padding:30px;border:1px solid rgba(255,255,255,.8);border-radius:24px;
+  background:rgba(255,255,255,.97);box-shadow:0 24px 80px rgba(25,35,50,.18);
+  text-align:center;animation:deleteDialogIn .22s cubic-bezier(.2,.75,.25,1);
+}
+.permanent-delete-icon{
+  display:grid;place-items:center;width:42px;height:42px;margin:0 auto 16px;border-radius:50%;
+  background:#fff1ef;color:#c64b43;font-size:21px;font-weight:600;
+}
+.permanent-delete-eyebrow{font-size:10px;letter-spacing:.16em;color:#a0a5ad;font-weight:650}
+.permanent-delete-dialog h2{margin:9px 0 10px;font-size:21px;letter-spacing:-.04em;color:#242932}
+.permanent-delete-dialog p{margin:0 auto;color:#777f8b;font-size:13px;line-height:1.85;max-width:330px;overflow-wrap:anywhere}
+.permanent-delete-dialog p strong{color:#343b46;font-weight:600}
+.permanent-delete-actions{display:flex;gap:10px;margin-top:25px}
+.permanent-delete-actions button{flex:1;min-height:43px;border:0;border-radius:13px;font-size:13px;font-weight:550;cursor:pointer;transition:background .2s,transform .2s,opacity .2s}
+.permanent-delete-actions button:active{transform:scale(.98)}
+.permanent-delete-actions button:disabled{opacity:.55;cursor:wait}
+.permanent-delete-cancel{background:#f1f2f4;color:#555e6b}
+.permanent-delete-cancel:hover{background:#e9ebee}
+.permanent-delete-confirm{background:#c94d45;color:#fff}
+.permanent-delete-confirm:hover{background:#b9413a}
+@keyframes deleteOverlayIn{from{opacity:0}to{opacity:1}}
+@keyframes deleteDialogIn{from{opacity:0;transform:translateY(9px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:520px){
+  .permanent-delete-overlay{padding:18px}
+  .permanent-delete-dialog{padding:26px 22px;border-radius:21px}
+  .permanent-delete-actions{flex-direction:column-reverse}
+}
