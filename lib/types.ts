@@ -15,6 +15,16 @@ export type Exercise = {
   externalUrl: string;
   published: boolean;
   featured?: boolean;
+  archived?: boolean;
+};
+
+export type ExerciseVersion = {
+  id: string;
+  exerciseId: string;
+  originalExerciseId: string;
+  versionNumber: number;
+  snapshot: Exercise;
+  createdAt: string;
 };
 
 export const STORAGE_KEY = "code-archive-exercises-v1";

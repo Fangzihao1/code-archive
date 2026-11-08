@@ -1,6 +1,6 @@
 "use client";
 
-import type { Exercise } from "@/lib/types";
+import type { Exercise, ExerciseVersion } from "@/lib/types";
 import { getExercises, saveExercises } from "@/lib/storage";
 import { createClient } from "@/lib/supabase/client";
 
@@ -8,7 +8,8 @@ type ExerciseRow = {
   id: string; slug: string; title: string; summary: string; category: string;
   tags: string[]; date: string; code: string; stdin: string; expected: string;
   description: string; learning: string; allow_run: boolean; external_url: string;
-  published: boolean; featured: boolean; created_at?: string; updated_at?: string;
+  published: boolean; featured: boolean; archived: boolean;
+  created_at?: string; updated_at?: string;
 };
 
 const MIGRATION_KEY = "code-archive-cloud-import-v1";
@@ -20,7 +21,8 @@ function toRow(item: Exercise): ExerciseRow {
     code: item.code, stdin: item.stdin, expected: item.expected,
     description: item.description, learning: item.learning,
     allow_run: item.allowRun, external_url: item.externalUrl,
-    published: item.published, featured: !!item.featured, updated_at: new Date().toISOString(),
+    published: item.published, featured: !!item.featured,
+    archived: !!item.archived, updated_at: new Date().toISOString(),
   };
 }
 
@@ -31,14 +33,14 @@ function fromRow(row: ExerciseRow): Exercise {
     code: row.code, stdin: row.stdin, expected: row.expected,
     description: row.description, learning: row.learning,
     allowRun: row.allow_run, externalUrl: row.external_url,
-    published: row.published, featured: !!row.featured,
+    published: row.published, featured: !!row.featured, archived: !!row.archived,
   };
 }
 
 export async function getPublishedExercises(): Promise<Exercise[]> {
   const supabase = createClient();
   const { data, error } = await supabase.from("exercises").select("*")
-    .eq("published", true).order("date", { ascending: false });
+    .eq("published", true).eq("archived", false).order("date", { ascending: false });
   if (error) throw error;
   return (data ?? []).map((row) => fromRow(row as ExerciseRow));
 }
@@ -46,7 +48,7 @@ export async function getPublishedExercises(): Promise<Exercise[]> {
 export async function getFeaturedExercises(): Promise<Exercise[]> {
   const supabase = createClient();
   const { data, error } = await supabase.from("exercises").select("*")
-    .eq("published", true).eq("featured", true).order("date", { ascending: false });
+    .eq("published", true).eq("featured", true).eq("archived", false).order("date", { ascending: false });
   if (error) throw error;
   return (data ?? []).map((row) => fromRow(row as ExerciseRow));
 }
@@ -57,6 +59,35 @@ export async function getAdminExercises(): Promise<Exercise[]> {
     .order("updated_at", { ascending: false });
   if (error) throw error;
   return (data ?? []).map((row) => fromRow(row as ExerciseRow));
+}
+
+export async function getExerciseVersions(exerciseId: string): Promise<ExerciseVersion[]> {
+  const supabase = createClient();
+  const { data, error } = await supabase.from("exercise_versions")
+    .select("id, exercise_id, original_exercise_id, version_number, snapshot, created_at")
+    .eq("original_exercise_id", exerciseId)
+    .order("version_number", { ascending: false });
+  if (error) throw error;
+  return (data ?? []).map((row) => ({
+    id: row.id as string,
+    exerciseId: row.exercise_id as string,
+    originalExerciseId: row.original_exercise_id as string,
+    versionNumber: row.version_number as number,
+    snapshot: fromRow(row.snapshot as ExerciseRow),
+    createdAt: row.created_at as string,
+  }));
+}
+
+export async function restoreExerciseVersion(version: ExerciseVersion): Promise<void> {
+  const supabase = createClient();
+  const { error } = await supabase.from("exercises")
+    .upsert(toRow({ ...version.snapshot, archived: false }), { onConflict: "id" });
+  if (error) throw error;
+  const restored = { ...version.snapshot, archived: false };
+  const local = getExercises();
+  saveExercises(local.some((item) => item.id === restored.id)
+    ? local.map((item) => item.id === restored.id ? restored : item)
+    : [restored, ...local]);
 }
 
 export async function saveCloudExercise(item: Exercise): Promise<void> {
@@ -70,11 +101,25 @@ export async function saveCloudExercise(item: Exercise): Promise<void> {
   saveExercises(next);
 }
 
-export async function deleteCloudExercise(id: string): Promise<void> {
+export async function archiveCloudExercise(id: string): Promise<void> {
   const supabase = createClient();
-  const { error } = await supabase.from("exercises").delete().eq("id", id);
+  const { error } = await supabase.from("exercises").update({
+    archived: true, published: false, featured: false, updated_at: new Date().toISOString(),
+  }).eq("id", id);
   if (error) throw error;
-  saveExercises(getExercises().filter((x) => x.id !== id));
+  const local = getExercises().map((item) => item.id === id
+    ? { ...item, archived: true, published: false, featured: false }
+    : item);
+  saveExercises(local);
+}
+
+export async function restoreArchivedExercise(id: string): Promise<void> {
+  const supabase = createClient();
+  const { error } = await supabase.from("exercises").update({
+    archived: false, updated_at: new Date().toISOString(),
+  }).eq("id", id);
+  if (error) throw error;
+  saveExercises(getExercises().map((item) => item.id === id ? { ...item, archived: false } : item));
 }
 
 export async function importLocalExercisesOnce(): Promise<void> {
