@@ -6719,3 +6719,185 @@ body:has(.page-main.page-simple-background) {
   .detail-image-gallery { gap:10px; }
   .detail-image-gallery img { border-radius:12px; }
 }
+
+
+/* Refined exercise editor controls: consistent checkbox alignment and clearer type hierarchy. */
+.admin-shell input[type="checkbox"] {
+  appearance:none;
+  -webkit-appearance:none;
+  display:inline-grid;
+  place-content:center;
+  flex:0 0 17px;
+  width:17px;
+  height:17px;
+  min-height:17px;
+  margin:0;
+  padding:0;
+  border:1.5px solid #c5cfdb;
+  border-radius:5px;
+  background:#fff;
+  vertical-align:middle;
+  cursor:pointer;
+  transition:background .16s ease,border-color .16s ease,box-shadow .16s ease;
+}
+.admin-shell input[type="checkbox"]::after {
+  content:"";
+  width:8px;
+  height:4px;
+  border:2px solid #fff;
+  border-top:0;
+  border-right:0;
+  transform:rotate(-45deg) scale(0);
+  transform-origin:center;
+  transition:transform .12s ease;
+}
+.admin-shell input[type="checkbox"]:checked {
+  border-color:#5d8fc5;
+  background:#5d8fc5;
+  box-shadow:0 2px 6px rgba(72,119,171,.18);
+}
+.admin-shell input[type="checkbox"]:checked::after { transform:rotate(-45deg) scale(1); }
+.admin-shell input[type="checkbox"]:focus-visible {
+  outline:3px solid rgba(91,145,207,.2);
+  outline-offset:2px;
+}
+.exercise-form {
+  gap:20px;
+}
+.exercise-form > label,
+.exercise-form .form-grid > label {
+  color:#5d6d80;
+  font-size:12px;
+  font-weight:600;
+  line-height:1.55;
+  letter-spacing:.01em;
+  gap:8px;
+}
+.exercise-form input:not([type="checkbox"]),
+.exercise-form select,
+.exercise-form textarea {
+  font-size:13px;
+  line-height:1.65;
+}
+.exercise-form input::placeholder,
+.exercise-form textarea::placeholder {
+  color:#a5afbb;
+  font-weight:400;
+}
+.exercise-form .check-row {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  align-items:stretch;
+  gap:10px;
+  padding:12px;
+}
+.exercise-form .check-row > label,
+.exercise-form .check-row > label:not(.featured-toggle) {
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:flex-start;
+  gap:10px;
+  min-width:0;
+  min-height:54px;
+  margin:0;
+  padding:11px 13px;
+  border:1px solid rgba(57,85,119,.09);
+  border-radius:10px;
+  background:rgba(255,255,255,.86);
+  color:#52657b;
+  font-size:12px;
+  font-weight:550;
+  line-height:1.5;
+}
+.exercise-form .check-row > label:not(.featured-toggle) input {
+  flex:0 0 17px;
+}
+.exercise-form .check-row .featured-toggle {
+  display:grid!important;
+  grid-template-columns:17px minmax(0,1fr);
+  align-items:center!important;
+  gap:10px!important;
+  min-height:54px;
+  margin:0;
+  padding:10px 12px;
+  border:1px solid rgba(103,145,195,.16);
+  border-radius:10px;
+  background:linear-gradient(110deg,#f4f8fd,#fff);
+}
+.exercise-form .featured-toggle span {
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+.exercise-form .featured-toggle strong {
+  color:#435b76;
+  font-size:12px;
+  font-weight:650;
+  line-height:1.45;
+}
+.exercise-form .featured-toggle small {
+  color:#8e9baa;
+  font-size:10px;
+  font-weight:400;
+  line-height:1.55;
+}
+.admin-bulk-bar {
+  font-size:12px;
+  line-height:1.5;
+}
+.admin-bulk-bar > label {
+  min-height:28px;
+  color:#5d6d80;
+  font-weight:550;
+}
+.admin-row-main {
+  align-items:center;
+}
+.admin-row-check {
+  width:18px;
+  height:22px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+.admin-row-main strong {
+  display:block;
+  margin-bottom:2px;
+  font-size:13px;
+  line-height:1.5;
+  letter-spacing:.005em;
+}
+.admin-row-main small {
+  display:block;
+  font-size:11px;
+  line-height:1.65;
+}
+@media(max-width:900px) {
+  .exercise-form .check-row {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .exercise-form .check-row .featured-toggle {
+    grid-column:1 / -1;
+  }
+}
+@media(max-width:620px) {
+  .exercise-form .check-row {
+    grid-template-columns:1fr;
+    gap:8px;
+    padding:10px;
+  }
+  .exercise-form .check-row .featured-toggle {
+    grid-column:auto;
+  }
+  .exercise-form .check-row > label,
+  .exercise-form .check-row > label:not(.featured-toggle) {
+    min-height:48px;
+    padding:10px 12px;
+  }
+  .admin-row-main { align-items:flex-start; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .admin-shell input[type="checkbox"] { transition:none!important; }
+}
