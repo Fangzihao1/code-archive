@@ -5478,3 +5478,155 @@ body:has(.page-main.page-simple-background) {
 .site-header nav a.active:after {
   width: 52px !important;
 }
+
+
+/* Login: quiet, responsive motion that matches the rest of CODE ARCHIVE. */
+.auth-screen {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.auth-screen::before,
+.auth-screen::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(2px);
+  will-change: transform;
+}
+.auth-screen::before {
+  width: min(58vw, 720px);
+  aspect-ratio: 1;
+  top: 12%;
+  left: -20%;
+  background: radial-gradient(circle, rgba(203,225,250,.42) 0%, rgba(222,235,250,.22) 36%, transparent 70%);
+  animation: auth-glow-drift 17s ease-in-out infinite alternate;
+}
+.auth-screen::after {
+  width: min(48vw, 600px);
+  aspect-ratio: 1;
+  right: -16%;
+  bottom: -18%;
+  background: radial-gradient(circle, rgba(220,214,250,.34) 0%, rgba(231,230,250,.18) 38%, transparent 70%);
+  animation: auth-glow-drift 21s ease-in-out infinite alternate-reverse;
+}
+.auth-topbar,
+.auth-layout {
+  position: relative;
+  z-index: 1;
+}
+.auth-intro {
+  animation: auth-intro-enter .72s cubic-bezier(.2,.75,.25,1) both;
+}
+.auth-eyebrow i {
+  animation: auth-status-pulse 2.8s ease-in-out infinite;
+}
+.auth-card {
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0);
+  transition: box-shadow .35s ease, border-color .35s ease, transform .35s cubic-bezier(.2,.75,.25,1);
+  animation: auth-card-enter .72s cubic-bezier(.2,.75,.25,1) .08s both;
+}
+.auth-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 48%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,113,227,.55), transparent);
+  transition: left .75s cubic-bezier(.2,.75,.25,1);
+  pointer-events: none;
+}
+.auth-card:hover {
+  transform: translateY(-3px);
+  border-color: #dce7f4;
+  box-shadow: 0 24px 64px rgba(29,29,31,.09);
+}
+.auth-card:hover::before {
+  left: 125%;
+}
+.auth-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.auth-form input {
+  transition: background .22s ease, border-color .22s ease, box-shadow .22s ease, transform .22s ease;
+}
+.auth-form label:focus-within {
+  color: #0068d8;
+}
+.auth-form input:focus {
+  transform: translateY(-1px);
+  background: #fff;
+}
+.auth-submit,
+.auth-demo button,
+.auth-switch button {
+  transition: background .22s ease, color .22s ease, box-shadow .22s ease, transform .22s ease, opacity .22s ease;
+}
+.auth-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+.auth-submit:active:not(:disabled),
+.auth-demo button:active:not(:disabled) {
+  transform: scale(.985);
+}
+.auth-submit:disabled {
+  cursor: wait;
+  opacity: .72;
+}
+.auth-demo {
+  transition: border-color .22s ease, background .22s ease, transform .22s ease;
+}
+.auth-demo:hover {
+  border-color: #d8e5f4;
+  background: #f7faff;
+  transform: translateY(-1px);
+}
+.auth-demo button:hover:not(:disabled),
+.auth-switch button:hover {
+  color: #004fa8;
+}
+@keyframes auth-glow-drift {
+  0% { transform: translate3d(-2%, -1%, 0) scale(.94); }
+  100% { transform: translate3d(5%, 4%, 0) scale(1.08); }
+}
+@keyframes auth-intro-enter {
+  from { opacity: 0; transform: translate3d(-14px, 10px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes auth-card-enter {
+  from { opacity: 0; transform: translate3d(0, 18px, 0) scale(.985); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes auth-status-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,113,227,.18); }
+  50% { box-shadow: 0 0 0 5px rgba(0,113,227,0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .auth-screen::before,
+  .auth-screen::after,
+  .auth-intro,
+  .auth-eyebrow i,
+  .auth-card {
+    animation: none !important;
+  }
+  .auth-card,
+  .auth-form input,
+  .auth-submit,
+  .auth-demo,
+  .auth-demo button,
+  .auth-switch button {
+    transition: none !important;
+  }
+  .auth-card:hover,
+  .auth-form input:focus,
+  .auth-submit:hover:not(:disabled) {
+    transform: none;
+  }
+}
