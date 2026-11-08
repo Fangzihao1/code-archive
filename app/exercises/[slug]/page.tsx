@@ -79,7 +79,7 @@ export default function ExerciseDetailPage() {
   }
 
   if (loading) return <><SiteHeader /><main className="content-wrap page-main"><div className="detail-loading"><span className="loading-dot" /><p>正在整理练习内容…</p></div></main><Footer /></>;
-  if (!item) return <><SiteHeader /><main className="content-wrap page-main"><div className="empty-state"><h2>暂未找到这条练习</h2><p>它可能已被取消发布或删除。</p><Link href="/exercises" className="button button-light">返回练习列表</Link></div></main><Footer /></>;
+  if (!item) return <><SiteHeader /><main className="content-wrap page-main"><BackButton fallbackHref="/exercises" label="返回练习列表" /><div className="empty-state"><h2>暂未找到这条练习</h2><p>它可能已被取消发布或删除。</p><Link href="/exercises" className="button button-light">返回练习列表</Link></div></main><Footer /></>;
 
   const steps = [
     { id: "brief", number: "01", label: "练习说明" },
