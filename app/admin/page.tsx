@@ -400,7 +400,7 @@ export default function AdminPage() {
     </section>
     {deleteTarget && <div className="permanent-delete-overlay" role="presentation">
       <section className="permanent-delete-dialog" role="alertdialog" aria-modal="true" aria-labelledby="permanent-delete-title" aria-describedby="permanent-delete-description">
-        <div className="permanent-delete-icon" aria-hidden="true">!</div>
+        <div className="permanent-delete-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4.5 7h15M9 7V4.8h6V7m-8.2 0 .8 12h8.8l.8-12M10 10.5v5.5m4-5.5v5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></div>
         <div className="permanent-delete-eyebrow">PERMANENT ACTION</div>
         <h2 id="permanent-delete-title">永久删除这条练习？</h2>
         <p id="permanent-delete-description">即将删除「<strong>{deleteTarget.title}</strong>」。练习内容、历史版本及关联配图都会被清除，删除后无法恢复。</p>
