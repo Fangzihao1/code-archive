@@ -22,7 +22,7 @@ export default function GalleryPage() {
     let active = true;
     getPublishedExercises()
       .then((rows) => { if (active) setItems(rows); })
-      .catch(() => { if (active) setItems(getExercises().filter((item) => item.published)); })
+      .catch(() => { if (active) setItems(getExercises().filter((item) => item.published && !item.archived)); })
       .finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
   }, []);

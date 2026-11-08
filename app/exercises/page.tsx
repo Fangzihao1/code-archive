@@ -38,7 +38,7 @@ export default function ExercisesPage() {
   const [category, setCategory] = useState("全部练习");
   const [sort, setSort] = useState("new");
   useEffect(() => {
-    getPublishedExercises().then(setItems).catch(() => setItems(getExercises().filter(x => x.published)));
+    getPublishedExercises().then(setItems).catch(() => setItems(getExercises().filter(x => x.published && !x.archived)));
     const params = new URLSearchParams(window.location.search);
     const c = params.get("category");
     if (c) setCategory(c);

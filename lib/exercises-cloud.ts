@@ -81,9 +81,9 @@ export async function getExerciseVersions(exerciseId: string): Promise<ExerciseV
 export async function restoreExerciseVersion(version: ExerciseVersion): Promise<void> {
   const supabase = createClient();
   const { error } = await supabase.from("exercises")
-    .upsert(toRow({ ...version.snapshot, archived: false }), { onConflict: "id" });
+    .upsert(toRow({ ...version.snapshot, archived: false, published: false, featured: false }), { onConflict: "id" });
   if (error) throw error;
-  const restored = { ...version.snapshot, archived: false };
+  const restored = { ...version.snapshot, archived: false, published: false, featured: false };
   const local = getExercises();
   saveExercises(local.some((item) => item.id === restored.id)
     ? local.map((item) => item.id === restored.id ? restored : item)
