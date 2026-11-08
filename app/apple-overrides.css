@@ -6494,3 +6494,25 @@ body:has(.page-main.page-simple-background) {
     width: 96px !important;
   }
 }
+
+
+/* Render the moving highlight as a clipped light field across the card's own top edge. */
+.auth-card-flipper::before {
+  left: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 2px !important;
+  transform: none !important;
+  border-radius: 20px 20px 0 0 !important;
+  background: radial-gradient(
+    ellipse 76px 4px at var(--auth-pointer-x, 50%) 50%,
+    rgba(255,255,255,.98) 0%,
+    rgba(177,207,240,.78) 28%,
+    rgba(130,174,224,.22) 62%,
+    transparent 100%
+  ) !important;
+  box-shadow: none !important;
+  opacity: var(--auth-pointer-visible, 0) !important;
+  transition: opacity .16s ease-out !important;
+  pointer-events: none !important;
+}
