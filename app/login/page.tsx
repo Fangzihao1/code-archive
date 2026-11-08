@@ -10,17 +10,40 @@ export default function LoginPage() {
   const authCardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const card = authCardRef.current;
+    if (!card) return;
+
+    let targetX = 50;
+    let currentX = 50;
+    let visible = false;
+    let frame = 0;
+
+    const animate = () => {
+      currentX += (targetX - currentX) * 0.2;
+      card.style.setProperty("--auth-pointer-x", `${currentX}%`);
+      card.style.setProperty("--auth-pointer-visible", visible ? "1" : "0");
+      if (Math.abs(targetX - currentX) > 0.08) {
+        frame = window.requestAnimationFrame(animate);
+      } else {
+        currentX = targetX;
+        card.style.setProperty("--auth-pointer-x", `${currentX}%`);
+        frame = 0;
+      }
+    };
+
     const updateHighlight = (event: PointerEvent) => {
-      const card = authCardRef.current;
-      if (!card) return;
       const bounds = card.getBoundingClientRect();
       const rawX = ((event.clientX - bounds.left) / bounds.width) * 100;
-      const x = Math.max(0, Math.min(100, rawX));
-      card.style.setProperty("--auth-pointer-x", `${x}%`);
-      card.style.setProperty("--auth-pointer-visible", rawX > 0 && rawX < 100 ? "1" : "0");
+      targetX = Math.max(0, Math.min(100, rawX));
+      visible = rawX > 0 && rawX < 100;
+      if (!frame) frame = window.requestAnimationFrame(animate);
     };
+
     window.addEventListener("pointermove", updateHighlight, { passive: true });
-    return () => window.removeEventListener("pointermove", updateHighlight);
+    return () => {
+      window.removeEventListener("pointermove", updateHighlight);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, []);
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [cardRotation, setCardRotation] = useState(0);
