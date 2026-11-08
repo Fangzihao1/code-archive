@@ -108,6 +108,7 @@ export default function ExerciseDetailPage() {
       <div className="section-number">01</div><div className="detail-full">
         <div className="detail-section-kicker">ABOUT THIS EXERCISE</div><h2>练习说明</h2>
         <p>{item.description || item.summary || "通过本次练习熟悉 Python 的基本语法与编程思路。"}</p>
+        {!!item.imageUrls?.length && <div className="detail-image-gallery">{item.imageUrls.map((url, index) => <img key={url} src={url} alt={item.title + " 配图 " + (index + 1)} loading="lazy" />)}</div>}
         <div className="detail-learning-card"><span>本次练习关注</span><strong>{item.category}</strong><p>{item.tags.length ? item.tags.map((tag) => `#${tag}`).join("　") : "从理解问题开始，逐步完成代码实践。"}</p></div>
       </div>
     </section>

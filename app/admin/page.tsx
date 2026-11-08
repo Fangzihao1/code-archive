@@ -5,11 +5,11 @@ import Link from "next/link";
 import { getExercises } from "@/lib/storage";
 import {
   archiveCloudExercise, bulkArchiveExercises, bulkSetPublished, getAdminExercises, getExerciseVersions, importLocalExercisesOnce,
-  renameExerciseCategory, renameExerciseTag, restoreArchivedExercise, restoreExerciseVersion, saveCloudExercise,
+  renameExerciseCategory, renameExerciseTag, restoreArchivedExercise, restoreExerciseVersion, saveCloudExercise, uploadExerciseImage, deleteExerciseImage,
 } from "@/lib/exercises-cloud";
 import type { Exercise, ExerciseVersion } from "@/lib/types";
 
-const blank: Exercise = { id: "", slug: "", title: "", summary: "", category: "基础语法", tags: [], date: new Date().toISOString().slice(0, 10), code: "print('Hello, Python!')", stdin: "", expected: "", description: "", learning: "", allowRun: true, externalUrl: "https://www.online-python.com/", published: false, featured: false, archived: false };
+const blank: Exercise = { id: "", slug: "", title: "", summary: "", category: "基础语法", tags: [], imageUrls: [], date: new Date().toISOString().slice(0, 10), code: "print('Hello, Python!')", stdin: "", expected: "", description: "", learning: "", allowRun: true, externalUrl: "https://www.online-python.com/", published: false, featured: false, archived: false };
 const sections = ["工作台", "练习管理", "分类管理", "标签管理", "回收站"];
 
 export default function AdminPage() {
@@ -20,6 +20,7 @@ export default function AdminPage() {
   const [activeSection, setActiveSection] = useState("工作台");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [uploadingImages, setUploadingImages] = useState(false);
   const [historyItem, setHistoryItem] = useState<Exercise | null>(null);
   const [versions, setVersions] = useState<ExerciseVersion[]>([]);
   const [historyLoading, setHistoryLoading] = useState(false);
@@ -56,6 +57,39 @@ export default function AdminPage() {
     setMessage("");
     setHistoryItem(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+
+  async function uploadImages(event: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(event.target.files ?? []);
+    event.target.value = "";
+    if (!files.length) return;
+    if ((form.imageUrls?.length ?? 0) + files.length > 6) {
+      setMessage("每条练习最多添加 6 张配图。");
+      return;
+    }
+    setUploadingImages(true);
+    setMessage("");
+    try {
+      const urls: string[] = [];
+      for (const file of files) urls.push(await uploadExerciseImage(file));
+      setForm((current) => ({ ...current, imageUrls: [...(current.imageUrls ?? []), ...urls] }));
+      setMessage("配图上传完成，保存练习后会同步到内容详情页。");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "图片上传失败，请稍后重试。");
+    } finally {
+      setUploadingImages(false);
+    }
+  }
+
+  async function removeImage(url: string) {
+    try {
+      await deleteExerciseImage(url);
+      setForm((current) => ({ ...current, imageUrls: (current.imageUrls ?? []).filter((entry) => entry !== url) }));
+      setMessage("配图已移除。");
+    } catch {
+      setMessage("图片移除失败，请稍后重试。");
+    }
   }
 
   async function submit(event: React.FormEvent) {
@@ -288,11 +322,13 @@ export default function AdminPage() {
           <label>知识点标签（用英文逗号分隔）<input value={form.tags.join(", ")} onChange={(event) => setForm({ ...form, tags: event.target.value.split(",").map((entry) => entry.trim()).filter(Boolean) })}/></label>
           <label>练习说明<textarea rows={3} value={form.description} onChange={(event) => setForm({ ...form, description: event.target.value })}/></label>
           <label>Python 源代码<textarea className="admin-code" rows={10} value={form.code} onChange={(event) => setForm({ ...form, code: event.target.value })}/></label>
+          <label>代码配图（JPG / PNG / WebP，单张不超过 5MB）<input type="file" accept="image/jpeg,image/png,image/webp" multiple disabled={uploadingImages} onChange={uploadImages}/></label>
+          {!!form.imageUrls?.length && <div className="admin-image-grid">{form.imageUrls.map((url) => <div key={url}><img src={url} alt="练习配图预览"/><button type="button" onClick={() => void removeImage(url)}>移除</button></div>)}</div>}
           <div className="form-grid"><label>示例输入（每行一项）<textarea rows={3} value={form.stdin} onChange={(event) => setForm({ ...form, stdin: event.target.value })}/></label><label>预期输出<textarea rows={3} value={form.expected} onChange={(event) => setForm({ ...form, expected: event.target.value })}/></label></div>
           <label>学习总结<textarea rows={3} value={form.learning} onChange={(event) => setForm({ ...form, learning: event.target.value })}/></label>
           <label>外部运行平台 URL<input type="url" value={form.externalUrl} onChange={(event) => setForm({ ...form, externalUrl: event.target.value })} placeholder="https://…"/></label>
           <div className="check-row"><label><input type="checkbox" checked={form.allowRun} onChange={(event) => setForm({ ...form, allowRun: event.target.checked })}/> 允许网页内运行</label><label><input type="checkbox" checked={form.published} onChange={(event) => setForm({ ...form, published: event.target.checked })}/> 立即公开发布</label><label className="featured-toggle"><input type="checkbox" checked={!!form.featured} onChange={(event) => setForm({ ...form, featured: event.target.checked })}/> <span><strong>显示在主页精选练习</strong><small>只有已发布且勾选精选的练习才会出现在首页。</small></span></label></div>
-          <div className="form-actions"><button type="button" className="button button-light" onClick={() => { setEditing(false); setForm(blank); }}>取消</button><button className="button button-primary" disabled={saving}>{saving ? "正在保存…" : "保存练习"}</button></div>
+          <div className="form-actions"><button type="button" className="button button-light" onClick={() => { setEditing(false); setForm(blank); }}>取消</button><button className="button button-primary" disabled={saving || uploadingImages}>{saving ? "正在保存…" : uploadingImages ? "图片上传中…" : "保存练习"}</button></div>
         </form>}
 
         <div className="admin-bulk-bar">
