@@ -7088,3 +7088,63 @@ body:has(.page-main.page-simple-background) {
     padding-left: 34px;
   }
 }
+
+
+/* Inline the selection box immediately after each exercise title. */
+.admin-shell .admin-row-main {
+  display: grid;
+  grid-template-columns: max-content 16px;
+  grid-template-rows: auto auto;
+  align-items: center;
+  justify-content: start;
+  column-gap: 7px;
+  row-gap: 3px;
+  min-width: 0;
+}
+.admin-shell .admin-row-main > .admin-row-check {
+  grid-column: 2;
+  grid-row: 1;
+  display: inline-flex;
+  width: 16px;
+  min-width: 16px;
+  height: 18px;
+  min-height: 18px;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  align-self: center;
+}
+.admin-shell .admin-row-main > .admin-row-check input[type="checkbox"] {
+  display: block;
+  width: 14px;
+  height: 14px;
+  min-height: 14px;
+  margin: 0;
+}
+.admin-shell .admin-row-main > div:last-child {
+  display: contents;
+}
+.admin-shell .admin-row-main > div:last-child > strong {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+  color: #30445c;
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.45;
+  letter-spacing: -.015em;
+}
+.admin-shell .admin-row-main > div:last-child > small {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  align-self: start;
+  color: #8a98a9;
+  font-size: 11px;
+  line-height: 1.6;
+}
+@media (max-width: 760px) {
+  .admin-shell .admin-row-main {
+    grid-template-columns: max-content 16px;
+    column-gap: 7px;
+  }
+}
