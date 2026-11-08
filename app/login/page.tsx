@@ -17,24 +17,31 @@ export default function LoginPage() {
     let currentX = 50;
     let visible = false;
     let frame = 0;
+    let lastFrameTime = 0;
 
-    const animate = () => {
-      currentX += (targetX - currentX) * 0.2;
+    const animate = (time: number) => {
+      const delta = lastFrameTime ? Math.min(time - lastFrameTime, 32) : 16;
+      lastFrameTime = time;
+      const easing = 1 - Math.exp(-delta / 105);
+      currentX += (targetX - currentX) * easing;
       card.style.setProperty("--auth-pointer-x", `${currentX}%`);
       card.style.setProperty("--auth-pointer-visible", visible ? "1" : "0");
-      if (Math.abs(targetX - currentX) > 0.08) {
+
+      if (Math.abs(targetX - currentX) > 0.025) {
         frame = window.requestAnimationFrame(animate);
       } else {
         currentX = targetX;
         card.style.setProperty("--auth-pointer-x", `${currentX}%`);
         frame = 0;
+        lastFrameTime = 0;
       }
     };
 
     const updateHighlight = (event: PointerEvent) => {
       const bounds = card.getBoundingClientRect();
+      if (!bounds.width) return;
       const rawX = ((event.clientX - bounds.left) / bounds.width) * 100;
-      targetX = Math.max(0, Math.min(100, rawX));
+      targetX = Math.max(10, Math.min(90, rawX));
       visible = rawX > 0 && rawX < 100;
       if (!frame) frame = window.requestAnimationFrame(animate);
     };
