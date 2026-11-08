@@ -5868,3 +5868,47 @@ body:has(.page-main.page-simple-background) {
   line-height: 16px !important;
   vertical-align: baseline !important;
 }
+
+
+/* Final login masthead alignment: vertically centered, with clear separation between both text groups. */
+.auth-topbar {
+  height: 84px !important;
+  min-height: 84px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  column-gap: 48px !important;
+}
+.auth-brand {
+  display: inline-flex !important;
+  align-items: baseline !important;
+  flex: 0 0 auto !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+.auth-brand span {
+  display: inline !important;
+  margin-left: 5px !important;
+  line-height: 1 !important;
+  vertical-align: baseline !important;
+}
+.auth-top-note {
+  display: inline-block !important;
+  flex: 0 0 auto !important;
+  margin: 0 0 0 auto !important;
+  line-height: 1 !important;
+  vertical-align: baseline !important;
+  white-space: nowrap !important;
+}
+@media (max-width: 560px) {
+  .auth-topbar {
+    column-gap: 18px !important;
+  }
+  .auth-brand {
+    font-size: 14px !important;
+  }
+  .auth-top-note {
+    font-size: 8px !important;
+    letter-spacing: 1px !important;
+  }
+}
