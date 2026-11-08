@@ -25,6 +25,8 @@ export default function AdminPage() {
   const [versions, setVersions] = useState<ExerciseVersion[]>([]);
   const [historyLoading, setHistoryLoading] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [deleteTarget, setDeleteTarget] = useState<Exercise | null>(null);
+  const [deleting, setDeleting] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const loadItems = useCallback(async () => {
@@ -207,16 +209,24 @@ export default function AdminPage() {
   }
 
   async function permanentlyDelete(item: Exercise) {
-    const confirmed = window.confirm(`确定永久删除「${item.title}」吗？这会同时删除练习内容、历史版本和关联配图，且无法恢复。`);
-    if (!confirmed) return;
+    setDeleteTarget(item);
+  }
+
+  async function confirmPermanentDelete() {
+    if (!deleteTarget || deleting) return;
+    const item = deleteTarget;
+    setDeleting(true);
     try {
       await permanentlyDeleteArchivedExercise(item);
       setItems((current) => current.filter((entry) => entry.id !== item.id));
       if (historyItem?.id === item.id) { setHistoryItem(null); setVersions([]); }
+      setDeleteTarget(null);
       setMessage(`「${item.title}」及其历史版本、配图已永久删除。`);
     } catch {
       setMessage("永久删除失败：请检查管理员权限、图片空间权限或网络连接。");
       await loadItems();
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -388,5 +398,17 @@ export default function AdminPage() {
       </div>}
       <p className="admin-warning">账号访问由 Supabase Auth 保护。练习内容保存在 Supabase 云端；访客页面只展示已发布内容。移入回收站不会立即删除数据，历史版本会继续保留。</p>
     </section>
+    {deleteTarget && <div className="permanent-delete-overlay" role="presentation">
+      <section className="permanent-delete-dialog" role="alertdialog" aria-modal="true" aria-labelledby="permanent-delete-title" aria-describedby="permanent-delete-description">
+        <div className="permanent-delete-icon" aria-hidden="true">!</div>
+        <div className="permanent-delete-eyebrow">PERMANENT ACTION</div>
+        <h2 id="permanent-delete-title">永久删除这条练习？</h2>
+        <p id="permanent-delete-description">即将删除「<strong>{deleteTarget.title}</strong>」。练习内容、历史版本及关联配图都会被清除，删除后无法恢复。</p>
+        <div className="permanent-delete-actions">
+          <button type="button" className="permanent-delete-cancel" disabled={deleting} onClick={() => setDeleteTarget(null)}>再考虑一下</button>
+          <button type="button" className="permanent-delete-confirm" disabled={deleting} onClick={() => void confirmPermanentDelete()}>{deleting ? "正在删除…" : "确认永久删除"}</button>
+        </div>
+      </section>
+    </div>}
   </main>;
 }
