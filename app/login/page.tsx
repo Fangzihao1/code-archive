@@ -154,19 +154,22 @@ export default function LoginPage() {
               <div className="auth-card-foot"><span>SECURE SIGN IN</span><span>© CODE ARCHIVE 2026</span></div>
             </section>
             <section className="auth-card-face auth-card-back" aria-hidden={!isFlipped}>
-              <div className="auth-back-mark">CA<span>/ PYTHON</span></div>
-              <span className="auth-card-kicker">A PERSONAL LEARNING SPACE</span>
-              <h2>让代码留下<br /><em>成长的轨迹。</em></h2>
-              <p>CODE ARCHIVE 是一个持续生长的 Python 学习档案，用来整理练习、收藏代码，也记录每一次探索与进步。</p>
-              <div className="auth-back-index">
-                <span><i>01</i> LEARN</span>
-                <span><i>02</i> BUILD</span>
-                <span><i>03</i> ARCHIVE</span>
+              <div className="auth-back-top">
+                <div className="auth-back-mark">CODE ARCHIVE<span> / PYTHON</span></div>
+                <span className="auth-back-number">01 — 03</span>
+              </div>
+              <span className="auth-card-kicker">A SPACE TO KEEP YOUR WORK</span>
+              <h2>不止于练习，<br /><em>让代码成为作品。</em></h2>
+              <p>把零散的 Python 练习整理成可回顾、可展示的个人学习档案。</p>
+              <div className="auth-back-features">
+                <div><i>01</i><span><strong>课堂练习</strong><small>记录知识点与编程过程</small></span><b>↗</b></div>
+                <div><i>02</i><span><strong>代码图库</strong><small>收藏值得保留的代码片段</small></span><b>↗</b></div>
+                <div><i>03</i><span><strong>持续归档</strong><small>让每一次进步都有迹可循</small></span><b>↗</b></div>
               </div>
               <button type="button" className="auth-back-return" onClick={() => setIsFlipped(false)} tabIndex={isFlipped ? 0 : -1}>
-                <span>↶</span> 返回登录
+                <span>↶</span> 翻回登录卡片
               </button>
-              <div className="auth-card-foot"><span>CODE ARCHIVE / PYTHON</span><span>EST. 2026</span></div>
+              <div className="auth-card-foot"><span>YOUR WORK, YOUR PROGRESS</span><span>EST. 2026</span></div>
             </section>
           </div>
         </div>
