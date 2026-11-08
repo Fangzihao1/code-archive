@@ -7387,3 +7387,21 @@ body:has(.page-main.page-simple-background) {
   outline: 2px solid #b9c8dc !important;
   outline-offset: 2px !important;
 }
+
+
+/* Center the empty-state copy inside the recycle bin. */
+.admin-shell .admin-panel .admin-list > .admin-empty {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+.admin-shell .admin-panel .admin-list > .admin-empty > strong,
+.admin-shell .admin-panel .admin-list > .admin-empty > p {
+  width: 100% !important;
+  max-width: none !important;
+  text-align: center !important;
+}
