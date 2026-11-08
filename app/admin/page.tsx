@@ -5,7 +5,7 @@ import Link from "next/link";
 import { getExercises } from "@/lib/storage";
 import {
   archiveCloudExercise, bulkArchiveExercises, bulkSetPublished, getAdminExercises, getAllExerciseVersions, getExerciseVersions, importExerciseVersions, importLocalExercisesOnce,
-  renameExerciseCategory, renameExerciseTag, restoreArchivedExercise, restoreExerciseVersion, saveCloudExercise, uploadExerciseImage, deleteExerciseImage,
+  permanentlyDeleteArchivedExercise, renameExerciseCategory, renameExerciseTag, restoreArchivedExercise, restoreExerciseVersion, saveCloudExercise, uploadExerciseImage, deleteExerciseImage,
 } from "@/lib/exercises-cloud";
 import type { Exercise, ExerciseVersion } from "@/lib/types";
 
@@ -206,6 +206,20 @@ export default function AdminPage() {
     }
   }
 
+  async function permanentlyDelete(item: Exercise) {
+    const confirmed = window.confirm(`确定永久删除「${item.title}」吗？这会同时删除练习内容、历史版本和关联配图，且无法恢复。`);
+    if (!confirmed) return;
+    try {
+      await permanentlyDeleteArchivedExercise(item);
+      setItems((current) => current.filter((entry) => entry.id !== item.id));
+      if (historyItem?.id === item.id) { setHistoryItem(null); setVersions([]); }
+      setMessage(`「${item.title}」及其历史版本、配图已永久删除。`);
+    } catch {
+      setMessage("永久删除失败：请检查管理员权限、图片空间权限或网络连接。");
+      await loadItems();
+    }
+  }
+
   async function openHistory(item: Exercise) {
     setHistoryItem(item);
     setVersions([]);
@@ -334,7 +348,7 @@ export default function AdminPage() {
       {activeSection === "回收站" ? <div className="admin-panel">
         <div className="panel-heading"><div><h2>已归档练习</h2><p>恢复后会回到练习管理，并保持草稿状态。</p></div></div>
         {message && <p className={isError ? "admin-message error" : "admin-message"} role="status">{message}</p>}
-        {loading ? <div className="admin-loading">正在读取回收站…</div> : <div className="admin-list">{archivedItems.length ? archivedItems.map((item) => <div className="admin-row" key={item.id}><div><strong>{item.title}</strong><small>{item.category} · {item.date} · 已归档</small></div><div className="row-actions"><button onClick={() => void openHistory(item)}>历史版本</button><button onClick={() => void restoreArchived(item)}>恢复</button></div></div>) : <div className="admin-empty"><strong>回收站为空</strong><p>移入回收站的练习会保留在这里。</p></div>}</div>}
+        {loading ? <div className="admin-loading">正在读取回收站…</div> : <div className="admin-list">{archivedItems.length ? archivedItems.map((item) => <div className="admin-row" key={item.id}><div><strong>{item.title}</strong><small>{item.category} · {item.date} · 已归档</small></div><div className="row-actions"><button onClick={() => void openHistory(item)}>历史版本</button><button onClick={() => void restoreArchived(item)}>恢复</button><button className="danger" onClick={() => void permanentlyDelete(item)}>永久删除</button></div></div>) : <div className="admin-empty"><strong>回收站为空</strong><p>移入回收站的练习会保留在这里。</p></div>}</div>}
       </div> : (activeSection === "工作台" || activeSection === "练习管理") ? <div className="admin-panel">
         <div className="panel-heading"><div><h2>{editing ? (items.some((item) => item.id === form.id) ? "编辑练习" : "新建练习") : "练习内容"}</h2><p>保存后同步到 Supabase；只有已发布内容会出现在访客页面。</p></div><button className="button button-primary" onClick={create}>＋ 新建练习</button></div>
 
