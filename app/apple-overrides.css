@@ -5912,3 +5912,19 @@ body:has(.page-main.page-simple-background) {
     letter-spacing: 1px !important;
   }
 }
+
+
+/* Keep the login wordmark and descriptor as one centered masthead group. */
+.auth-topbar {
+  justify-content: center !important;
+  align-items: center !important;
+  column-gap: 18px !important;
+}
+.auth-top-note {
+  margin: 0 !important;
+}
+@media (max-width: 560px) {
+  .auth-topbar {
+    column-gap: 12px !important;
+  }
+}
