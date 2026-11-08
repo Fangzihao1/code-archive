@@ -59,6 +59,19 @@ export default function ExerciseDetailPage() {
     }
   }
 
+  function downloadSource() {
+    if (!item) return;
+    const blob = new Blob([item.code], { type: "text/x-python;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `${item.slug || "python-exercise"}.py`;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    URL.revokeObjectURL(url);
+  }
+
   function jumpTo(id: string) {
     setActiveStep(id);
     document.getElementById(`detail-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -80,7 +93,10 @@ export default function ExerciseDetailPage() {
       <div className="detail-title-top"><span className="eyebrow">{item.category} · PYTHON EXERCISE</span><span className="detail-index">EXERCISE {String(currentIndex + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}</span></div>
       <h1>{item.title}</h1><p>{item.summary}</p>
       <div className="detail-meta"><span>Python</span><span>{item.date}</span>{item.tags.map((tag) => <span key={tag}>#{tag}</span>)}</div>
-      <button className="button button-light" onClick={copy}>{copied ? "已复制 ✓" : "复制完整源代码 ↗"}</button>
+      <div className="detail-title-actions">
+        <button className="button button-light" onClick={copy}>{copied ? "已复制 ✓" : "复制完整源代码 ↗"}</button>
+        <button className="button button-light" onClick={downloadSource}>下载 .py ↓</button>
+      </div>
     </header>
 
     <nav className="detail-step-nav" aria-label="练习内容导航">
@@ -98,7 +114,7 @@ export default function ExerciseDetailPage() {
     <section id="detail-source" className="detail-section block-section">
       <div className="section-number">02</div><div className="detail-full">
         <div className="detail-section-kicker">SOURCE CODE</div><h2>源代码</h2>
-        <div className="source-code"><div className="source-top"><span className="source-window-dots">● ● ●</span><span>{item.slug}.py</span><button onClick={copy}>{copied ? "已复制 ✓" : "复制代码"}</button></div>
+        <div className="source-code"><div className="source-top"><span className="source-window-dots">● ● ●</span><span>{item.slug}.py</span><div className="source-actions"><button onClick={copy}>{copied ? "已复制 ✓" : "复制代码"}</button><button onClick={downloadSource}>下载 .py ↓</button></div></div>
           <pre>{item.code.split("\n").map((line, index) => <div key={index}><i>{String(index + 1).padStart(2, "0")}</i><span>{line || " "}</span></div>)}</pre>
         </div>
         <p className="detail-code-note">建议先阅读代码，再尝试运行并观察输出结果。</p>
