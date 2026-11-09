@@ -740,3 +740,27 @@
   .permanent-delete-dialog{padding:30px 23px 24px!important;border-radius:22px!important}
   .permanent-delete-actions{flex-direction:row!important;gap:9px!important}
 }
+
+
+/* Stronger visible glass: avoid the opaque white-card appearance */
+.permanent-delete-overlay{
+  background:rgba(235,240,247,.10)!important;
+  -webkit-backdrop-filter:blur(2px) saturate(108%)!important;
+  backdrop-filter:blur(2px) saturate(108%)!important;
+}
+.permanent-delete-dialog{
+  background:rgba(255,255,255,.38)!important;
+  background-image:linear-gradient(135deg,rgba(255,255,255,.56),rgba(245,248,252,.24))!important;
+  border:1px solid rgba(255,255,255,.72)!important;
+  -webkit-backdrop-filter:blur(34px) saturate(175%)!important;
+  backdrop-filter:blur(34px) saturate(175%)!important;
+  box-shadow:0 24px 70px rgba(30,42,58,.14),inset 0 1px 0 rgba(255,255,255,.8),inset 0 -1px 0 rgba(255,255,255,.18)!important;
+}
+.permanent-delete-cancel{
+  background:rgba(255,255,255,.38)!important;
+  border:1px solid rgba(255,255,255,.58)!important;
+}
+.permanent-delete-confirm{
+  background:rgba(191,76,69,.78)!important;
+  color:#fff!important;
+}
