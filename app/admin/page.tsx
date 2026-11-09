@@ -141,17 +141,37 @@ export default function AdminPage() {
   }
 
   async function bulkArchive() {
-    if (!selectedIds.length) return;
-    if (!window.confirm(`确定将选中的 ${selectedIds.length} 条练习移入回收站吗？`)) return;
+    if (!selectedIds.length || archiving) return;
+    setBulkArchiveDialog(true);
+  }
+
+  async function confirmArchive() {
+    if (archiving) return;
+    setArchiving(true);
     try {
-      await bulkArchiveExercises(selectedIds);
-      setItems((current) => current.map((item) => selectedIds.includes(item.id)
-        ? { ...item, archived: true, published: false, featured: false }
-        : item));
-      setMessage(`已将 ${selectedIds.length} 条练习移入回收站。`);
-      setSelectedIds([]);
+      if (archiveTarget) {
+        const item = archiveTarget;
+        await archiveCloudExercise(item.id);
+        setItems((current) => current.map((entry) => entry.id === item.id
+          ? { ...entry, archived: true, published: false, featured: false }
+          : entry));
+        setMessage("练习已移入回收站，可以随时恢复。");
+        if (form.id === item.id) { setForm(blank); setEditing(false); }
+        setArchiveTarget(null);
+      } else if (bulkArchiveDialog) {
+        const ids = [...selectedIds];
+        await bulkArchiveExercises(ids);
+        setItems((current) => current.map((item) => ids.includes(item.id)
+          ? { ...item, archived: true, published: false, featured: false }
+          : item));
+        setMessage(`已将 ${ids.length} 条练习移入回收站。`);
+        setSelectedIds([]);
+        setBulkArchiveDialog(false);
+      }
     } catch {
-      setMessage("批量归档失败，请检查网络或账号权限。");
+      setMessage("移入回收站失败，请检查网络或账号权限。");
+    } finally {
+      setArchiving(false);
     }
   }
 
