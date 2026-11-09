@@ -720,3 +720,28 @@
 .back-to-top span{font-size:17px;line-height:1}
 .back-to-top small{font-size:11px;white-space:nowrap}
 @media(max-width:650px){.back-to-top{right:16px;bottom:18px;padding:10px 12px}}
+
+
+/* Gentle homepage section snapping — native scrolling remains uninterrupted. */
+html.home-snap-active {
+  scroll-snap-type: y proximity;
+  scroll-padding-top: 76px;
+}
+html.home-snap-active main > section {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+  scroll-margin-top: 76px;
+}
+@media (max-width: 650px) {
+  html.home-snap-active {
+    scroll-padding-top: 96px;
+  }
+  html.home-snap-active main > section {
+    scroll-margin-top: 96px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.home-snap-active {
+    scroll-snap-type: none;
+  }
+}
