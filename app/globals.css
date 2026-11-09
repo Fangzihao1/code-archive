@@ -650,6 +650,25 @@
  .permanent-delete-overlay,.permanent-delete-dialog{animation:none!important}
  .permanent-delete-actions button{transition:none!important}
 }
-/* Archive confirmation uses the same glass surface with a quieter action tone. */
-.archive-confirm-action{color:#45423c!important}
-.archive-confirm-action:hover{background:rgba(69,66,60,.055)!important}
+/* Archive confirmation: restrained Apple-like hover and press feedback. */
+.permanent-delete-actions button{
+  transition:background .2s ease,color .2s ease,transform .18s cubic-bezier(.2,.8,.2,1),opacity .18s ease!important;
+  -webkit-tap-highlight-color:transparent;
+}
+.permanent-delete-cancel{color:#514d46!important}
+.permanent-delete-cancel:hover{
+  color:#25231f!important;
+  background:rgba(77,69,57,.075)!important;
+}
+.archive-confirm-action{color:#496b58!important}
+.archive-confirm-action:hover{
+  color:#28583e!important;
+  background:rgba(94,145,111,.13)!important;
+}
+.permanent-delete-actions button:active:not(:disabled){
+  transform:scale(.975)!important;
+  opacity:.82!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .permanent-delete-actions button{transition:none!important}
+}
