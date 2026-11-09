@@ -650,3 +650,6 @@
  .permanent-delete-overlay,.permanent-delete-dialog{animation:none!important}
  .permanent-delete-actions button{transition:none!important}
 }
+/* Archive confirmation uses the same glass surface with a quieter action tone. */
+.archive-confirm-action{color:#45423c!important}
+.archive-confirm-action:hover{background:rgba(69,66,60,.055)!important}
