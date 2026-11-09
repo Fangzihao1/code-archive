@@ -672,3 +672,32 @@
 @media(prefers-reduced-motion:reduce){
   .permanent-delete-actions button{transition:none!important}
 }
+
+
+/* Dedicated category and tag rename dialog */
+.rename-dialog .rename-dialog-input{
+  display:block!important;box-sizing:border-box!important;width:100%!important;
+  height:46px!important;margin:0 0 24px!important;padding:0 14px!important;
+  border:1px solid rgba(83,75,63,.16)!important;border-radius:13px!important;
+  outline:none!important;background:rgba(255,255,255,.48)!important;
+  color:#292722!important;font:inherit!important;font-size:14px!important;
+  box-shadow:inset 0 1px 2px rgba(35,30,22,.025)!important;
+  transition:border-color .18s ease,background .18s ease,box-shadow .18s ease!important;
+}
+.rename-dialog .rename-dialog-input:focus{
+  border-color:rgba(102,126,110,.48)!important;
+  background:rgba(255,255,255,.72)!important;
+  box-shadow:0 0 0 3px rgba(102,126,110,.09)!important;
+}
+.rename-dialog .rename-dialog-input::placeholder{color:rgba(75,69,60,.42)!important}
+.rename-dialog .rename-dialog-message{
+  margin:-13px 0 17px!important;padding:0!important;
+  color:#b45b52!important;font-size:12px!important;
+}
+.rename-save-action{color:#496b58!important}
+.rename-save-action:hover{
+  color:#28583e!important;background:rgba(94,145,111,.13)!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .rename-dialog .rename-dialog-input{transition:none!important}
+}
