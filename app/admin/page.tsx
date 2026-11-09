@@ -30,6 +30,9 @@ export default function AdminPage() {
   const [archiveTarget, setArchiveTarget] = useState<Exercise | null>(null);
   const [bulkArchiveDialog, setBulkArchiveDialog] = useState(false);
   const [archiving, setArchiving] = useState(false);
+  const [renameTarget, setRenameTarget] = useState<{ type: "category" | "tag"; name: string } | null>(null);
+  const [renameValue, setRenameValue] = useState("");
+  const [renaming, setRenaming] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const loadItems = useCallback(async () => {
@@ -175,35 +178,44 @@ export default function AdminPage() {
     }
   }
 
-  async function renameCategory(category: string) {
-    const nextName = window.prompt("输入新的分类名称", category)?.trim();
-    if (!nextName || nextName === category) return;
-    if (categories.includes(nextName)) {
-      setMessage("这个分类名称已经存在。");
-      return;
-    }
-    try {
-      await renameExerciseCategory(category, nextName);
-      await loadItems();
-      setMessage(`分类“${category}”已更名为“${nextName}”。`);
-    } catch {
-      setMessage("分类修改失败，请检查网络或账号权限。");
-    }
+  function openRename(type: "category" | "tag", name: string) {
+    setRenameTarget({ type, name });
+    setRenameValue(name);
+    setMessage("");
   }
 
-  async function renameTag(tag: string) {
-    const nextName = window.prompt("输入新的标签名称", tag)?.trim();
-    if (!nextName || nextName === tag) return;
-    if (tags.includes(nextName)) {
-      setMessage("这个标签名称已经存在。");
+  async function confirmRename() {
+    if (!renameTarget || renaming) return;
+    const nextName = renameValue.trim();
+    if (!nextName) {
+      setMessage("名称不能为空。");
       return;
     }
+    if (nextName === renameTarget.name) {
+      setRenameTarget(null);
+      return;
+    }
+    const existingNames = renameTarget.type === "category" ? categories : tags;
+    if (existingNames.includes(nextName)) {
+      setMessage(`这个${renameTarget.type === "category" ? "分类" : "标签"}名称已经存在。`);
+      return;
+    }
+    setRenaming(true);
     try {
-      await renameExerciseTag(tag, nextName);
+      if (renameTarget.type === "category") {
+        await renameExerciseCategory(renameTarget.name, nextName);
+      } else {
+        await renameExerciseTag(renameTarget.name, nextName);
+      }
+      const oldName = renameTarget.name;
+      const typeLabel = renameTarget.type === "category" ? "分类" : "标签";
+      setRenameTarget(null);
       await loadItems();
-      setMessage(`标签“${tag}”已更名为“${nextName}”。`);
+      setMessage(`${typeLabel}“${oldName}”已更名为“${nextName}”。`);
     } catch {
-      setMessage("标签修改失败，请检查网络或账号权限。");
+      setMessage("名称修改失败，请检查网络或账号权限。");
+    } finally {
+      setRenaming(false);
     }
   }
 
@@ -406,8 +418,8 @@ export default function AdminPage() {
         {loading ? <div className="admin-loading">正在从云端读取练习数据…</div> : <div className="admin-list">{activeItems.length ? activeItems.map((item) => <div className="admin-row" key={item.id}><div className="admin-row-main"><div className="admin-row-title"><strong>{item.title}</strong><label className="admin-row-check"><input type="checkbox" checked={selectedIds.includes(item.id)} onChange={(event) => setSelectedIds((current) => event.target.checked ? [...current, item.id] : current.filter((id) => id !== item.id))}/></label></div><small>{item.category} · {item.date} · {item.published ? "已发布" : "草稿"} · {item.published && item.featured ? "主页精选" : "未精选"} · 最近修改 {item.updatedAt ? new Date(item.updatedAt).toLocaleDateString("zh-CN") : "—"}</small></div><div className="row-actions"><button onClick={() => void openHistory(item)}>历史版本</button><button onClick={() => edit(item)}>编辑</button><button className="danger" onClick={() => void archive(item)}>移入回收站</button></div></div>) : <div className="admin-empty"><strong>还没有练习内容</strong><p>创建第一条 Python 练习后，可以在这里编辑和发布。</p></div>}</div>}
       </div> : <div className="admin-panel">
         <div className="panel-heading"><div><h2>{activeSection}</h2><p>以下数据根据云端练习内容自动汇总。</p></div></div>
-        {loading ? <div className="admin-loading">正在读取数据…</div> : activeSection === "分类管理" ? <div className="admin-list">{categories.length ? categories.map((category) => <div className="admin-row" key={category}><div><strong>{category}</strong><small>{activeItems.filter((item) => item.category === category).length} 条练习</small></div><div className="row-actions"><span className="admin-count">{activeItems.filter((item) => item.category === category && item.published).length} 条已发布</span><button onClick={() => void renameCategory(category)}>修改名称</button></div></div>) : <div className="admin-empty">暂无分类数据。</div>}</div>
-          : <div className="admin-list">{tags.length ? tags.map((tag) => <div className="admin-row" key={tag}><div><strong>#{tag}</strong><small>{activeItems.filter((item) => item.tags.includes(tag)).length} 条练习使用</small></div><div className="row-actions"><span className="admin-count">{activeItems.filter((item) => item.tags.includes(tag) && item.published).length} 条已发布</span><button onClick={() => void renameTag(tag)}>修改名称</button></div></div>) : <div className="admin-empty">暂无标签数据。</div>}</div>}
+        {loading ? <div className="admin-loading">正在读取数据…</div> : activeSection === "分类管理" ? <div className="admin-list">{categories.length ? categories.map((category) => <div className="admin-row" key={category}><div><strong>{category}</strong><small>{activeItems.filter((item) => item.category === category).length} 条练习</small></div><div className="row-actions"><span className="admin-count">{activeItems.filter((item) => item.category === category && item.published).length} 条已发布</span><button onClick={() => openRename("category", category)}>修改名称</button></div></div>) : <div className="admin-empty">暂无分类数据。</div>}</div>
+          : <div className="admin-list">{tags.length ? tags.map((tag) => <div className="admin-row" key={tag}><div><strong>#{tag}</strong><small>{activeItems.filter((item) => item.tags.includes(tag)).length} 条练习使用</small></div><div className="row-actions"><span className="admin-count">{activeItems.filter((item) => item.tags.includes(tag) && item.published).length} 条已发布</span><button onClick={() => openRename("tag", tag)}>修改名称</button></div></div>) : <div className="admin-empty">暂无标签数据。</div>}</div>}
       </div>}
       <p className="admin-warning">账号访问由 Supabase Auth 保护。练习内容保存在 Supabase 云端；访客页面只展示已发布内容。移入回收站不会立即删除数据，历史版本会继续保留。</p>
     </section>
@@ -418,6 +430,27 @@ export default function AdminPage() {
         <div className="permanent-delete-actions">
           <button type="button" className="permanent-delete-cancel" disabled={archiving} onClick={() => { setArchiveTarget(null); setBulkArchiveDialog(false); }}>取消</button>
           <button type="button" className="archive-confirm-action" disabled={archiving} onClick={() => void confirmArchive()}>{archiving ? "正在移入…" : "移入回收站"}</button>
+        </div>
+      </section>
+    </div>}
+    {renameTarget && <div className="permanent-delete-overlay" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget && !renaming) setRenameTarget(null); }}>
+      <section className="permanent-delete-dialog rename-dialog" role="dialog" aria-modal="true" aria-labelledby="rename-dialog-title">
+        <h2 id="rename-dialog-title">修改{renameTarget.type === "category" ? "分类" : "标签"}名称</h2>
+        <p>将「<strong>{renameTarget.name}</strong>」修改为新的名称，相关练习会同步更新。</p>
+        <input
+          className="rename-dialog-input"
+          autoFocus
+          value={renameValue}
+          maxLength={40}
+          placeholder="请输入新名称"
+          aria-label="新的名称"
+          onChange={(event) => setRenameValue(event.target.value)}
+          onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); void confirmRename(); } if (event.key === "Escape" && !renaming) setRenameTarget(null); }}
+        />
+        {message && <p className="rename-dialog-message" role="alert">{message}</p>}
+        <div className="permanent-delete-actions">
+          <button type="button" className="permanent-delete-cancel" disabled={renaming} onClick={() => setRenameTarget(null)}>取消</button>
+          <button type="button" className="rename-save-action" disabled={renaming || !renameValue.trim()} onClick={() => void confirmRename()}>{renaming ? "正在保存…" : "保存修改"}</button>
         </div>
       </section>
     </div>}
