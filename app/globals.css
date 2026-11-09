@@ -682,111 +682,78 @@
 }
 
 
-/* Quiet, native-feeling glass confirmation */
+
+/* CODE ARCHIVE — restrained Apple-inspired glass confirmation */
 .permanent-delete-overlay{
-  background:rgba(242,245,249,.20)!important;
-  -webkit-backdrop-filter:blur(5px) saturate(112%)!important;
-  backdrop-filter:blur(5px) saturate(112%)!important;
+  position:fixed!important;inset:0!important;z-index:10000!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  padding:24px!important;
+  background:rgba(25,32,44,.16)!important;
+  -webkit-backdrop-filter:blur(7px) saturate(118%)!important;
+  backdrop-filter:blur(7px) saturate(118%)!important;
+  animation:deleteOverlayIn .22s ease-out both!important;
 }
 .permanent-delete-dialog{
-  width:min( calc(100% - 32px), 430px)!important;
-  padding:36px 36px 28px!important;
-  border:1px solid rgba(255,255,255,.72)!important;
-  border-radius:24px!important;
-  background:rgba(255,255,255,.76)!important;
-  -webkit-backdrop-filter:blur(28px) saturate(165%)!important;
-  backdrop-filter:blur(28px) saturate(165%)!important;
-  box-shadow:0 18px 60px rgba(25,35,50,.12),inset 0 1px 0 rgba(255,255,255,.86)!important;
+  box-sizing:border-box!important;
+  width:min(100%,420px)!important;
+  padding:34px 34px 27px!important;
+  border:1px solid rgba(255,255,255,.58)!important;
+  border-radius:26px!important;
+  background:rgba(248,250,253,.58)!important;
+  background-image:linear-gradient(145deg,rgba(255,255,255,.34),rgba(236,241,248,.18))!important;
+  -webkit-backdrop-filter:blur(38px) saturate(165%)!important;
+  backdrop-filter:blur(38px) saturate(165%)!important;
+  box-shadow:0 24px 80px rgba(20,29,43,.18),inset 0 1px 0 rgba(255,255,255,.78),inset 0 -1px 0 rgba(255,255,255,.16)!important;
   text-align:center!important;
+  animation:deleteDialogIn .28s cubic-bezier(.2,.75,.25,1) both!important;
 }
 .permanent-delete-dialog h2{
-  margin:0 0 12px!important;
+  margin:0 0 11px!important;
   color:#20242b!important;
   font-size:22px!important;
+  line-height:1.35!important;
   font-weight:620!important;
   letter-spacing:-.045em!important;
 }
 .permanent-delete-dialog p{
-  max-width:320px!important;
+  max-width:315px!important;
   margin:0 auto!important;
-  color:#737b87!important;
+  color:rgba(55,64,77,.76)!important;
   font-size:13px!important;
   line-height:1.85!important;
 }
-.permanent-delete-dialog p strong{color:#343b46!important;font-weight:600!important}
+.permanent-delete-dialog p strong{color:#303846!important;font-weight:620!important}
 .permanent-delete-actions{
-  justify-content:center!important;
-  gap:10px!important;
-  margin-top:27px!important;
+  display:flex!important;gap:10px!important;
+  margin-top:26px!important;
 }
 .permanent-delete-actions button{
-  min-height:44px!important;
+  flex:1!important;min-height:44px!important;
   border-radius:13px!important;
-  font-size:13px!important;
-  font-weight:560!important;
+  font-size:13px!important;font-weight:570!important;
+  letter-spacing:-.01em!important;
   box-shadow:none!important;
+  transition:background .18s ease,transform .18s ease,opacity .18s ease!important;
 }
 .permanent-delete-cancel{
-  background:rgba(245,246,248,.78)!important;
-  color:#4e5662!important;
-}
-.permanent-delete-cancel:hover{background:rgba(235,237,241,.9)!important}
-.permanent-delete-confirm{
-  background:rgba(249,232,230,.88)!important;
-  color:#bd4c45!important;
-}
-.permanent-delete-confirm:hover{background:rgba(245,218,215,.96)!important}
-@media(max-width:520px){
-  .permanent-delete-dialog{padding:30px 23px 24px!important;border-radius:22px!important}
-  .permanent-delete-actions{flex-direction:row!important;gap:9px!important}
-}
-
-
-/* Stronger visible glass: avoid the opaque white-card appearance */
-.permanent-delete-overlay{
-  background:rgba(235,240,247,.10)!important;
-  -webkit-backdrop-filter:blur(2px) saturate(108%)!important;
-  backdrop-filter:blur(2px) saturate(108%)!important;
-}
-.permanent-delete-dialog{
-  background:rgba(255,255,255,.38)!important;
-  background-image:linear-gradient(135deg,rgba(255,255,255,.56),rgba(245,248,252,.24))!important;
-  border:1px solid rgba(255,255,255,.72)!important;
-  -webkit-backdrop-filter:blur(34px) saturate(175%)!important;
-  backdrop-filter:blur(34px) saturate(175%)!important;
-  box-shadow:0 24px 70px rgba(30,42,58,.14),inset 0 1px 0 rgba(255,255,255,.8),inset 0 -1px 0 rgba(255,255,255,.18)!important;
-}
-.permanent-delete-cancel{
-  background:rgba(255,255,255,.38)!important;
-  border:1px solid rgba(255,255,255,.58)!important;
-}
-.permanent-delete-confirm{
-  background:rgba(191,76,69,.78)!important;
-  color:#fff!important;
-}
-
-
-/* Final glass correction: cool translucent tint, not opaque milky white */
-.permanent-delete-overlay{
-  background:rgba(216,226,240,.08)!important;
-  -webkit-backdrop-filter:blur(0.5px) saturate(105%)!important;
-  backdrop-filter:blur(0.5px) saturate(105%)!important;
-}
-.permanent-delete-dialog{
-  background:rgba(194,211,232,.24)!important;
-  background-image:none!important;
-  border:1px solid rgba(255,255,255,.66)!important;
-  -webkit-backdrop-filter:blur(26px) saturate(190%)!important;
-  backdrop-filter:blur(26px) saturate(190%)!important;
-  box-shadow:0 22px 68px rgba(36,54,78,.16),inset 0 1px 0 rgba(255,255,255,.72),inset 0 -1px 0 rgba(255,255,255,.12)!important;
-}
-.permanent-delete-dialog h2{color:#202936!important}
-.permanent-delete-dialog p{color:#596879!important}
-.permanent-delete-cancel{
-  background:rgba(230,237,246,.30)!important;
+  color:#333b48!important;
+  background:rgba(255,255,255,.30)!important;
   border:1px solid rgba(255,255,255,.48)!important;
 }
+.permanent-delete-cancel:hover{background:rgba(255,255,255,.48)!important}
 .permanent-delete-confirm{
-  background:rgba(177,73,69,.78)!important;
-  color:#fff!important;
+  color:#b33e38!important;
+  background:rgba(224,91,82,.13)!important;
+  border:1px solid rgba(205,79,72,.10)!important;
+}
+.permanent-delete-confirm:hover{background:rgba(224,91,82,.20)!important}
+.permanent-delete-actions button:active{transform:scale(.985)!important}
+@media(max-width:520px){
+  .permanent-delete-overlay{padding:20px!important}
+  .permanent-delete-dialog{padding:30px 23px 24px!important;border-radius:23px!important}
+  .permanent-delete-actions{gap:8px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .permanent-delete-overlay,.permanent-delete-dialog{animation:none!important}
+  .permanent-delete-actions button{transition:none!important}
 }
