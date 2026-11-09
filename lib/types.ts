@@ -14,6 +14,19 @@ export type Exercise = {
   allowRun: boolean;
   externalUrl: string;
   published: boolean;
+  featured?: boolean;
+  archived?: boolean;
+  updatedAt?: string;
+  imageUrls?: string[];
+};
+
+export type ExerciseVersion = {
+  id: string;
+  exerciseId: string;
+  originalExerciseId: string;
+  versionNumber: number;
+  snapshot: Exercise;
+  createdAt: string;
 };
 
 export const STORAGE_KEY = "code-archive-exercises-v1";

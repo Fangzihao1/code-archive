@@ -1,46 +1,128 @@
 "use client";
-
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import ExerciseCard from "@/components/ExerciseCard";
 import type { Exercise } from "@/lib/types";
 
 export default function HorizontalExerciseRail({ items }: { items: Exercise[] }) {
   const railRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0);
+  const paused = useRef(false);
+  const pauseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pendingShift = useRef(0);
+  const progressRef = useRef<HTMLElement>(null);
+  const [orderedItems, setOrderedItems] = useState(items);
+  const [isPaused, setIsPaused] = useState(false);
 
-  function move(direction: -1 | 1) {
+  useEffect(() => {
+    setOrderedItems(items);
+    if (railRef.current) railRef.current.scrollLeft = 0;
+  }, [items]);
+
+  const pause = useCallback(() => {
+    paused.current = true;
+    setIsPaused(true);
+    if (pauseTimer.current) clearTimeout(pauseTimer.current);
+  }, []);
+  const resume = useCallback(() => {
+    if (pauseTimer.current) clearTimeout(pauseTimer.current);
+    paused.current = false;
+    setIsPaused(false);
+  }, []);
+  const resumeSoon = useCallback((delay = 1400) => {
+    if (pauseTimer.current) clearTimeout(pauseTimer.current);
+    pauseTimer.current = setTimeout(() => {
+      if (!railRef.current?.querySelector(".horizontal-rail-item:hover")) resume();
+    }, delay);
+  }, [resume]);
+
+  useLayoutEffect(() => {
+    const rail = railRef.current;
+    if (rail && pendingShift.current > 0) {
+      rail.scrollLeft = Math.max(0, rail.scrollLeft - pendingShift.current);
+      pendingShift.current = 0;
+    }
+  }, [orderedItems]);
+
+  const updateProgress = useCallback(() => {
     const rail = railRef.current;
     if (!rail) return;
-    rail.scrollBy({ left: direction * Math.max(300, rail.clientWidth * 0.78), behavior: "smooth" });
-  }
+    const first = rail.querySelector<HTMLElement>(".horizontal-rail-item");
+    if (!first) return;
+    const gap = parseFloat(getComputedStyle(rail).columnGap || "22") || 22;
+    const cycleWidth = first.offsetWidth + gap;
+    if (progressRef.current) {
+      const progress = cycleWidth > 0 ? Math.min(1, rail.scrollLeft / cycleWidth) : 0;
+      progressRef.current.style.transform = `scaleX(${Math.max(.04, progress)})`;
+    }
+  }, []);
 
-  function updateProgress() {
+  const move = useCallback((direction: -1 | 1) => {
     const rail = railRef.current;
-    if (!rail) return;
-    const max = rail.scrollWidth - rail.clientWidth;
-    setProgress(max <= 0 ? 0 : rail.scrollLeft / max);
-  }
+    const first = rail?.querySelector<HTMLElement>(".horizontal-rail-item");
+    if (!rail || !first) return;
+    pause();
+    const gap = parseFloat(getComputedStyle(rail).columnGap || "22") || 22;
+    rail.scrollBy({ left: direction * (first.offsetWidth + gap), behavior: "smooth" });
+    resumeSoon(1500);
+  }, [pause, resumeSoon]);
+
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail || orderedItems.length < 2) return;
+    let frame = 0;
+    let last = 0;
+    let progressFrame = 0;
+    const tick = (now: number) => {
+      if (!last) last = now;
+      const elapsed = Math.min(now - last, 50);
+      last = now;
+      if (!paused.current) {
+        const first = rail.querySelector<HTMLElement>(".horizontal-rail-item");
+        if (first) {
+          const gap = parseFloat(getComputedStyle(rail).columnGap || "22") || 22;
+          const shift = first.offsetWidth + gap;
+          // Keep the rail moving at a noticeably quicker, steady pace.
+          rail.scrollLeft += 78 * elapsed / 1000;
+          if (rail.scrollLeft >= shift && pendingShift.current === 0) {
+            pendingShift.current = shift;
+            setOrderedItems(current => {
+              if (current.length < 2) return current;
+              return [...current.slice(1), current[0]];
+            });
+          }
+          if (now - progressFrame > 120) {
+            progressFrame = now;
+            updateProgress();
+          }
+        }
+      }
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [orderedItems.length, updateProgress]);
 
   return (
-    <div className="horizontal-rail">
+    <section className={`horizontal-rail ${isPaused ? "is-paused" : "is-auto"}`}>
       <div className="horizontal-rail-top">
         <span>{items.length} 个精选条目</span>
         <div className="rail-controls">
-          <div className="rail-progress" aria-label="浏览进度">
-            <i style={{ transform: `scaleX(${Math.max(0.04, progress)})` }} />
-          </div>
+          <span className="rail-autoplay-status">{isPaused ? "悬停暂停" : "自动向左滚动"}</span>
+          <div className="rail-progress" aria-label="浏览进度"><i ref={progressRef} /></div>
           <button type="button" onClick={() => move(-1)} aria-label="向左浏览">←</button>
           <button type="button" onClick={() => move(1)} aria-label="向右浏览">→</button>
         </div>
       </div>
-      <div className="horizontal-rail-track" ref={railRef} onScroll={updateProgress}>
-        {items.map((item) => (
-          <div className="horizontal-rail-item" key={item.id}>
+      <div className="horizontal-rail-track" ref={railRef} onScroll={updateProgress}
+        onWheel={() => { pause(); resumeSoon(); }}>
+        {orderedItems.map(item => (
+          <div className="horizontal-rail-item" key={item.id}
+            onMouseEnter={pause} onMouseLeave={resume}
+            onFocusCapture={pause} onBlurCapture={resume}>
             <ExerciseCard item={item} />
           </div>
         ))}
       </div>
-      <p className="rail-hint">可横向滚动浏览 · 使用触控板、鼠标滚轮或两侧箭头继续探索</p>
-    </div>
+      <p className="rail-hint">练习持续向左流动 · 当前练习完全离开后自动接到队尾 · 悬停暂停并放大</p>
+    </section>
   );
 }

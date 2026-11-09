@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
   if (!url || !key) {
-    if (path === "/login" || path.startsWith("/auth")) return response;
+    if (path === "/login" || path.startsWith("/auth") || path === "/api/demo-login") return response;
     const target = request.nextUrl.clone();
     target.pathname = "/login";
     target.searchParams.set("setup", "1");
@@ -31,7 +31,10 @@ export async function middleware(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser();
   const authPage = path === "/login" || path.startsWith("/auth/") || path === "/api/demo-login";
 
-  if (!user && !authPage) {
+  const publicPage = path === "/" || path === "/home" || path === "/exercises" ||
+    path.startsWith("/exercises/") || path === "/about";
+
+  if (!user && !authPage && !publicPage) {
     const target = request.nextUrl.clone();
     target.pathname = "/login";
     target.searchParams.set("next", path);
