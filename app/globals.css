@@ -592,102 +592,61 @@
 }
 
 
-/* CODE ARCHIVE — restrained Liquid Glass confirmation */
+/* CODE ARCHIVE — warm neutral glass confirmation */
 .permanent-delete-overlay{
-  position:fixed!important;
-  inset:0!important;
-  z-index:10000!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  padding:24px!important;
-  background:rgba(19,25,34,.20)!important;
-  -webkit-backdrop-filter:blur(8px) saturate(118%)!important;
-  backdrop-filter:blur(8px) saturate(118%)!important;
+  position:fixed!important;inset:0!important;z-index:10000!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  padding:24px!important;background:rgba(25,23,20,.16)!important;
+  -webkit-backdrop-filter:blur(7px) saturate(112%)!important;
+  backdrop-filter:blur(7px) saturate(112%)!important;
   animation:deleteOverlayIn .22s ease-out both!important;
 }
 .permanent-delete-dialog{
-  box-sizing:border-box!important;
-  width:min(100%,368px)!important;
-  padding:32px 30px 0!important;
-  overflow:hidden!important;
-  border:1px solid rgba(255,255,255,.72)!important;
-  border-radius:25px!important;
-  background:rgba(245,248,252,.58)!important;
-  -webkit-backdrop-filter:blur(30px) saturate(165%)!important;
-  backdrop-filter:blur(30px) saturate(165%)!important;
-  box-shadow:
-    0 22px 70px rgba(12,20,32,.19),
-    0 2px 8px rgba(12,20,32,.05),
-    inset 0 1px 0 rgba(255,255,255,.82)!important;
-  text-align:center!important;
-  animation:deleteDialogIn .28s cubic-bezier(.2,.75,.25,1) both!important;
+  box-sizing:border-box!important;width:min(100%,360px)!important;
+  padding:31px 29px 0!important;overflow:hidden!important;
+  border:1px solid rgba(255,255,255,.76)!important;border-radius:24px!important;
+  background:rgba(255,253,249,.56)!important;
+  -webkit-backdrop-filter:blur(28px) saturate(145%)!important;
+  backdrop-filter:blur(28px) saturate(145%)!important;
+  box-shadow:0 20px 64px rgba(34,29,22,.15),0 2px 8px rgba(34,29,22,.035),inset 0 1px 0 rgba(255,255,255,.9)!important;
+  text-align:center!important;animation:deleteDialogIn .28s cubic-bezier(.2,.75,.25,1) both!important;
 }
 .permanent-delete-dialog h2{
-  margin:0 0 11px!important;
-  color:#20242b!important;
-  font-size:21px!important;
-  line-height:1.35!important;
-  font-weight:650!important;
-  letter-spacing:-.045em!important;
+  margin:0 0 10px!important;color:#242321!important;font-size:21px!important;
+  line-height:1.35!important;font-weight:650!important;letter-spacing:-.045em!important;
 }
 .permanent-delete-dialog p{
-  max-width:292px!important;
-  margin:0 auto!important;
-  padding-bottom:27px!important;
-  color:rgba(45,53,65,.72)!important;
-  font-size:13px!important;
-  line-height:1.85!important;
-  letter-spacing:-.01em!important;
+  max-width:292px!important;margin:0 auto!important;padding-bottom:26px!important;
+  color:rgba(55,51,45,.72)!important;font-size:13px!important;line-height:1.85!important;letter-spacing:-.01em!important;
 }
-.permanent-delete-dialog p strong{
-  color:#29313d!important;
-  font-weight:650!important;
-}
+.permanent-delete-dialog p strong{color:#302d28!important;font-weight:650!important}
 .permanent-delete-actions{
-  display:flex!important;
-  gap:0!important;
-  margin:0 -30px!important;
-  border-top:1px solid rgba(70,82,99,.13)!important;
+  display:flex!important;gap:0!important;margin:0 -29px!important;
+  border-top:1px solid rgba(77,67,53,.11)!important;
 }
 .permanent-delete-actions button{
-  flex:1!important;
-  min-width:0!important;
-  min-height:50px!important;
-  padding:0 10px!important;
-  border:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-  font-size:13px!important;
-  font-weight:560!important;
-  letter-spacing:-.015em!important;
-  cursor:pointer!important;
+  flex:1!important;min-width:0!important;min-height:50px!important;padding:0 10px!important;
+  border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;
+  font-size:13px!important;font-weight:560!important;letter-spacing:-.015em!important;cursor:pointer!important;
   transition:background .16s ease,opacity .16s ease!important;
 }
-.permanent-delete-actions button+button{
-  border-left:1px solid rgba(70,82,99,.13)!important;
-}
-.permanent-delete-cancel{color:#3d4653!important}
-.permanent-delete-cancel:hover{background:rgba(255,255,255,.24)!important}
-.permanent-delete-confirm{color:#c34d49!important}
-.permanent-delete-confirm:hover{background:rgba(196,77,73,.07)!important}
+.permanent-delete-actions button+button{border-left:1px solid rgba(77,67,53,.11)!important}
+.permanent-delete-cancel{color:#49463f!important}
+.permanent-delete-cancel:hover{background:rgba(255,255,255,.28)!important}
+.permanent-delete-confirm{color:#bd514b!important}
+.permanent-delete-confirm:hover{background:rgba(189,81,75,.055)!important}
 .permanent-delete-actions button:active{opacity:.62!important}
 .permanent-delete-actions button:disabled{opacity:.42!important;cursor:wait!important}
 @keyframes deleteOverlayIn{from{opacity:0}to{opacity:1}}
 @keyframes deleteDialogIn{from{opacity:0;transform:translateY(7px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(max-width:520px){
-  .permanent-delete-overlay{padding:18px!important}
-  .permanent-delete-dialog{
-    width:min(100%,350px)!important;
-    padding:29px 23px 0!important;
-    border-radius:23px!important;
-  }
-  .permanent-delete-dialog p{padding-bottom:23px!important}
-  .permanent-delete-actions{margin:0 -23px!important}
-  .permanent-delete-actions button{min-height:49px!important;font-size:12px!important}
+ .permanent-delete-overlay{padding:18px!important}
+ .permanent-delete-dialog{width:min(100%,350px)!important;padding:28px 23px 0!important;border-radius:22px!important}
+ .permanent-delete-dialog p{padding-bottom:22px!important}
+ .permanent-delete-actions{margin:0 -23px!important}
+ .permanent-delete-actions button{min-height:49px!important;font-size:12px!important}
 }
 @media(prefers-reduced-motion:reduce){
-  .permanent-delete-overlay,.permanent-delete-dialog{animation:none!important}
-  .permanent-delete-actions button{transition:none!important}
+ .permanent-delete-overlay,.permanent-delete-dialog{animation:none!important}
+ .permanent-delete-actions button{transition:none!important}
 }
