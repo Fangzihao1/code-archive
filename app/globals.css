@@ -722,28 +722,3 @@
 @media(max-width:650px){.back-to-top{right:16px;bottom:18px;padding:10px 12px}}
 
 
-/* One-section-at-a-time homepage snapping with native browser scrolling. */
-html.home-snap-active {
-  scroll-snap-type: y mandatory;
-  scroll-padding-top: 76px;
-  scroll-behavior: smooth;
-}
-html.home-snap-active main > section {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  scroll-margin-top: 76px;
-}
-@media (max-width: 650px) {
-  html.home-snap-active {
-    scroll-padding-top: 96px;
-  }
-  html.home-snap-active main > section {
-    scroll-margin-top: 96px;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  html.home-snap-active {
-    scroll-snap-type: none;
-    scroll-behavior: auto;
-  }
-}
