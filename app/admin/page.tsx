@@ -27,6 +27,9 @@ export default function AdminPage() {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [deleteTarget, setDeleteTarget] = useState<Exercise | null>(null);
   const [deleting, setDeleting] = useState(false);
+  const [archiveTarget, setArchiveTarget] = useState<Exercise | null>(null);
+  const [bulkArchiveDialog, setBulkArchiveDialog] = useState(false);
+  const [archiving, setArchiving] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const loadItems = useCallback(async () => {
@@ -185,17 +188,7 @@ export default function AdminPage() {
   }
 
   async function archive(item: Exercise) {
-    if (!window.confirm("将这条练习移入回收站？它会从访客页面下架，但内容和历史版本都会保留。")) return;
-    try {
-      await archiveCloudExercise(item.id);
-      setItems((current) => current.map((entry) => entry.id === item.id
-        ? { ...entry, archived: true, published: false, featured: false }
-        : entry));
-      setMessage("练习已移入回收站，可以随时恢复。");
-      if (form.id === item.id) { setForm(blank); setEditing(false); }
-    } catch {
-      setMessage("移入回收站失败，请检查网络或账号权限。");
-    }
+    setArchiveTarget(item);
   }
 
   async function restoreArchived(item: Exercise) {
@@ -398,6 +391,16 @@ export default function AdminPage() {
       </div>}
       <p className="admin-warning">账号访问由 Supabase Auth 保护。练习内容保存在 Supabase 云端；访客页面只展示已发布内容。移入回收站不会立即删除数据，历史版本会继续保留。</p>
     </section>
+    {(archiveTarget || bulkArchiveDialog) && <div className="permanent-delete-overlay" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget && !archiving) { setArchiveTarget(null); setBulkArchiveDialog(false); } }}>
+      <section className="permanent-delete-dialog" role="alertdialog" aria-modal="true" aria-labelledby="archive-confirm-title" aria-describedby="archive-confirm-description">
+        <h2 id="archive-confirm-title">{bulkArchiveDialog ? "移入回收站？" : "将这条练习移入回收站？"}</h2>
+        <p id="archive-confirm-description">{bulkArchiveDialog ? <>确定将选中的 <strong>{selectedIds.length} 条练习</strong> 移入回收站？它们会从访客页面下架，内容和历史版本都会保留。</> : <>「<strong>{archiveTarget?.title}</strong>」将从访客页面下架，练习内容和历史版本会保留在回收站中，之后可以恢复。</>}</p>
+        <div className="permanent-delete-actions">
+          <button type="button" className="permanent-delete-cancel" disabled={archiving} onClick={() => { setArchiveTarget(null); setBulkArchiveDialog(false); }}>取消</button>
+          <button type="button" className="archive-confirm-action" disabled={archiving} onClick={() => void confirmArchive()}>{archiving ? "正在移入…" : "移入回收站"}</button>
+        </div>
+      </section>
+    </div>}
     {deleteTarget && <div className="permanent-delete-overlay" role="presentation">
       <section className="permanent-delete-dialog" role="alertdialog" aria-modal="true" aria-labelledby="permanent-delete-title" aria-describedby="permanent-delete-description">
         <h2 id="permanent-delete-title">永久删除这条练习？</h2>
