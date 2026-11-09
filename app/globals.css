@@ -660,10 +660,10 @@
   color:#25231f!important;
   background:rgba(77,69,57,.075)!important;
 }
-.archive-confirm-action{color:#514d46!important}
+.archive-confirm-action{color:#b6534d!important}
 .archive-confirm-action:hover{
-  color:#292722!important;
-  background:rgba(77,69,57,.085)!important;
+  color:#963d38!important;
+  background:rgba(190,79,72,.09)!important;
 }
 .permanent-delete-actions button:active:not(:disabled){
   transform:scale(.975)!important;
