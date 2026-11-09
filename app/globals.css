@@ -764,3 +764,29 @@
   background:rgba(191,76,69,.78)!important;
   color:#fff!important;
 }
+
+
+/* Final glass correction: cool translucent tint, not opaque milky white */
+.permanent-delete-overlay{
+  background:rgba(216,226,240,.08)!important;
+  -webkit-backdrop-filter:blur(0.5px) saturate(105%)!important;
+  backdrop-filter:blur(0.5px) saturate(105%)!important;
+}
+.permanent-delete-dialog{
+  background:rgba(194,211,232,.24)!important;
+  background-image:none!important;
+  border:1px solid rgba(255,255,255,.66)!important;
+  -webkit-backdrop-filter:blur(26px) saturate(190%)!important;
+  backdrop-filter:blur(26px) saturate(190%)!important;
+  box-shadow:0 22px 68px rgba(36,54,78,.16),inset 0 1px 0 rgba(255,255,255,.72),inset 0 -1px 0 rgba(255,255,255,.12)!important;
+}
+.permanent-delete-dialog h2{color:#202936!important}
+.permanent-delete-dialog p{color:#596879!important}
+.permanent-delete-cancel{
+  background:rgba(230,237,246,.30)!important;
+  border:1px solid rgba(255,255,255,.48)!important;
+}
+.permanent-delete-confirm{
+  background:rgba(177,73,69,.78)!important;
+  color:#fff!important;
+}
