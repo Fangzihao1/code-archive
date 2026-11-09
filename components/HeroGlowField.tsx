@@ -20,6 +20,8 @@ export default function HeroGlowField() {
     let height = 0;
     let dpr = 1;
     let lastTime = 0;
+    let lastPaintTime = 0;
+    let isVisible = false;
     let pointerX = 0;
     let pointerY = 0;
     let pointerInside = false;
@@ -44,7 +46,7 @@ export default function HeroGlowField() {
       const rect = canvas.getBoundingClientRect();
       width = rect.width;
       height = rect.height;
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, 1.25);
       canvas.width = Math.max(1, Math.round(width * dpr));
       canvas.height = Math.max(1, Math.round(height * dpr));
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -80,6 +82,13 @@ export default function HeroGlowField() {
     };
 
     const draw = (time: number) => {
+      if (!isVisible) return;
+      // Limit this decorative canvas to ~30fps to leave room for page scrolling.
+      if (time - lastPaintTime < 32) {
+        frame = window.requestAnimationFrame(draw);
+        return;
+      }
+      lastPaintTime = time;
       const delta = Math.min(32, lastTime ? time - lastTime : 16);
       lastTime = time;
       context.clearRect(0, 0, width, height);
@@ -148,13 +157,27 @@ export default function HeroGlowField() {
       frame = window.requestAnimationFrame(draw);
     };
 
+    const visibilityObserver = new IntersectionObserver((entries) => {
+      const nextVisible = entries.some((entry) => entry.isIntersecting);
+      if (nextVisible === isVisible) return;
+      isVisible = nextVisible;
+      if (isVisible) {
+        lastTime = 0;
+        frame = window.requestAnimationFrame(draw);
+      } else {
+        window.cancelAnimationFrame(frame);
+      }
+    }, { threshold: 0 });
+    visibilityObserver.observe(canvas);
+
     resize();
     window.addEventListener("resize", resize);
     window.addEventListener("pointermove", onPointerMove, { passive: true });
     window.addEventListener("pointerout", onPointerOut);
-    frame = window.requestAnimationFrame(draw);
+    if (isVisible) frame = window.requestAnimationFrame(draw);
 
     return () => {
+      visibilityObserver.disconnect();
       window.cancelAnimationFrame(frame);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onPointerMove);
